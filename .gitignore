@@ -44,5 +44,4 @@ next-env.d.ts
 api.json
 oauth.json
 tokens.json
-outer-admin/config.js
-outer-admin/.env
+
