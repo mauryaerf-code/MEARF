@@ -57,8 +57,7 @@ function ContactForm() {
         const recipient = "drshailendar@mauryaerf.com";
         const subjectLine = encodeURIComponent(formData.subject || "General Inquiry - MERF");
         const bodyText = encodeURIComponent(
-            `Name: ${formData.name}\n` +
-            `Email: ${formData.email}\n\n` +
+            `Name: ${formData.name}\n\n` +
             `Message:\n${formData.message}`
         );
         
@@ -190,7 +189,7 @@ export default function Contact() {
                                 10 A, Saini Colony Rd, First, Kartarpur,<br />
                                 Gopal Pura Mode, Jaipur, Rajasthan 302006
                             </p>
-                            <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: '5px' }}>Registered Section 8 NGO | Registered MSME</p>
+                            
                         </div>
                     </div>
 

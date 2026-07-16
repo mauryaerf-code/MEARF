@@ -113,11 +113,16 @@ export default function ShodhUnnayan() {
     };
 
     const openGmail = () => {
-        const email = "shodhunnayan@gmail.com";
-        window.open(
-            `https://mail.google.com/mail/?view=cm&fs=1&to=${email}`,
-            "_blank"
-        );
+        const email = "drshailendar@mauryaerf.com";
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        if (isMobile) {
+            window.location.href = `mailto:${email}`;
+        } else {
+            window.open(
+                `https://mail.google.com/mail/?view=cm&fs=1&to=${email}`,
+                "_blank"
+            );
+        }
     };
 
     const totalPages = Math.ceil(totalCount / pageSize);
@@ -192,7 +197,7 @@ export default function ShodhUnnayan() {
                                         <i className="far fa-envelope"></i> Online Submission Inquiry
                                     </button>
                                     <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '10px', textAlign: 'center' }}>
-                                        Clicking this button will open Gmail Compose in a new tab addressed to <strong>shodhunnayan@gmail.com</strong>.
+                                        Clicking this button will open Gmail Compose in a new tab addressed to <strong>drshailendar@mauryaerf.com</strong>.
                                     </p>
                                 </div>
                             </div>

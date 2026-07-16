@@ -114,10 +114,15 @@ export default function ScholarsRealView() {
 
     const openGmail = () => {
         const email = "editorthescholarview@gmail.com";
-        window.open(
-            `https://mail.google.com/mail/?view=cm&fs=1&to=${email}`,
-            "_blank"
-        );
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        if (isMobile) {
+            window.location.href = `mailto:${email}`;
+        } else {
+            window.open(
+                `https://mail.google.com/mail/?view=cm&fs=1&to=${email}`,
+                "_blank"
+            );
+        }
     };
 
     const totalPages = Math.ceil(totalCount / pageSize);

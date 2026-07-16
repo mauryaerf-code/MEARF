@@ -120,36 +120,8 @@ export default function About() {
                         <p>Our foundation and publication initiatives are guided by academic and professional experts from across India.</p>
                     </div>
 
-                    {/* The 4 Category Description Cards */}
-                    <div className="grid grid-4 text-center" style={{ marginBottom: '50px' }}>
-                        <div className="card" style={{ padding: '25px' }}>
-                            <div className="card-icon"><i className="fas fa-user-shield"></i></div>
-                            <h3 style={{ fontSize: '1.15rem', marginBottom: '10px' }}>Advisory Board</h3>
-                            <p style={{ fontSize: '0.85rem', marginBottom: 0 }}>Comprising senior professors and administrators overseeing the strategic direction of MERF and RISSR.</p>
-                        </div>
-
-                        <div className="card" style={{ padding: '25px' }}>
-                            <div className="card-icon"><i className="fas fa-user-edit"></i></div>
-                            <h3 style={{ fontSize: '1.15rem', marginBottom: '10px' }}>Editorial Board</h3>
-                            <p style={{ fontSize: '0.85rem', marginBottom: 0 }}>Eminent subject-matter editors managing reviews and quality curation for Shodh Unnayan & The Scholar's Real View.</p>
-                        </div>
-
-                        <div className="card" style={{ padding: '25px' }}>
-                            <div className="card-icon"><i className="fas fa-user-check"></i></div>
-                            <h3 style={{ fontSize: '1.15rem', marginBottom: '10px' }}>Review Committee</h3>
-                            <p style={{ fontSize: '0.85rem', marginBottom: 0 }}>Double-blind peer-review experts ensuring scientific integrity and original content publication.</p>
-                        </div>
-
-                        <div className="card" style={{ padding: '25px' }}>
-                            <div className="card-icon"><i className="fas fa-user-friends"></i></div>
-                            <h3 style={{ fontSize: '1.15rem', marginBottom: '10px' }}>Experts Committee</h3>
-                            <p style={{ fontSize: '0.85rem', marginBottom: 0 }}>Field specialists guiding FDP curriculums, teacher training, and university collaborative projects.</p>
-                        </div>
-                    </div>
-
-                    {/* Supabase Dynamic Member Cards (3 columns grid layout for larger card sizes) */}
-                    {members.length > 0 && (
-                        <div style={{ marginTop: '40px' }}>
+                    {members.length > 0 ? (
+                        <div style={{ marginTop: '20px' }}>
                             <style>{`
                                 .members-grid {
                                     display: grid;
@@ -217,7 +189,6 @@ export default function About() {
                                     }
                                 }
                             `}</style>
-                            <h3 style={{ fontSize: '1.45rem', color: 'var(--primary-dark)', marginBottom: '20px', textAlign: 'center', fontWeight: '600' }}>Registered Board & Committee Members</h3>
                             <div className="members-grid">
                                 {members.map(member => (
                                     <div className="member-card card" key={member.id}>
@@ -252,6 +223,33 @@ export default function About() {
                                         </div>
                                     </div>
                                 ))}
+                            </div>
+                        </div>
+                    ) : (
+                        /* The 4 Category Description Cards */
+                        <div className="grid grid-4 text-center" style={{ marginBottom: '50px', marginTop: '25px' }}>
+                            <div className="card" style={{ padding: '25px', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-lg)' }}>
+                                <div className="card-icon"><i className="fas fa-user-shield"></i></div>
+                                <h3 style={{ fontSize: '1.15rem', marginBottom: '10px' }}>Advisory Board</h3>
+                                <p style={{ fontSize: '0.85rem', marginBottom: 0 }}>Comprising senior professors and administrators overseeing the strategic direction of MERF and RISSR.</p>
+                            </div>
+
+                            <div className="card" style={{ padding: '25px', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-lg)' }}>
+                                <div className="card-icon"><i className="fas fa-user-edit"></i></div>
+                                <h3 style={{ fontSize: '1.15rem', marginBottom: '10px' }}>Editorial Board</h3>
+                                <p style={{ fontSize: '0.85rem', marginBottom: 0 }}>Eminent subject-matter editors managing reviews and quality curation for Shodh Unnayan & The Scholar's Real View.</p>
+                            </div>
+
+                            <div className="card" style={{ padding: '25px', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-lg)' }}>
+                                <div className="card-icon"><i className="fas fa-user-check"></i></div>
+                                <h3 style={{ fontSize: '1.15rem', marginBottom: '10px' }}>Review Committee</h3>
+                                <p style={{ fontSize: '0.85rem', marginBottom: 0 }}>Double-blind peer-review experts ensuring scientific integrity and original content publication.</p>
+                            </div>
+
+                            <div className="card" style={{ padding: '25px', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-lg)' }}>
+                                <div className="card-icon"><i className="fas fa-user-friends"></i></div>
+                                <h3 style={{ fontSize: '1.15rem', marginBottom: '10px' }}>Experts Committee</h3>
+                                <p style={{ fontSize: '0.85rem', marginBottom: 0 }}>Field specialists guiding FDP curriculums, teacher training, and university collaborative projects.</p>
                             </div>
                         </div>
                     )}

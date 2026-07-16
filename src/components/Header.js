@@ -33,10 +33,7 @@ export default function Header() {
                     <div>
                         <i className="fas fa-phone-alt"></i> <a href="tel:+919636635216">+91-9636635216</a>
                     </div>
-                    <div className="top-bar-links">
-                        <span><i className="fas fa-certificate"></i> Registered MSME</span>
-                        <span><i className="fas fa-university"></i> Section 8 Not-For-Profit</span>
-                    </div>
+                    
                 </div>
             </div>
 
