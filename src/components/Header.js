@@ -43,7 +43,7 @@ export default function Header() {
             <header className="main-header" id="main-header-nav">
                 <div className="container-fluid navbar">
                     <Link href="/" className="logo-container" id="brand-logo-link">
-                        <img src="/assets/logo.png" alt="MERF Logo" className="logo-img" id="logo-graphic" style={{ height: '60px', width: '60px', borderRadius: '50%', objectFit: 'cover' }} />
+                        <img src="/assets/logo.jpeg" alt="MERF Logo" className="logo-img" id="logo-graphic" style={{ height: '60px', width: '60px', borderRadius: '50%', objectFit: 'cover' }} />
                         <div className="logo-text">
                             <h1>MERF</h1>
                             <p>Maurya Education and Research Foundation</p>
@@ -73,7 +73,7 @@ export default function Header() {
                             </li>
                             <li className="nav-item-dropdown">
                                 <Link href="/journals" className={`nav-link ${isActive('/journals')}`} onClick={handleLinkClick}>
-                                    RISSR Journals <i className="fas fa-chevron-down" style={{ fontSize: '0.75rem' }}></i>
+                                    Research (RISSR) <i className="fas fa-chevron-down" style={{ fontSize: '0.75rem' }}></i>
                                 </Link>
                                 <ul className="dropdown-menu">
                                     <li>
@@ -103,7 +103,7 @@ export default function Header() {
                             </li>
                             <li>
                                 <Link href="/events" className={`nav-link ${isActive('/events')}`} onClick={handleLinkClick}>
-                                    Events
+                                    Extension (Academic Events)
                                 </Link>
                             </li>
                             <li>

@@ -32,11 +32,29 @@ function ContactForm() {
         });
     };
 
-    const handleFormSubmit = (e) => {
+    const handleFormSubmit = async (e) => {
         e.preventDefault();
         setIsSubmitting(true);
 
-        const recipient = "1.rajveersinghcse@gmail.com";
+        // 1. Submit query details to database inquiries table
+        try {
+            const response = await fetch('/api/inquiries', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+            const result = await response.json();
+            if (!result.success) {
+                console.error("Database logging failed:", result.error);
+            }
+        } catch (err) {
+            console.error("Failed to post inquiry to database:", err);
+        }
+
+        // 2. Open client-side compose window
+        const recipient = "drshailendar@mauryaerf.com";
         const subjectLine = encodeURIComponent(formData.subject || "General Inquiry - MERF");
         const bodyText = encodeURIComponent(
             `Name: ${formData.name}\n` +
@@ -44,10 +62,15 @@ function ContactForm() {
             `Message:\n${formData.message}`
         );
         
-        const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${recipient}&su=${subjectLine}&body=${bodyText}`;
-
-        // Open Gmail Web Compose in a new tab
-        window.open(gmailUrl, '_blank');
+        // Detect mobile user agent strictly
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        if (isMobile) {
+            const mailtoUrl = `mailto:${recipient}?subject=${subjectLine}&body=${bodyText}`;
+            window.location.href = mailtoUrl;
+        } else {
+            const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${recipient}&su=${subjectLine}&body=${bodyText}`;
+            window.open(gmailUrl, '_blank');
+        }
 
         setIsSubmitting(false);
         setFormSubmitted(true);
@@ -154,7 +177,7 @@ export default function Contact() {
                             <h3 style={{ fontSize: '1.25rem', marginBottom: '10px' }}>Email Correspondence</h3>
                             <div style={{ fontSize: '0.85rem', marginBottom: '5px', color: 'var(--text-muted)' }}>
                                 Journal Submissions & NGO Inquiries:<br />
-                                <a href="mailto:shodhunnayan@gmail.com"><strong>shodhunnayan@gmail.com</strong></a><br />
+                                <a href="mailto:drshailendar@mauryaerf.com"><strong>drshailendar@mauryaerf.com</strong></a><br />
                                 <a href="mailto:editorthescholarview@gmail.com"><strong>editorthescholarview@gmail.com</strong></a>
                             </div>
                         </div>
@@ -174,17 +197,23 @@ export default function Contact() {
                     <div className="grid grid-2" style={{ gap: '50px' }}>
                         <div>
                             <h2 style={{ fontSize: '1.6rem', marginBottom: '20px' }}>Our Location</h2>
-                            <div style={{ width: '100%', height: '350px', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border-color)', overflow: 'hidden', backgroundColor: 'var(--bg-white)', position: 'relative', boxShadow: 'var(--shadow-md)' }}>
-                                <iframe 
-                                    src="https://maps.google.com/maps?q=Maurya%20Publications%20%26%20Distributors%20Jaipur%2C%2010%20A%2C%20Saini%20Colony%20Rd%2C%20Saini%20Colony%20I%2C%20First%2C%20Kartarpur%2C%20Gopal%20Pura%20Mode%2C%20Jaipur%2C%20Rajasthan%20302006&t=&z=16&ie=UTF8&iwloc=&output=embed" 
-                                    width="100%" 
-                                    height="100%" 
-                                    style={{ border: 0 }} 
-                                    allowFullScreen="" 
-                                    loading="lazy" 
-                                    referrerPolicy="no-referrer-when-downgrade"
-                                    title="Office Map"
-                                ></iframe>
+                            <div className="card text-center" style={{ padding: '30px', backgroundColor: 'var(--bg-white)', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-lg)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '350px', boxShadow: 'var(--shadow-md)' }}>
+                                <div style={{ fontSize: '3rem', color: 'var(--accent-dark)', marginBottom: '15px' }}>
+                                    <i className="fas fa-map-marked-alt"></i>
+                                </div>
+                                <h3 style={{ fontSize: '1.25rem', marginBottom: '8px', color: 'var(--primary-dark)', fontWeight: '600' }}>Maurya Publications & Distributors</h3>
+                                <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '20px', maxWidth: '320px', lineHeight: '1.5' }}>
+                                    10 A, Saini Colony Rd, First, Kartarpur, Gopal Pura Mode, Jaipur, Rajasthan 302006
+                                </p>
+                                <a 
+                                    href="https://www.google.com/maps/search/?api=1&query=Maurya+Publications+Distributors+Jaipur+10A+Saini+Colony+Rd+Kartarpura+Jaipur+Rajasthan+302006" 
+                                    target="_blank" 
+                                    rel="noopener noreferrer" 
+                                    className="btn btn-primary"
+                                    style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '10px 20px', width: 'fit-content', fontSize: '0.85rem' }}
+                                >
+                                    <i className="fas fa-directions"></i> Open in Google Maps
+                                </a>
                             </div>
                         </div>
 

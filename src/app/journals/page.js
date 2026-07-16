@@ -11,12 +11,23 @@ export default function JournalsLanding() {
         <>
             <section className="hero" style={{ padding: '60px 0', backgroundImage: `linear-gradient(135deg, rgba(7, 17, 36, 0.9) 0%, rgba(15, 32, 70, 0.8) 100%), url('https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?q=80&w=1200&auto=format&fit=crop')` }}>
                 <div className="container text-center">
-                    <h1 style={{ color: 'var(--text-light)', fontSize: '2.75rem', marginBottom: '10px' }}>RISSR Academic Journals</h1>
+                    <h1 style={{ color: 'var(--text-light)', fontSize: '2.75rem', marginBottom: '10px' }}>Research (RISSR)</h1>
                     <p style={{ color: 'var(--accent)', fontSize: '1.1rem', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: 0 }}>Rajasthan Institute of Social Science Research (NITI Aayog Recognized)</p>
                 </div>
             </section>
 
-            <section className="section" id="journals-portal-overview">
+            <section className="section" id="about-rissr-section" style={{ backgroundColor: 'var(--bg-white)', paddingBottom: '20px' }}>
+                <div className="container">
+                    <div className="card" style={{ padding: '30px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
+                        <h2 style={{ fontSize: '1.6rem', color: 'var(--primary-dark)', marginBottom: '15px' }}>About RISSR</h2>
+                        <p style={{ fontSize: '1.02rem', fontFamily: '"Outfit", "Inter", sans-serif', lineHeight: '1.8', color: 'var(--text-dark)', textAlign: 'justify', margin: 0 }}>
+                            Rajasthan Institute of Social Science Research (RISSR) is an organization working for the promotion of research in multidisciplinary fields through the publication of journals and conducting webinars, national and international conferences. It is providing a leading forum for sharing original research contributions and practical developments in the field Social Science, Humanity, Science, Technology and Management to contribute to academic advancements. It's a non-government organization recognized by NITI Aayog, Govt. of India. There are two Journals published by RISSR:
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section className="section" id="journals-portal-overview" style={{ paddingTop: '20px' }}>
                 <div className="container">
                     <div className="section-header">
                         <h2>Our Peer-Reviewed Journals</h2>

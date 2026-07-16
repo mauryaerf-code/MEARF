@@ -8,7 +8,7 @@ export default function Footer() {
                 <div className="footer-col" id="footer-col-about">
                     <h3>About MERF</h3>
                     <p style={{ fontSize: '0.9rem', lineHeight: '1.7', marginBottom: '20px', color: '#f8f9fa', fontWeight: '500' }}>
-                        <strong style={{ color: 'var(--accent)', fontWeight: '700' }}>Maurya Education and Research Foundation</strong> is a registered Section 8 not-for-profit company. We dedicate our efforts to academic excellence, research publishing, book distribution, and community empowerment programs.
+                        <strong style={{ color: 'var(--accent)', fontWeight: '700' }}>Maurya Education and Research Foundation</strong> We dedicate our efforts to academic excellence, research publishing, book distribution, and community empowerment programs.
                     </p>
                     <div style={{ display: 'flex', gap: '10px' }}>
                         <a href="#" style={{ fontSize: '1.25rem', color: 'var(--accent)' }} aria-label="Facebook"><i className="fab fa-facebook"></i></a>
@@ -43,7 +43,7 @@ export default function Footer() {
                         <li>
                             <i className="fas fa-envelope"></i>
                             <span>
-                                shodhunnayan@gmail.com<br />
+                                drshailendar@mauryaerf.com<br />
                                 editorthescholarview@gmail.com
                             </span>
                         </li>
@@ -53,9 +53,7 @@ export default function Footer() {
             
             <div className="container footer-bottom">
                 <p>&copy; {new Date().getFullYear()} Maurya Education and Research Foundation (MERF). All Rights Reserved.</p>
-                <p style={{ fontSize: '0.75rem', color: 'var(--text-light-muted)', marginTop: '5px' }}>
-                    Registered Section 8 NGO under MCA, Govt. of India | Registered MSME
-                </p>
+                
             </div>
         </footer>
     );

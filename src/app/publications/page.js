@@ -132,14 +132,14 @@ export default function Publications() {
                                     <h2 style={{ fontSize: '1.85rem', marginBottom: '0' }}>Platform for Budding & Established Authors</h2>
                                 </div>
                             </div>
-                            <p style={{ fontSize: '1.05rem', lineHeight: '1.7' }}>
-                                <strong>Maurya Publications & Distributors</strong> serves as an ideal platform for both established as well as budding authors to get their books and monographs published at the earliest date.
+                            <p style={{ fontSize: '1.02rem', fontFamily: '"Outfit", "Inter", sans-serif', lineHeight: '1.8', color: 'var(--text-dark)', textAlign: 'justify', marginBottom: '15px' }}>
+                                <strong>Maurya Publications & Distributors</strong> serves as an ideal platform for both the established as well as budding authors for getting their books published at an earliest date.
                             </p>
-                            <p>
-                                Since our inception in <strong>2022</strong>, we believe in providing high-quality book publication services at reasonable prices. Maintaining high academic and production standards is our priority.
+                            <p style={{ fontSize: '1.02rem', fontFamily: '"Outfit", "Inter", sans-serif', lineHeight: '1.8', color: 'var(--text-dark)', textAlign: 'justify', marginBottom: '15px' }}>
+                                Since inception (in <strong>2022</strong>) we believe in providing high quality books at reasonable prices. We strongly believe in being in close contact with all our authors on the production, promotion and distribution of their books. Maintaining high academic and production standards is our priority.
                             </p>
-                            <p>
-                                We assess manuscripts for their academic viability across the globe and allot an official <strong>ISBN</strong> (International Standard Book Number) to all approved publications. We are willing to take risks by publishing emerging disciplines and support publication in both <strong>English and Hindi</strong> languages.
+                            <p style={{ fontSize: '1.02rem', fontFamily: '"Outfit", "Inter", sans-serif', lineHeight: '1.8', color: 'var(--text-dark)', textAlign: 'justify', marginBottom: 0 }}>
+                                Manuscripts received would be thoroughly assessed for their viability across the globe. We intend to inform the authors ASAP on the acceptance or rejection of their works. Moreover, <strong>ISBN</strong> is allotted to all our publications. Our books are at the forefront of knowledge and often break new ground in research. As an independent publisher, we are more willing to take risks by publishing in emerging disciplines.
                             </p>
                             
                             <div style={{ marginTop: '30px' }}>

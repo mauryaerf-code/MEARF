@@ -80,7 +80,7 @@ export default function Home() {
                         <div>
                             <h2 style={{ fontSize: '2rem', marginBottom: '20px' }}>Welcome to Maurya Education and Research Foundation</h2>
                             <p style={{ fontSize: '1.1rem', lineHeight: '1.7', marginBottom: '25px' }}>
-                                <strong>MERF</strong> is registered as a Section 8 not-for-profit company, committed to enhancing higher education quality, promoting research culture, and fostering academic collaboration worldwide.
+                                <strong>MERF</strong> is registered , committed to enhancing higher education quality, promoting research culture, and fostering academic collaboration worldwide.
                             </p>
                             <p>
                                 We operate independently and collaborate closely with students, researchers, academicians, and educational institutions across India. From organizing national and international conferences to publishing ISBN-registered books and ISSN-registered academic journals, we support academic growth in every dimension.
