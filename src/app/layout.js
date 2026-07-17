@@ -2,6 +2,7 @@ import "./globals.css";
 import { Outfit, Playfair_Display } from "next/font/google";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import Script from "next/script";
 
 const outfitFont = Outfit({
   subsets: ["latin"],
@@ -31,14 +32,14 @@ export const metadata = {
   authors: [{ name: "Dr. Shailendar Maurya" }],
   creator: "Maurya Education and Research Foundation",
   publisher: "Maurya Education and Research Foundation",
-  metadataBase: new URL("https://merfindia.org"),
+  metadataBase: new URL("https://www.mauryaerf.com"),
   alternates: {
     canonical: "/",
   },
   openGraph: {
     title: "Maurya Education and Research Foundation (MERF)",
     description: "Maurya Education and Research Foundation (MERF) is a Section 8 NGO in Jaipur, Rajasthan, dedicated to academic research, journal publication, book distribution, and community welfare.",
-    url: "https://merfindia.org",
+    url: "https://www.mauryaerf.com",
     siteName: "Maurya Education and Research Foundation",
     images: [
       {
@@ -68,6 +69,19 @@ export default function RootLayout({ children }) {
         <link rel="icon" href="/vercel.svg" />
       </head>
       <body className={`${outfitFont.variable} ${playfairFont.variable}`}>
+        {/* Google Analytics (gtag.js) */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-F50EX3QEBS"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-F50EX3QEBS');
+          `}
+        </Script>
         <Header />
         <main>{children}</main>
         <Footer />
