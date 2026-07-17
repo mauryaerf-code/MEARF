@@ -61,7 +61,7 @@ const nextConfig = {
           },
           {
             key: 'Content-Security-Policy',
-            value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; img-src 'self' data: blob: https://lh3.googleusercontent.com https://images.unsplash.com; connect-src 'self' https://zniwqsmenctnjtuynrxh.supabase.co wss://zniwqsmenctnjtuynrxh.supabase.co https://lh3.googleusercontent.com localhost:* 127.0.0.1:* ws://localhost:* ws://127.0.0.1:*; font-src 'self' data: https://cdnjs.cloudflare.com https://fonts.gstatic.com; frame-src 'self' https://docs.google.com https://drive.google.com;",
+            value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; img-src 'self' data: blob: https://lh3.googleusercontent.com https://images.unsplash.com https://www.google-analytics.com https://www.googletagmanager.com; connect-src 'self' https://zniwqsmenctnjtuynrxh.supabase.co wss://zniwqsmenctnjtuynrxh.supabase.co https://lh3.googleusercontent.com https://www.google-analytics.com localhost:* 127.0.0.1:* ws://localhost:* ws://127.0.0.1:*; font-src 'self' data: https://cdnjs.cloudflare.com https://fonts.gstatic.com; frame-src 'self' https://docs.google.com https://drive.google.com;",
           },
         ],
       },
