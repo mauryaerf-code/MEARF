@@ -28,9 +28,43 @@ export const metadata = {
   },
   description: "Maurya Education and Research Foundation (MERF) is a Section 8 NGO in Jaipur, Rajasthan, dedicated to academic research, journal publication, book distribution, and community welfare.",
   icons: {
-    icon: "/vercel.svg"
+    icon: "/favicon.png",
+    shortcut: "/favicon.ico",
+    apple: "/favicon.png",
   },
-  keywords: ["MERF", "Maurya Education and Research Foundation", "NGO", "Section 8 Company", "Research publishing", "Jaipur", "Rajasthan", "Shodh Unnayan", "The Scholar's Real View"],
+  keywords: [
+    "Maurya Education and Research Foundation",
+    "MERF",
+    "MERF India",
+    "Rajasthan Institute of Social Science Research",
+    "RISSR",
+    "academic research India",
+    "education research organization",
+    "education NGO India",
+    "multidisciplinary research journal",
+    "peer reviewed journal India",
+    "refereed journal publications",
+    "Shodh Unnayan Journal",
+    "The Scholar's Real View Journal",
+    "Vanijyam Journal",
+    "VIJCMBS",
+    "Online Journal",
+    "multidisciplinary online journal",
+    "ISBN book publication services",
+    "publish book with ISBN",
+    "academic book publisher India",
+    "faculty development programme FDP",
+    "skill development programme SDP",
+    "national international seminar",
+    "academic conferences 2026",
+    "social welfare organization",
+    "women empowerment education",
+    "NEP 2020 teacher training",
+    "Indian Knowledge System IKS",
+    "best research organization in India",
+    "publish research paper online",
+    "conference proceedings publication"
+  ],
   authors: [{ name: "Dr. Shailendar Maurya" }],
   creator: "Maurya Education and Research Foundation",
   publisher: "Maurya Education and Research Foundation",
@@ -68,7 +102,7 @@ export default function RootLayout({ children }) {
       <head>
         {/* FontAwesome for Icons */}
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-        <link rel="icon" href="/vercel.svg" />
+        <link rel="icon" href="/favicon.png" />
       </head>
       <body className={`${outfitFont.variable} ${playfairFont.variable}`}>
         {/* Google Analytics (gtag.js) */}

@@ -34,6 +34,18 @@ export default function sitemap() {
       priority: 0.9,
     },
     {
+      url: `${baseUrl}/journals/vanijyam`,
+      lastModified: currentDate,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/journals/online`,
+      lastModified: currentDate,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
       url: `${baseUrl}/events`,
       lastModified: currentDate,
       changeFrequency: "weekly",

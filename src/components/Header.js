@@ -91,6 +91,24 @@ export default function Header() {
                                             </div>
                                         </Link>
                                     </li>
+                                    <li>
+                                        <Link href="/journals/vanijyam" className="dropdown-link-with-img" onClick={handleLinkClick}>
+                                            <img src="/assets/home/vanijyam.png" alt="Vanijyam Journal Cover" style={{ objectFit: 'cover' }} />
+                                            <div className="dropdown-link-text">
+                                                <span className="dropdown-link-title">Vanijyam</span>
+                                                <span className="dropdown-link-subtitle">Multi-Language (Annually)</span>
+                                            </div>
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link href="/journals/online" className="dropdown-link-with-img" onClick={handleLinkClick}>
+                                            <img src="/assets/home/online.png" alt="Online Journal Cover" style={{ objectFit: 'cover' }} />
+                                            <div className="dropdown-link-text">
+                                                <span className="dropdown-link-title">Online Journal</span>
+                                                <span className="dropdown-link-subtitle">Multi-Language (Quarterly)</span>
+                                            </div>
+                                        </Link>
+                                    </li>
                                 </ul>
                             </li>
                             <li>
