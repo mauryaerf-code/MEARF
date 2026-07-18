@@ -9,7 +9,7 @@ const getEmbeddableDriveUrl = (url) => {
     const regExp = /(?:id=|\/d\/|d=)([a-zA-Z0-9_-]{25,})/;
     const match = url.match(regExp);
     if (match && match[1]) {
-        return `https://lh3.googleusercontent.com/d/${match[1]}`;
+        return `https://drive.google.com/file/d/${match[1]}/view?usp=drivesdk`;
     }
     return url;
 };
