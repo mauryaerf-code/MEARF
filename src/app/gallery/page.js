@@ -11,6 +11,21 @@ const GALLERY_IMAGES = [
     { id: "gal-6", src: "/assets/ne&gal/gallary/gal06.png", alt: "Gallery Image 6", title: "Student Award Ceremony", category: "Gallery" },
     { id: "gal-7", src: "/assets/ne&gal/gallary/gal07.png", alt: "Gallery Image 7", title: "Advisory Board Meet", category: "Gallery" },
     { id: "gal-8", src: "/assets/ne&gal/gallary/gal08.png", alt: "Gallery Image 8", title: "Teacher Training Program", category: "Gallery" },
+    { id: "gal-9", src: "/assets/ne&gal/gallary/gal09.png", alt: "Gallery Image 9", title: "Advisory Board Meet", category: "Gallery" },
+    { id: "gal-10", src: "/assets/ne&gal/gallary/gal10.png", alt: "Gallery Image 10", title: "Advisory Board Meet", category: "Gallery" },
+    { id: "gal-11", src: "/assets/ne&gal/gallary/gal11.png", alt: "Gallery Image 11", title: "Advisory Board Meet", category: "Gallery" },
+    { id: "gal-12", src: "/assets/ne&gal/gallary/gal12.png", alt: "Gallery Image 12", title: "Advisory Board Meet", category: "Gallery" },
+    { id: "gal-13", src: "/assets/ne&gal/gallary/gal13.png", alt: "Gallery Image 13", title: "Advisory Board Meet", category: "Gallery" },
+    { id: "gal-14", src: "/assets/ne&gal/gallary/gal14.png", alt: "Gallery Image 14", title: "Advisory Board Meet", category: "Gallery" },
+    { id: "gal-15", src: "/assets/ne&gal/gallary/gal15.png", alt: "Gallery Image 15", title: "Advisory Board Meet", category: "Gallery" },
+    { id: "gal-16", src: "/assets/ne&gal/gallary/gal16.png", alt: "Gallery Image 16", title: "Advisory Board Meet", category: "Gallery" },
+    { id: "gal-17", src: "/assets/ne&gal/gallary/gal17.png", alt: "Gallery Image 17", title: "Advisory Board Meet", category: "Gallery" },
+    { id: "gal-18", src: "/assets/ne&gal/gallary/gal18.png", alt: "Gallery Image 18", title: "Advisory Board Meet", category: "Gallery" },
+    { id: "gal-19", src: "/assets/ne&gal/gallary/gal19.png", alt: "Gallery Image 19", title: "Advisory Board Meet", category: "Gallery" },
+    { id: "gal-20", src: "/assets/ne&gal/gallary/gal20.png", alt: "Gallery Image 20", title: "Advisory Board Meet", category: "Gallery" },
+    { id: "gal-21", src: "/assets/ne&gal/gallary/gal21.png", alt: "Gallery Image 21", title: "Advisory Board Meet", category: "Gallery" },
+    { id: "gal-22", src: "/assets/ne&gal/gallary/gal22.png", alt: "Gallery Image 22", title: "Advisory Board Meet", category: "Gallery" },
+
 ];
 
 const NEWS_IMAGES = [
@@ -19,6 +34,9 @@ const NEWS_IMAGES = [
     { id: "news-3", src: "/assets/ne&gal/news/new03.png", alt: "News 3", title: "NGO Project Release Announcement", category: "News" },
     { id: "news-4", src: "/assets/ne&gal/news/new04.png", alt: "News 4", title: "Dr. Maurya's Interview Highlights", category: "News" },
     { id: "news-5", src: "/assets/ne&gal/news/new05.png", alt: "News 5", title: "National Seminar Press Briefing", category: "News" },
+    { id: "news-6", src: "/assets/ne&gal/news/new06.png", alt: "News 6", title: "National Seminar Press Briefing", category: "News" },
+    { id: "news-7", src: "/assets/ne&gal/news/new07.png", alt: "News 7", title: "National Seminar Press Briefing", category: "News" },
+    { id: "news-8", src: "/assets/ne&gal/news/new08.png", alt: "News 8", title: "National Seminar Press Briefing", category: "News" },
 ];
 
 export default function Gallery() {

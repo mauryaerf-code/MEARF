@@ -3,13 +3,22 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
 
-const getEmbeddableDriveUrl = (url) => {
+const getDirectDriveUrl = (url) => {
     if (!url) return '';
-    if (url.startsWith('data:')) return url;
     const regExp = /(?:id=|\/d\/|d=)([a-zA-Z0-9_-]{25,})/;
     const match = url.match(regExp);
     if (match && match[1]) {
-        return `https://drive.google.com/file/d/${match[1]}/view?usp=drivesdk`;
+        return `https://drive.google.com/file/d/${match[1]}/view`;
+    }
+    return url;
+};
+
+const getDownloadDriveUrl = (url) => {
+    if (!url) return '';
+    const regExp = /(?:id=|\/d\/|d=)([a-zA-Z0-9_-]{25,})/;
+    const match = url.match(regExp);
+    if (match && match[1]) {
+        return `https://drive.google.com/uc?export=download&id=${match[1]}`;
     }
     return url;
 };
@@ -172,7 +181,7 @@ export default function VanijyamJournal() {
             <section className="hero" style={{ padding: '60px 0', backgroundImage: `linear-gradient(135deg, rgba(7, 17, 36, 0.9) 0%, rgba(15, 32, 70, 0.8) 100%), url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=1200&auto=format&fit=crop')` }}>
                 <div className="container text-center">
                     <h1 style={{ color: 'var(--text-light)', fontSize: '2.75rem', marginBottom: '10px' }}>Vanijyam</h1>
-                    <p style={{ color: 'var(--accent)', fontSize: '1.1rem', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: 0 }}>Rajasthan Institute of Social Science Research (RISSR)</p>
+                    <p style={{ color: 'var(--accent)', fontSize: '1.1rem', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: 0 }}>Maurya Education And Research Foundation (MERF)</p>
                 </div>
             </section>
 
@@ -313,7 +322,7 @@ export default function VanijyamJournal() {
                                                     <td style={{ padding: '12px 15px' }}>{item.volume}</td>
                                                     <td style={{ padding: '12px 15px' }}>
                                                         {item.pdfUrl ? (
-                                                            <a href={getEmbeddableDriveUrl(item.pdfUrl)} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent-dark)', fontWeight: 'bold', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                                                            <a href={getDirectDriveUrl(item.pdfUrl)} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent-dark)', fontWeight: 'bold', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
                                                                 <i className="far fa-file-pdf"></i> {item.issue}
                                                             </a>
                                                         ) : (

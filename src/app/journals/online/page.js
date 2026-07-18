@@ -134,7 +134,7 @@ export default function OnlineJournal() {
             <section className="hero" style={{ padding: '60px 0', backgroundImage: `linear-gradient(135deg, rgba(7, 17, 36, 0.9) 0%, rgba(15, 32, 70, 0.8) 100%), url('https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1200&auto=format&fit=crop')` }}>
                 <div className="container text-center">
                     <h1 style={{ color: 'var(--text-light)', fontSize: '2.75rem', marginBottom: '10px' }}>Online</h1>
-                    <p style={{ color: 'var(--accent)', fontSize: '1.1rem', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: 0 }}>Rajasthan Institute of Social Science Research (RISSR)</p>
+                    <p style={{ color: 'var(--accent)', fontSize: '1.1rem', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: 0 }}>Maurya Education And Research Foundation (MERF)</p>
                 </div>
             </section>
 
@@ -284,7 +284,7 @@ export default function OnlineJournal() {
                                                                 {art.title}
                                                             </span>
                                                             <a 
-                                                                href={getEmbeddableDriveUrl(art.pdfurl)} 
+                                                                href={getDirectDriveUrl(art.pdfurl)} 
                                                                 target="_blank" 
                                                                 rel="noopener noreferrer" 
                                                                 className="btn btn-outline btn-xs"

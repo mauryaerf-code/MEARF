@@ -29,13 +29,22 @@ export default function Header() {
     return (
         <>
             <div className="top-bar" id="top-bar-utility">
-                <div className="container-fluid flex-between flex-wrap">
-                    <div>
-                        <i className="fas fa-phone-alt"></i> <a href="tel:+919636635216">+91-9636635216</a>
-                    </div>
-                    
-                </div>
-            </div>
+    <div className="container-fluid flex-between flex-wrap">
+
+        <div>
+            <i className="fas fa-phone-alt"></i>
+            <a href="tel:+919636635216"> +91-9636635216</a>
+        </div>
+
+        <div className="email-section">
+            <i className="fas fa-envelope"></i>
+            <a href="mailto:drshailendar@mauryaerf.com">
+                drshailendar@mauryaerf.com
+            </a>
+        </div>
+
+    </div>
+</div>
 
             <header className="main-header" id="main-header-nav">
                 <div className="container-fluid navbar">

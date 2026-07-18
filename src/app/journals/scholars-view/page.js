@@ -3,13 +3,22 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
 
-const getEmbeddableDriveUrl = (url) => {
+const getDirectDriveUrl = (url) => {
     if (!url) return '';
-    if (url.startsWith('data:')) return url;
     const regExp = /(?:id=|\/d\/|d=)([a-zA-Z0-9_-]{25,})/;
     const match = url.match(regExp);
     if (match && match[1]) {
-        return `https://drive.google.com/file/d/${match[1]}/view?usp=drivesdk`;
+        return `https://drive.google.com/file/d/${match[1]}/view`;
+    }
+    return url;
+};
+
+const getDownloadDriveUrl = (url) => {
+    if (!url) return '';
+    const regExp = /(?:id=|\/d\/|d=)([a-zA-Z0-9_-]{25,})/;
+    const match = url.match(regExp);
+    if (match && match[1]) {
+        return `https://drive.google.com/uc?export=download&id=${match[1]}`;
     }
     return url;
 };
@@ -273,7 +282,7 @@ export default function ScholarsRealView() {
                                                 <td style={{ padding: '12px 15px' }}>{item.volume}</td>
                                                 <td style={{ padding: '12px 15px' }}>
                                                     {item.pdfUrl ? (
-                                                        <a href={item.pdfUrl} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent-dark)', fontWeight: 'bold', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                                                        <a href={getDirectDriveUrl(item.pdfUrl)} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent-dark)', fontWeight: 'bold', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
                                                             <i className="far fa-file-pdf"></i> {item.issue}
                                                         </a>
                                                     ) : (
