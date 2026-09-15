@@ -79,7 +79,7 @@ export const metadata = {
     siteName: "Maurya Education and Research Foundation",
     images: [
       {
-        url: "/assets/logo.png",
+        url: "/assets/logo.jpeg",
         width: 800,
         height: 800,
         alt: "MERF Logo",
@@ -92,8 +92,38 @@ export const metadata = {
     card: "summary",
     title: "Maurya Education and Research Foundation (MERF)",
     description: "Maurya Education and Research Foundation (MERF) is a Section 8 NGO in Jaipur, Rajasthan, dedicated to academic research, journal publication, book distribution, and community welfare.",
-    images: ["/assets/logo.png"],
+    images: ["/assets/logo.jpeg"],
   },
+};
+
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "EducationalOrganization",
+  name: "Maurya Education and Research Foundation",
+  alternateName: ["MERF", "MERF India", "Rajasthan Institute of Social Science Research", "RISSR"],
+  url: "https://www.mauryaerf.com",
+  logo: "https://www.mauryaerf.com/assets/logo.jpeg",
+  founder: {
+    "@type": "Person",
+    name: "Dr. Shailendar Maurya",
+    jobTitle: "Founder & Chief Editor",
+    telephone: "+91-9636635216"
+  },
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Jaipur",
+    addressRegion: "Rajasthan",
+    addressCountry: "IN"
+  },
+  contactPoint: {
+    "@type": "ContactPoint",
+    telephone: "+91-9636635216",
+    contactType: "Editorial Office & Inquiry",
+    email: "drshailendar@mauryaerf.com",
+    areaServed: "IN",
+    availableLanguage: ["English", "Hindi"]
+  },
+  description: "Maurya Education and Research Foundation (MERF) is a NITI Aayog recognized NGO in Jaipur, Rajasthan, dedicated to academic research, journal publication, book distribution, and community welfare."
 };
 
 export default function RootLayout({ children }) {
@@ -103,6 +133,10 @@ export default function RootLayout({ children }) {
         {/* FontAwesome for Icons */}
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
         <link rel="icon" href="/favicon.png" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
       </head>
       <body className={`${outfitFont.variable} ${playfairFont.variable}`}>
         {/* Google Analytics (gtag.js) */}

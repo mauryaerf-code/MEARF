@@ -1,59 +1,77 @@
 export default function sitemap() {
   const baseUrl = "https://www.mauryaerf.com";
-  const currentDate = new Date();
+  const lastModDate = new Date();
 
   return [
     {
       url: `${baseUrl}/`,
-      lastModified: currentDate,
-      changeFrequency: "daily",
+      lastModified: lastModDate,
+      changeFrequency: "weekly",
       priority: 1.0,
     },
     {
-      url: `${baseUrl}/about`,
-      lastModified: currentDate,
-      changeFrequency: "monthly",
-      priority: 0.8,
+      url: `${baseUrl}/journals`,
+      lastModified: lastModDate,
+      changeFrequency: "weekly",
+      priority: 0.95,
     },
     {
-      url: `${baseUrl}/publications`,
-      lastModified: currentDate,
+      url: `${baseUrl}/journals/online`,
+      lastModified: lastModDate,
       changeFrequency: "weekly",
-      priority: 0.8,
+      priority: 0.9,
     },
     {
       url: `${baseUrl}/journals/shodh-unnayan`,
-      lastModified: currentDate,
+      lastModified: lastModDate,
       changeFrequency: "weekly",
       priority: 0.9,
     },
     {
       url: `${baseUrl}/journals/scholars-view`,
-      lastModified: currentDate,
+      lastModified: lastModDate,
       changeFrequency: "weekly",
       priority: 0.9,
     },
     {
       url: `${baseUrl}/journals/vanijyam`,
-      lastModified: currentDate,
+      lastModified: lastModDate,
       changeFrequency: "weekly",
       priority: 0.9,
     },
     {
-      url: `${baseUrl}/journals/online`,
-      lastModified: currentDate,
+      url: `${baseUrl}/publications`,
+      lastModified: lastModDate,
       changeFrequency: "weekly",
-      priority: 0.9,
+      priority: 0.85,
     },
     {
       url: `${baseUrl}/events`,
-      lastModified: currentDate,
+      lastModified: lastModDate,
       changeFrequency: "weekly",
+      priority: 0.85,
+    },
+    {
+      url: `${baseUrl}/about`,
+      lastModified: lastModDate,
+      changeFrequency: "monthly",
       priority: 0.8,
     },
     {
+      url: `${baseUrl}/social-welfare`,
+      lastModified: lastModDate,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/gallery`,
+      lastModified: lastModDate,
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
+    {
       url: `${baseUrl}/contact`,
-      lastModified: currentDate,
+      lastModified: lastModDate,
       changeFrequency: "monthly",
       priority: 0.7,
     },

@@ -79,9 +79,18 @@ export default function Header() {
                             </li>
                             <li className="nav-item-dropdown">
                                 <Link href="/journals" className={`nav-link ${isActive('/journals')}`} onClick={handleLinkClick}>
-                                    Research (RISSR) <i className="fas fa-chevron-down" style={{ fontSize: '0.75rem' }}></i>
+                                    Research Journals <i className="fas fa-chevron-down" style={{ fontSize: '0.75rem' }}></i>
                                 </Link>
                                 <ul className="dropdown-menu">
+                                    <li>
+                                        <Link href="/journals/online" className="dropdown-link-with-img" onClick={handleLinkClick}>
+                                            <img src="/assets/home/online.png" alt="Reforming Research Journal Cover" style={{ objectFit: 'cover' }} />
+                                            <div className="dropdown-link-text">
+                                                <span className="dropdown-link-title">Reforming Research</span>
+                                                <span className="dropdown-link-subtitle">Online Multi-Language (Quarterly)</span>
+                                            </div>
+                                        </Link>
+                                    </li>
                                     <li>
                                         <Link href="/journals/shodh-unnayan" className="dropdown-link-with-img" onClick={handleLinkClick}>
                                             <img src="/assets/home/Shodh Unnayan.png" alt="Shodh Unnayan Journal Cover" />
@@ -109,20 +118,11 @@ export default function Header() {
                                             </div>
                                         </Link>
                                     </li>
-                                    <li>
-                                        <Link href="/journals/online" className="dropdown-link-with-img" onClick={handleLinkClick}>
-                                            <img src="/assets/home/online.png" alt="Online Journal Cover" style={{ objectFit: 'cover' }} />
-                                            <div className="dropdown-link-text">
-                                                <span className="dropdown-link-title">Online Journal</span>
-                                                <span className="dropdown-link-subtitle">Multi-Language (Quarterly)</span>
-                                            </div>
-                                        </Link>
-                                    </li>
                                 </ul>
                             </li>
                             <li>
                                 <Link href="/publications" className={`nav-link ${isActive('/publications')}`} onClick={handleLinkClick}>
-                                    Publications
+                                    Books Publications
                                 </Link>
                             </li>
                             <li>
