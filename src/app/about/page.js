@@ -105,10 +105,10 @@ export default function About() {
                                 "Welcome to the Maurya Education and Research Foundation. Our foundation is built on the principles of empowering scholars, supporting quality publication activities, and addressing community development at the grassroots level. We believe that integrating global intellectual ideas is the pathway to building a modern, sustainable nation."
                             </p>
                             <p>
-                                As the Chief Editor of our peer-reviewed journals, <em>Shodh Unnayan</em> and <em>The Scholar's Real View</em>, I invite researchers, academicians, and graduate students from all fields to contribute their original research works. We are also committed to assisting budding authors through <em>Maurya Publications & Distributors</em> to publish books and monographs with ISBN registration.
+                                As the Founder and Chief Editor across our peer-reviewed journals managed by RISSR—<em>Reforming Research</em>, <em>Shodh Unnayan</em>, <em>The Scholar's Real View</em>, and <em>Vanijyam</em>—I invite researchers, academicians, and graduate students from all fields to contribute their original research works. We are also committed to assisting authors through <em>Maurya Publications & Distributors</em> (<Link href="/books-publications" style={{ color: 'var(--primary)', textDecoration: 'underline' }}>Book Publishing</Link>) to publish books and monographs with ISBN registration.
                             </p>
                             <p>
-                                Through our social wing, <em>Swami Vivekanand Balika Shiksha Prachar Samiti (SVBSPS)</em>, we translate our core value systems into practical community impact—ensuring that education, women's empowerment, health, and environmental sustainability go hand-in-hand.
+                                Through our social wing, <em><Link href="/social-welfare" style={{ color: 'var(--primary)', textDecoration: 'underline' }}>Swami Vivekanand Balika Shiksha Prachar Samiti (SVBSPS)</Link></em>, we translate our core value systems into practical community impact—ensuring that education, women's empowerment, health, and environmental sustainability go hand-in-hand.
                             </p>
                         </div>
                     </div>
@@ -237,7 +237,7 @@ export default function About() {
                             <div className="card" style={{ padding: '25px', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-lg)' }}>
                                 <div className="card-icon"><i className="fas fa-user-edit"></i></div>
                                 <h3 style={{ fontSize: '1.15rem', marginBottom: '10px' }}>Editorial Board</h3>
-                                <p style={{ fontSize: '0.85rem', marginBottom: 0 }}>Eminent subject-matter editors managing reviews and quality curation for Shodh Unnayan & The Scholar's Real View.</p>
+                                <p style={{ fontSize: '0.85rem', marginBottom: 0 }}>Eminent subject-matter editors managing peer reviews and quality curation for our 4 journals: Reforming Research, Shodh Unnayan, The Scholar's Real View, and Vanijyam.</p>
                             </div>
 
                             <div className="card" style={{ padding: '25px', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-lg)' }}>

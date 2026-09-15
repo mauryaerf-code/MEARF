@@ -30,6 +30,25 @@ const nextConfig = {
     removeConsole: process.env.NODE_ENV === 'production' ? { exclude: ['error'] } : false,
   },
   allowedDevOrigins: getLocalIPs(),
+  async redirects() {
+    return [
+      {
+        source: '/journals/online',
+        destination: '/journals/reforming-research',
+        permanent: true,
+      },
+      {
+        source: '/journals/scholars-view',
+        destination: '/journals/scholars-real-view',
+        permanent: true,
+      },
+      {
+        source: '/publications',
+        destination: '/books-publications',
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [
       {

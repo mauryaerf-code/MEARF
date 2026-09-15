@@ -19,12 +19,12 @@ export const metadata = {
     "quarterly online journal submission"
   ],
   alternates: {
-    canonical: "/journals/online",
+    canonical: "/journals/reforming-research",
   },
   openGraph: {
     title: "Reforming Research | International Peer-Reviewed Online Journal",
     description: "An international peer-reviewed refered interdisciplinary quarterly online journal in multi-language published by MERF.",
-    url: "https://www.mauryaerf.com/journals/online",
+    url: "https://www.mauryaerf.com/journals/reforming-research",
     siteName: "Maurya Education and Research Foundation",
     images: [{ url: "/assets/home/online.png", width: 600, height: 800, alt: "Reforming Research Journal" }],
     locale: "en_US",
@@ -43,7 +43,7 @@ const reformingResearchSchema = {
   "@type": "Periodical",
   name: "Reforming Research",
   alternateName: "Reforming Research Online Journal",
-  url: "https://www.mauryaerf.com/journals/online",
+  url: "https://www.mauryaerf.com/journals/reforming-research",
   description: "An International Peer Reviewed Refered Interdisciplinary Quarterly online Journal in Multi-Language.",
   inLanguage: ["en", "hi"],
   publisher: {

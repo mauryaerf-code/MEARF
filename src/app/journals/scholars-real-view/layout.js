@@ -16,12 +16,12 @@ export const metadata = {
     "international research journal India"
   ],
   alternates: {
-    canonical: "/journals/scholars-view",
+    canonical: "/journals/scholars-real-view",
   },
   openGraph: {
     title: "The Scholar's Real View | Peer-Reviewed English Research Journal",
     description: "Half-yearly multidisciplinary English research journal under RISSR (MERF). ISSN: 3049-3609.",
-    url: "https://www.mauryaerf.com/journals/scholars-view",
+    url: "https://www.mauryaerf.com/journals/scholars-real-view",
     siteName: "Maurya Education and Research Foundation",
     images: [{ url: "/assets/home/Scholar.png", width: 600, height: 800, alt: "The Scholar's Real View Cover" }],
     locale: "en_US",
@@ -41,7 +41,7 @@ const scholarsSchema = {
   name: "The Scholar's Real View",
   issn: "3049-3609",
   inLanguage: "en",
-  url: "https://www.mauryaerf.com/journals/scholars-view",
+  url: "https://www.mauryaerf.com/journals/scholars-real-view",
   description: "Peer-reviewed refereed multidisciplinary half-yearly international journal in the English language.",
   publisher: {
     "@type": "Organization",

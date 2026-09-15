@@ -8,7 +8,7 @@ export default function Home() {
 
     useEffect(() => {
         // Animate counters
-        const targets = { journals: 2, year: 2022, conferences: 50, programs: 6 };
+        const targets = { journals: 4, year: 2022, conferences: 50, programs: 6 };
         const duration = 1000; // 1 second
         const steps = 30;
         const stepTime = duration / steps;
@@ -121,7 +121,7 @@ export default function Home() {
                         <div className="card" id="wing-card-rissr">
                             <div className="card-icon"><i className="fas fa-graduation-cap"></i></div>
                             <h3 className="card-title">Research & Journals (RISSR)</h3>
-                            <p>Managed under the Rajasthan Institute of Social Science Research. Recognized by NITI Aayog, Government of India. Publishes two peer-reviewed academic journals with ISSN registration.</p>
+                            <p>Managed under the Rajasthan Institute of Social Science Research. Recognized by NITI Aayog, Government of India. Publishes four peer-reviewed academic journals with dedicated peer-review and editorial infrastructure.</p>
                             <Link href="/journals" className="btn btn-outline btn-sm" style={{ marginTop: '15px' }}>
                                 Explore Journals
                             </Link>
@@ -131,7 +131,7 @@ export default function Home() {
                             <div className="card-icon"><i className="fas fa-book"></i></div>
                             <h3 className="card-title">Maurya Publications</h3>
                             <p>Established in 2022. Serving as an ideal platform for authors to get books and monographs published with ISBN registration. Publishing services in English and Hindi.</p>
-                            <Link href="/publications" className="btn btn-outline btn-sm" style={{ marginTop: '15px' }}>
+                            <Link href="/books-publications" className="btn btn-outline btn-sm" style={{ marginTop: '15px' }}>
                                 Book Publishing
                             </Link>
                         </div>
@@ -152,10 +152,42 @@ export default function Home() {
                 <div className="container">
                     <div className="section-header">
                         <h2>Peer-Reviewed ISSN Journals</h2>
-                        <p>Read research papers and submit original, unpublished manuscripts to our recognized multidisciplinary journals.</p>
+                        <p>Read research papers and submit original, unpublished manuscripts to our recognized multidisciplinary journals under the RISSR research wing.</p>
                     </div>
 
-                    <div className="grid grid-2">
+                    <div className="grid grid-2" style={{ gap: '30px' }}>
+                        {/* Journal 1: Reforming Research */}
+                        <div className="card" id="journal-reforming-research-card" style={{ padding: '30px' }}>
+                            <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap', alignItems: 'flex-start' }}>
+                                <div style={{ flex: '0 0 120px', maxWidth: '120px' }}>
+                                    <img src="/assets/home/online.png" alt="Reforming Research Journal Cover" style={{ width: '100%', height: 'auto', borderRadius: 'var(--radius-sm)', boxShadow: 'var(--shadow-sm)', objectFit: 'cover' }} />
+                                </div>
+                                <div style={{ flex: '1', minWidth: '200px' }}>
+                                    <span className="badge badge-accent" style={{ marginBottom: '10px' }}>Online Multi-Language Quarterly</span>
+                                    <h3 className="card-title" style={{ marginTop: '5px' }}>Reforming Research</h3>
+                                    <p style={{ fontSize: '0.9rem', marginBottom: '15px' }}>International peer-reviewed refered interdisciplinary quarterly online journal in multi-language covering social sciences, humanities, commerce, law, and technology.</p>
+                                    
+                                    <div className="journal-meta" style={{ marginBottom: '20px' }}>
+                                        <div className="meta-row">
+                                            <span className="meta-label">ISSN:</span>
+                                            <span className="meta-value">To Be Allotted</span>
+                                        </div>
+                                        <div className="meta-row">
+                                            <span className="meta-label">Chief Editor:</span>
+                                            <span className="meta-value">Dr. Shailendar Maurya</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div style={{ display: 'flex', gap: '10px' }}>
+                                        <Link href="/journals/reforming-research" className="btn btn-primary btn-sm">
+                                            Author Guidelines & Submission
+                                        </Link>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Journal 2: Shodh Unnayan */}
                         <div className="card" id="journal-shodh-unnayan-card" style={{ padding: '30px' }}>
                             <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap', alignItems: 'flex-start' }}>
                                 <div style={{ flex: '0 0 120px', maxWidth: '120px' }}>
@@ -163,7 +195,7 @@ export default function Home() {
                                 </div>
                                 <div style={{ flex: '1', minWidth: '200px' }}>
                                     <span className="badge badge-accent" style={{ marginBottom: '10px' }}>Hindi Quarterly</span>
-                                    <h3 className="card-title" style={{ marginTop: '5px' }}>Shodh Unnayan</h3>
+                                    <h3 className="card-title" style={{ marginTop: '5px' }}>शोध उन्नयन (Shodh Unnayan)</h3>
                                     <p style={{ fontSize: '0.9rem', marginBottom: '15px' }}>Peer-reviewed refereed multidisciplinary quarterly international journal published in the Hindi language, showcasing original research papers.</p>
                                     
                                     <div className="journal-meta" style={{ marginBottom: '20px' }}>
@@ -179,13 +211,14 @@ export default function Home() {
                                     
                                     <div style={{ display: 'flex', gap: '10px' }}>
                                         <Link href="/journals/shodh-unnayan" className="btn btn-primary btn-sm">
-                                            Author Guidelines
+                                            Author Guidelines & Submission
                                         </Link>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
+                        {/* Journal 3: The Scholar's Real View */}
                         <div className="card" id="journal-scholars-view-card" style={{ padding: '30px' }}>
                             <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap', alignItems: 'flex-start' }}>
                                 <div style={{ flex: '0 0 120px', maxWidth: '120px' }}>
@@ -208,8 +241,39 @@ export default function Home() {
                                     </div>
                                     
                                     <div style={{ display: 'flex', gap: '10px' }}>
-                                        <Link href="/journals/scholars-view" className="btn btn-primary btn-sm">
-                                            Author Guidelines
+                                        <Link href="/journals/scholars-real-view" className="btn btn-primary btn-sm">
+                                            Author Guidelines & Submission
+                                        </Link>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Journal 4: Vanijyam */}
+                        <div className="card" id="journal-vanijyam-card" style={{ padding: '30px' }}>
+                            <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap', alignItems: 'flex-start' }}>
+                                <div style={{ flex: '0 0 120px', maxWidth: '120px' }}>
+                                    <img src="/assets/home/vanijyam.png" alt="Vanijyam Journal Cover" style={{ width: '100%', height: 'auto', borderRadius: 'var(--radius-sm)', boxShadow: 'var(--shadow-sm)', objectFit: 'cover' }} />
+                                </div>
+                                <div style={{ flex: '1', minWidth: '200px' }}>
+                                    <span className="badge badge-primary" style={{ marginBottom: '10px' }}>Multi-Language Annually</span>
+                                    <h3 className="card-title" style={{ marginTop: '5px' }}>Vanijyam (VIJCMBS)</h3>
+                                    <p style={{ fontSize: '0.9rem', marginBottom: '15px' }}>International peer-reviewed refered interdisciplinary yearly journal in commerce, management, economics, banking, finance, and business studies.</p>
+                                    
+                                    <div className="journal-meta" style={{ marginBottom: '20px' }}>
+                                        <div className="meta-row">
+                                            <span className="meta-label">ISSN:</span>
+                                            <span className="meta-value">Applied</span>
+                                        </div>
+                                        <div className="meta-row">
+                                            <span className="meta-label">Chief Editor:</span>
+                                            <span className="meta-value">Dr. Vinod Kumar Meena</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div style={{ display: 'flex', gap: '10px' }}>
+                                        <Link href="/journals/vanijyam" className="btn btn-primary btn-sm">
+                                            Author Guidelines & Submission
                                         </Link>
                                     </div>
                                 </div>

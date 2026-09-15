@@ -69,7 +69,7 @@ export default function JournalsLanding() {
                     <div className="card" style={{ padding: '30px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
                         <h2 style={{ fontSize: '1.6rem', color: 'var(--primary-dark)', marginBottom: '15px' }}>About RISSR</h2>
                         <p style={{ fontSize: '1.02rem', fontFamily: '"Outfit", "Inter", sans-serif', lineHeight: '1.8', color: 'var(--text-dark)', textAlign: 'justify', margin: 0 }}>
-                            Rajasthan Institute of Social Science Research (RISSR) is an organization working for the promotion of research in multidisciplinary fields through the publication of journals and conducting webinars, national and international conferences. It is providing a leading forum for sharing original research contributions and practical developments in the field Social Science, Humanity, Science, Technology and Management to contribute to academic advancements. It's a non-government organization recognized by NITI Aayog, Govt. of India. There are four Journals published by RISSR:
+                            <strong>Rajasthan Institute of Social Science Research (RISSR)</strong> is the academic research wing of Maurya Education and Research Foundation (MERF), recognized by NITI Aayog, Government of India. RISSR operates the unified peer-review infrastructure, editorial guidelines, and academic dissemination for four independent international journals: <em>Reforming Research (Online Journal)</em>, <em>शोध उन्नयन (Shodh Unnayan)</em>, <em>The Scholar's Real View</em>, and <em>Vanijyam (VIJCMBS)</em>. It provides a leading forum for sharing original, critical, and solution-oriented research contributions across Social Sciences, Humanities, Law, Education, Commerce, Management, Technology, and Allied disciplines.
                         </p>
                     </div>
                 </div>
@@ -98,7 +98,7 @@ export default function JournalsLanding() {
                                 </div>
                             </div>
                             <div style={{ marginTop: '30px' }}>
-                                <Link href="/journals/online" className="btn btn-accent btn-sm" style={{ width: '100%', textAlign: 'center' }}>
+                                <Link href="/journals/reforming-research" className="btn btn-accent btn-sm" style={{ width: '100%', textAlign: 'center' }}>
                                     Guidelines & Submissions
                                 </Link>
                             </div>
@@ -140,7 +140,7 @@ export default function JournalsLanding() {
                                 </div>
                             </div>
                             <div style={{ marginTop: '30px' }}>
-                                <Link href="/journals/scholars-view" className="btn btn-primary btn-sm" style={{ width: '100%', textAlign: 'center' }}>
+                                <Link href="/journals/scholars-real-view" className="btn btn-primary btn-sm" style={{ width: '100%', textAlign: 'center' }}>
                                     Guidelines & Submissions
                                 </Link>
                             </div>
@@ -165,6 +165,98 @@ export default function JournalsLanding() {
                                     Guidelines & Submissions
                                 </Link>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Dedicated Manuscript Submission Portal Section */}
+            <section className="section" id="manuscript-submission" style={{ backgroundColor: 'var(--bg-white)', borderTop: '1px solid var(--border-color)' }}>
+                <div className="container">
+                    <div className="section-header">
+                        <h2>Manuscript Submission Portal</h2>
+                        <p>All four journals operate under RISSR's rigorous, double-blind peer-review system. Submit your original research manuscript directly to the respective journal's editorial office.</p>
+                    </div>
+
+                    <div className="grid grid-4" style={{ gap: '20px' }}>
+                        {/* 1. Reforming Research */}
+                        <div className="card" style={{ padding: '25px', border: '1px solid var(--border-color)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                            <div>
+                                <h4 style={{ color: 'var(--primary-dark)', fontSize: '1.15rem', marginBottom: '8px' }}>1. Reforming Research</h4>
+                                <span className="badge badge-accent" style={{ marginBottom: '12px' }}>Online Quarterly</span>
+                                <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', lineHeight: '1.6', marginBottom: '15px' }}>
+                                    Multi-language interdisciplinary online journal. Scope: Social Sciences, Humanities, Law, Education, Commerce, Tech.
+                                </p>
+                                <p style={{ fontSize: '0.82rem', marginBottom: '5px' }}>
+                                    <strong>Submission Email:</strong><br />
+                                    <a href="mailto:drshailendar@mauryaerf.com?subject=Manuscript Submission - Reforming Research" style={{ color: 'var(--primary)', wordBreak: 'break-all' }}>
+                                        drshailendar@mauryaerf.com
+                                    </a>
+                                </p>
+                            </div>
+                            <Link href="/journals/reforming-research" className="btn btn-outline btn-sm" style={{ marginTop: '20px', width: '100%', textAlign: 'center' }}>
+                                View Guidelines
+                            </Link>
+                        </div>
+
+                        {/* 2. Shodh Unnayan */}
+                        <div className="card" style={{ padding: '25px', border: '1px solid var(--border-color)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                            <div>
+                                <h4 style={{ color: 'var(--primary-dark)', fontSize: '1.15rem', marginBottom: '8px' }}>2. शोध उन्नयन</h4>
+                                <span className="badge badge-accent" style={{ marginBottom: '12px' }}>Hindi Quarterly</span>
+                                <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', lineHeight: '1.6', marginBottom: '15px' }}>
+                                    Hindi multidisciplinary peer-reviewed quarterly journal. Format: Kruti Dev 010 / DevLys 010, font size 14.
+                                </p>
+                                <p style={{ fontSize: '0.82rem', marginBottom: '5px' }}>
+                                    <strong>Submission Email:</strong><br />
+                                    <a href="mailto:drshailendar@mauryaerf.com?subject=Manuscript Submission - Shodh Unnayan" style={{ color: 'var(--primary)', wordBreak: 'break-all' }}>
+                                        drshailendar@mauryaerf.com
+                                    </a>
+                                </p>
+                            </div>
+                            <Link href="/journals/shodh-unnayan" className="btn btn-outline btn-sm" style={{ marginTop: '20px', width: '100%', textAlign: 'center' }}>
+                                View Guidelines
+                            </Link>
+                        </div>
+
+                        {/* 3. The Scholar's Real View */}
+                        <div className="card" style={{ padding: '25px', border: '1px solid var(--border-color)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                            <div>
+                                <h4 style={{ color: 'var(--primary-dark)', fontSize: '1.15rem', marginBottom: '8px' }}>3. The Scholar's Real View</h4>
+                                <span className="badge badge-primary" style={{ marginBottom: '12px' }}>English Half-Yearly</span>
+                                <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', lineHeight: '1.6', marginBottom: '15px' }}>
+                                    English multidisciplinary refereed journal. Format: Times New Roman, APA / MLA referencing.
+                                </p>
+                                <p style={{ fontSize: '0.82rem', marginBottom: '5px' }}>
+                                    <strong>Submission Email:</strong><br />
+                                    <a href="mailto:editorthescholarview@gmail.com?subject=Manuscript Submission - The Scholar's Real View" style={{ color: 'var(--primary)', wordBreak: 'break-all' }}>
+                                        editorthescholarview@gmail.com
+                                    </a>
+                                </p>
+                            </div>
+                            <Link href="/journals/scholars-real-view" className="btn btn-outline btn-sm" style={{ marginTop: '20px', width: '100%', textAlign: 'center' }}>
+                                View Guidelines
+                            </Link>
+                        </div>
+
+                        {/* 4. Vanijyam */}
+                        <div className="card" style={{ padding: '25px', border: '1px solid var(--border-color)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                            <div>
+                                <h4 style={{ color: 'var(--primary-dark)', fontSize: '1.15rem', marginBottom: '8px' }}>4. Vanijyam (VIJCMBS)</h4>
+                                <span className="badge badge-primary" style={{ marginBottom: '12px' }}>Multi-Language Annually</span>
+                                <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', lineHeight: '1.6', marginBottom: '15px' }}>
+                                    Commerce, management, business studies, economics, finance & banking journal.
+                                </p>
+                                <p style={{ fontSize: '0.82rem', marginBottom: '5px' }}>
+                                    <strong>Submission Email:</strong><br />
+                                    <a href="mailto:editorvanijam@gmail.com?subject=Manuscript Submission - Vanijyam" style={{ color: 'var(--primary)', wordBreak: 'break-all' }}>
+                                        editorvanijam@gmail.com
+                                    </a>
+                                </p>
+                            </div>
+                            <Link href="/journals/vanijyam" className="btn btn-outline btn-sm" style={{ marginTop: '20px', width: '100%', textAlign: 'center' }}>
+                                View Guidelines
+                            </Link>
                         </div>
                     </div>
                 </div>

@@ -16,12 +16,12 @@ export const metadata = {
     "low cost ISBN publication India"
   ],
   alternates: {
-    canonical: "/publications",
+    canonical: "/books-publications",
   },
   openGraph: {
     title: "Publications & ISBN Book Publishing | Maurya Publications",
     description: "Get your academic book or monograph published with registered ISBN through Maurya Publications & Distributors.",
-    url: "https://www.mauryaerf.com/publications",
+    url: "https://www.mauryaerf.com/books-publications",
     siteName: "Maurya Education and Research Foundation",
     images: [{ url: "/assets/logo.jpeg", width: 800, height: 800, alt: "Maurya Publications" }],
     locale: "en_US",
@@ -39,7 +39,7 @@ const publicationsSchema = {
   "@context": "https://schema.org",
   "@type": "CollectionPage",
   name: "Maurya Publications & Distributors - ISBN Book Publishing",
-  url: "https://www.mauryaerf.com/publications",
+  url: "https://www.mauryaerf.com/books-publications",
   description: "Catalogue of published academic books, monographs, and ISBN book publishing guidelines.",
   publisher: {
     "@type": "Organization",

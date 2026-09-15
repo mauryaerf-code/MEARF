@@ -24,7 +24,11 @@ export default function Header() {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    const isActive = (path) => pathname === path ? 'active' : '';
+    const isActive = (path) => {
+        if (!pathname) return '';
+        if (path === '/') return pathname === '/' ? 'active' : '';
+        return pathname.startsWith(path) ? 'active' : '';
+    };
 
     return (
         <>
@@ -83,7 +87,7 @@ export default function Header() {
                                 </Link>
                                 <ul className="dropdown-menu">
                                     <li>
-                                        <Link href="/journals/online" className="dropdown-link-with-img" onClick={handleLinkClick}>
+                                        <Link href="/journals/reforming-research" className="dropdown-link-with-img" onClick={handleLinkClick}>
                                             <img src="/assets/home/online.png" alt="Reforming Research Journal Cover" style={{ objectFit: 'cover' }} />
                                             <div className="dropdown-link-text">
                                                 <span className="dropdown-link-title">Reforming Research</span>
@@ -101,7 +105,7 @@ export default function Header() {
                                         </Link>
                                     </li>
                                     <li>
-                                        <Link href="/journals/scholars-view" className="dropdown-link-with-img" onClick={handleLinkClick}>
+                                        <Link href="/journals/scholars-real-view" className="dropdown-link-with-img" onClick={handleLinkClick}>
                                             <img src="/assets/home/Scholar.png" alt="The Scholar's Real View Cover" />
                                             <div className="dropdown-link-text">
                                                 <span className="dropdown-link-title">The Scholar's Real View</span>
@@ -121,7 +125,7 @@ export default function Header() {
                                 </ul>
                             </li>
                             <li>
-                                <Link href="/publications" className={`nav-link ${isActive('/publications')}`} onClick={handleLinkClick}>
+                                <Link href="/books-publications" className={`nav-link ${isActive('/books-publications')}`} onClick={handleLinkClick}>
                                     Books Publications
                                 </Link>
                             </li>

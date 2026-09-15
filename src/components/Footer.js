@@ -22,8 +22,8 @@ export default function Footer() {
                     <ul className="footer-links">
                         <li><Link href="/about">About the Founder</Link></li>
                         <li><Link href="/about#advisory-board">Governing Advisory Board</Link></li>
-                        <li><Link href="/journals">Submit a Research Paper</Link></li>
-                        <li><Link href="/publications">Book Guidelines</Link></li>
+                        <li><Link href="/journals#manuscript-submission">Submit a Research Paper</Link></li>
+                        <li><Link href="/books-publications#guidelines">Book Guidelines</Link></li>
                         <li><Link href="/social-welfare">SVBSPS Social Wing</Link></li>
                         <li><Link href="/gallery">News & Gallery</Link></li>
                     </ul>

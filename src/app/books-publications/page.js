@@ -142,19 +142,24 @@ export default function Publications() {
                                 Manuscripts received would be thoroughly assessed for their viability across the globe. We intend to inform the authors ASAP on the acceptance or rejection of their works. Moreover, <strong>ISBN</strong> is allotted to all our publications. Our books are at the forefront of knowledge and often break new ground in research. As an independent publisher, we are more willing to take risks by publishing in emerging disciplines.
                             </p>
                             
-                            <div style={{ marginTop: '30px' }}>
-                                <button 
-                                    onClick={() => router.push('/journals')} 
+                            <div style={{ marginTop: '30px', display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
+                                <a 
+                                    href="mailto:drshailendar@mauryaerf.com?subject=Book Proposal Submission - Maurya Publications" 
                                     className="btn btn-primary" 
                                     id="email-ms-btn"
-                                    style={{ border: 'none' }}
                                 >
                                     Submit Book Proposal
-                                </button>
+                                </a>
+                                <a 
+                                    href="#guidelines" 
+                                    className="btn btn-outline"
+                                >
+                                    View Formatting Guidelines
+                                </a>
                             </div>
                         </div>
                         <div>
-                            <div className="card card-accent" style={{ padding: '35px', backgroundColor: 'var(--bg-white)' }}>
+                            <div className="card card-accent" id="guidelines" style={{ padding: '35px', backgroundColor: 'var(--bg-white)' }}>
                                 <h3 style={{ fontSize: '1.35rem', marginBottom: '20px', color: 'var(--primary-dark)', borderBottom: '2px solid var(--accent)', paddingBottom: '10px' }}>Format & Style Guidelines</h3>
                                 <p style={{ fontSize: '0.95rem', marginBottom: '20px' }}>All books and monographs must follow these styles prior to final draft review:</p>
                                 

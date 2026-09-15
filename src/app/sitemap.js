@@ -16,7 +16,7 @@ export default function sitemap() {
       priority: 0.95,
     },
     {
-      url: `${baseUrl}/journals/online`,
+      url: `${baseUrl}/journals/reforming-research`,
       lastModified: lastModDate,
       changeFrequency: "weekly",
       priority: 0.9,
@@ -28,7 +28,7 @@ export default function sitemap() {
       priority: 0.9,
     },
     {
-      url: `${baseUrl}/journals/scholars-view`,
+      url: `${baseUrl}/journals/scholars-real-view`,
       lastModified: lastModDate,
       changeFrequency: "weekly",
       priority: 0.9,
@@ -40,7 +40,7 @@ export default function sitemap() {
       priority: 0.9,
     },
     {
-      url: `${baseUrl}/publications`,
+      url: `${baseUrl}/books-publications`,
       lastModified: lastModDate,
       changeFrequency: "weekly",
       priority: 0.85,
