@@ -33,9 +33,13 @@ export const metadata = {
     apple: "/favicon.png",
   },
   keywords: [
+    "Maurya Education and Research Foundation (MERF)",
     "Maurya Education and Research Foundation",
+    "Academic Excellence & Social Innovation",
     "MERF",
     "MERF India",
+    "Research Journals (Published by RISSR & MERF)",
+    "Books Publications & ISBN Book Publishing",
     "Rajasthan Institute of Social Science Research",
     "RISSR",
     "academic research India",
@@ -98,32 +102,47 @@ export const metadata = {
 
 const organizationSchema = {
   "@context": "https://schema.org",
-  "@type": "EducationalOrganization",
-  name: "Maurya Education and Research Foundation",
-  alternateName: ["MERF", "MERF India", "Rajasthan Institute of Social Science Research", "RISSR"],
-  url: "https://www.mauryaerf.com",
-  logo: "https://www.mauryaerf.com/assets/logo.jpeg",
-  founder: {
-    "@type": "Person",
-    name: "Dr. Shailendar Maurya",
-    jobTitle: "Founder & Chief Editor",
-    telephone: "+91-9636635216"
-  },
-  address: {
-    "@type": "PostalAddress",
-    addressLocality: "Jaipur",
-    addressRegion: "Rajasthan",
-    addressCountry: "IN"
-  },
-  contactPoint: {
-    "@type": "ContactPoint",
-    telephone: "+91-9636635216",
-    contactType: "Editorial Office & Inquiry",
-    email: "drshailendar@mauryaerf.com",
-    areaServed: "IN",
-    availableLanguage: ["English", "Hindi"]
-  },
-  description: "Maurya Education and Research Foundation (MERF) is a NITI Aayog recognized NGO in Jaipur, Rajasthan, dedicated to academic research, journal publication, book distribution, and community welfare."
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://www.mauryaerf.com/#website",
+      "url": "https://www.mauryaerf.com",
+      "name": "Maurya Education and Research Foundation",
+      "alternateName": ["MERF", "MERF India", "mauryaerf.com"],
+      "publisher": {
+        "@id": "https://www.mauryaerf.com/#organization"
+      }
+    },
+    {
+      "@type": "EducationalOrganization",
+      "@id": "https://www.mauryaerf.com/#organization",
+      "name": "Maurya Education and Research Foundation",
+      "alternateName": ["MERF", "MERF India", "Rajasthan Institute of Social Science Research", "RISSR"],
+      "url": "https://www.mauryaerf.com",
+      "logo": "https://www.mauryaerf.com/assets/logo.jpeg",
+      "founder": {
+        "@type": "Person",
+        "name": "Dr. Shailendar Maurya",
+        "jobTitle": "Founder & Chief Editor",
+        "telephone": "+91-9636635216"
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Jaipur",
+        "addressRegion": "Rajasthan",
+        "addressCountry": "IN"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+91-9636635216",
+        "contactType": "Editorial Office & Inquiry",
+        "email": "drshailendar@mauryaerf.com",
+        "areaServed": "IN",
+        "availableLanguage": ["English", "Hindi"]
+      },
+      "description": "Maurya Education and Research Foundation (MERF) is a NITI Aayog recognized NGO in Jaipur, Rajasthan, dedicated to academic research, journal publication, book distribution, and community welfare."
+    }
+  ]
 };
 
 export default function RootLayout({ children }) {

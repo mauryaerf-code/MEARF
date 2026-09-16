@@ -1,9 +1,12 @@
 import React from 'react';
 
 export const metadata = {
-  title: "About Us | Maurya Education and Research Foundation (MERF)",
+  title: "About Us",
   description: "Learn about Maurya Education and Research Foundation (MERF), a NITI Aayog recognized NGO in Jaipur, Rajasthan, driving academic research, journal publishing, and social innovation.",
   keywords: [
+    "About Us Maurya Education and Research Foundation",
+    "About Maurya Education and Research Foundation",
+    "About MERF",
     "Maurya Education and Research Foundation",
     "MERF Jaipur",
     "NITI Aayog registered NGO",

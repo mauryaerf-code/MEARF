@@ -1,9 +1,11 @@
 import React from 'react';
 
 export const metadata = {
-  title: "News & Gallery | Maurya Education and Research Foundation",
+  title: "News, Press & Media Gallery",
   description: "Browse photo galleries and event highlights from academic conferences, FDPs, award ceremonies, and social welfare programs organized by MERF.",
   keywords: [
+    "News, Press & Media Gallery",
+    "News & Gallery MERF",
     "MERF photo gallery",
     "academic conference photos Jaipur",
     "national seminar gallery",

@@ -4,11 +4,16 @@ export const metadata = {
   title: "The Scholar's Real View | Peer-Reviewed English Research Journal | ISSN: 3049-3609",
   description: "The Scholar's Real View is a half-yearly peer-reviewed multidisciplinary English research journal published by RISSR (MERF). Call for original research papers.",
   keywords: [
+    "The Scholar's Real View",
+    "The Scholar's Real View Peer-Reviewed English Research Journal",
     "The Scholars Real View journal",
+    "ISSN 3049-3609",
+    "Peer-Reviewed English Research Journal",
     "peer reviewed English research journal India",
     "multidisciplinary academic journal Jaipur",
-    "ISSN 3049-3609",
     "RISSR English journal",
+    "MERF English journal",
+    "Dr Shailendar Maurya Scholars Real View",
     "half-yearly research journal",
     "fast track research paper publication",
     "social science technology management journal",
@@ -41,6 +46,12 @@ const scholarsSchema = {
   name: "The Scholar's Real View",
   issn: "3049-3609",
   inLanguage: "en",
+  editor: {
+    "@type": "Person",
+    name: "Dr. Shailendar Maurya",
+    jobTitle: "Founder & Chief Editor",
+    telephone: "+91-9636635216"
+  },
   url: "https://www.mauryaerf.com/journals/scholars-real-view",
   description: "Peer-reviewed refereed multidisciplinary half-yearly international journal in the English language.",
   publisher: {

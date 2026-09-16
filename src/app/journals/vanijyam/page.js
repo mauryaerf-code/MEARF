@@ -94,7 +94,6 @@ export default function VanijyamJournal() {
     };
 
     useEffect(() => {
-        document.title = "Vanijyam (VIJCMBS) | Maurya Education and Research Foundation";
         fetchArticles(page, activeSearch);
     }, [page, activeSearch]);
 
@@ -180,11 +179,14 @@ export default function VanijyamJournal() {
 
             <section className="hero" style={{ padding: '60px 0', backgroundImage: `linear-gradient(135deg, rgba(7, 17, 36, 0.9) 0%, rgba(15, 32, 70, 0.8) 100%), url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=1200&auto=format&fit=crop')` }}>
                 <div className="container text-center">
-                    <h1 style={{ color: 'var(--text-light)', fontSize: '2.5rem', marginBottom: '10px', lineHeight: '1.3' }}>
-                        Vanijyam <br></br>International Journal of Commerce, Management and Business Studies (VIJCMBS)
+                    <h1 style={{ color: 'var(--text-light)', fontSize: '2.5rem', marginBottom: '14px', lineHeight: '1.35' }}>
+                        Vanijyam <br />
+                        <span style={{ fontSize: '0.7em', fontWeight: '500', display: 'inline-block', marginTop: '6px' }}>
+                            International Journal of Commerce, Management and Business Studies (VIJCMBS)
+                        </span>
                     </h1>
                     <p style={{ color: 'var(--accent)', fontSize: '1.1rem', letterSpacing: '0.5px', marginBottom: 0 }}>
-                        (An International Peer Reviewed Refered Interdisciplinary Yearly/Annually Journal in MultiLanguage)
+                        (An International Peer Reviewed Refered Annually Journal in Multi-Language)
                     </p>
                 </div>
             </section>
@@ -195,27 +197,33 @@ export default function VanijyamJournal() {
                     {/* Top Row: Two Cards Side-by-Side (Left: About, Right: Specifications) */}
                     <div className="grid grid-2" style={{ gap: '30px', alignItems: 'stretch', marginBottom: '40px' }}>
                         
-                        {/* Left Card: About the Journal */}
+                        {/* Left Card: About the Journal with Cover Image & Badge */}
                         <div className="card" style={{ padding: '35px', backgroundColor: 'var(--bg-white)', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-sm)', display: 'flex', flexDirection: 'column', height: '100%' }}>
-                            <h3 style={{ fontSize: '1.5rem', marginBottom: '18px', borderBottom: '2.5px solid var(--accent)', paddingBottom: '10px', color: 'var(--primary-dark)', fontWeight: '700', fontFamily: 'var(--font-heading)' }}>
-                                <i className="fas fa-book-open" style={{ marginRight: '10px', color: 'var(--accent-dark)' }}></i>
-                                About the Journal
-                            </h3>
+                            <div style={{ display: 'flex', gap: '20px', alignItems: 'center', marginBottom: '20px', flexWrap: 'wrap' }}>
+                                <div style={{ flex: '0 0 100px', maxWidth: '100px' }}>
+                                    <img src="/assets/home/vanijyam.png" alt="Vanijyam Journal Cover" style={{ width: '100%', height: 'auto', borderRadius: 'var(--radius-sm)', boxShadow: 'var(--shadow-md)' }} />
+                                </div>
+                                <div style={{ flex: '1', minWidth: '180px' }}>
+                                    <span className="badge badge-primary" style={{ marginBottom: '10px' }}>ISSN: Applied</span>
+                                    <h2 style={{ fontSize: '1.8rem', marginBottom: '0', fontFamily: 'var(--font-heading)' }}>Vanijyam (VIJCMBS)</h2>
+                                </div>
+                            </div>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', flex: 1 }}>
                                 <p style={{ fontSize: '0.98rem', lineHeight: '1.8', color: 'var(--text-dark)', textAlign: 'justify', margin: 0 }}>
-                                    <strong>Vanijyam International Journal of Commerce, Management and Business Studies (VIJCMBS)</strong> is committed to publishing high-quality, original research that advances knowledge in Commerce, Management, Economics, Business Studies, Accounting, Finance, Banking, Human Resource Management, Tourism, Marketing, Entrepreneurship and related disciplines.
+                                    <strong>Vanijyam <br>
+                                    </br>International Journal of Commerce, Management and Business Studies (VIJCMBS)</strong> is an annual peer-reviewed multi-language journal published under RISSR (MERF) committed to advancing high-quality research in Commerce, Management, Economics, Business Studies, Accounting, Finance, Banking, Tourism, and Entrepreneurship.
                                 </p>
                                 <p style={{ fontSize: '0.98rem', lineHeight: '1.8', color: 'var(--text-dark)', textAlign: 'justify', margin: 0 }}>
-                                    As a multilanguage, interdisciplinary journal, we welcome contributions in English, Hindi and other Indian languages. All submissions undergo a peer review process to ensure academic rigor and integrity.
+                                    As a multilanguage, interdisciplinary journal, we welcome contributions in English, Hindi, and other Indian languages. All submissions undergo a double-blind peer review process to ensure academic rigor and integrity.
                                 </p>
                                 <p style={{ fontSize: '0.98rem', lineHeight: '1.8', color: 'var(--primary-dark)', fontWeight: '600', marginTop: 'auto', paddingTop: '10px', marginBottom: 0 }}>
-                                    VIJCMBS is published by Maurya Education and Research Foundation - MERF, Jaipur, Rajasthan.
+                                    Published by Rajasthan Institute of Social Science Research (RISSR) under Maurya Education and Research Foundation, Jaipur, Rajasthan.
                                 </p>
                             </div>
                         </div>
 
                         {/* Right Card: Journal Specifications */}
-                        <div className="card specs-card-responsive" style={{ padding: '35px', backgroundColor: 'var(--bg-white)', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-sm)', display: 'flex', flexDirection: 'column', height: '100%' }}>
+                        <div className="card specs-card-responsive" style={{ padding: '35px', backgroundColor: 'var(--bg-white)', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-sm)', display: 'flex', flexDirection: 'column', height: '100%', justifyContent: 'space-between' }}>
                             <div>
                                 <h3 style={{ fontSize: '1.5rem', marginBottom: '20px', borderBottom: '2.5px solid var(--accent)', paddingBottom: '10px', color: 'var(--primary-dark)', fontWeight: '700', fontFamily: 'var(--font-heading)' }}>
                                     <i className="fas fa-list-check" style={{ marginRight: '10px', color: 'var(--accent-dark)' }}></i>
@@ -233,7 +241,7 @@ export default function VanijyamJournal() {
                                     </div>
                                     <div className="spec-item">
                                         <div className="spec-label">Frequency:</div>
-                                        <div className="spec-value">Yearly / Annually</div>
+                                        <div className="spec-value">Yearly/Annually</div>
                                     </div>
                                     <div className="spec-item">
                                         <div className="spec-label">Publication Format:</div>
@@ -258,6 +266,12 @@ export default function VanijyamJournal() {
                                     <div className="spec-item">
                                         <div className="spec-label">Name of Publisher:</div>
                                         <div className="spec-value">Maurya Education and Research Foundation, Jaipur, Rajasthan, India</div>
+                                    </div>
+                                    <div className="spec-item">
+                                        <div className="spec-label">Contact / Phone:</div>
+                                        <div className="spec-value" style={{ fontWeight: '600', color: 'var(--accent-dark)' }}>
+                                            <i className="fas fa-phone-alt" style={{ marginRight: '6px' }}></i>+91-9636635216
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -357,7 +371,7 @@ export default function VanijyamJournal() {
                                 </h4>
                                 <ul style={{ paddingLeft: '20px', margin: 0, fontSize: '0.95rem', lineHeight: '1.7', color: 'var(--text-dark)' }}>
                                     <li>By submitting a manuscript, authors confirm that the work is not under consideration, and has not been previously published, elsewhere.</li>
-                                    <li>Upon acceptance, copyright of the published article vests with the journal / publisher, unless otherwise agreed in writing.</li>
+                                    <li>Upon acceptance, copyright of the published article vests with Vanijyam (VIJCMBS) / Maurya Education and Research Foundation (MERF), unless otherwise agreed in writing.</li>
                                     <li>Authors are required to submit a signed declaration/undertaking confirming originality and compliance with these guidelines along with the manuscript.</li>
                                 </ul>
                             </div>

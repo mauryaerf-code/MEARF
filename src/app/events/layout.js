@@ -1,9 +1,12 @@
 import React from 'react';
 
 export const metadata = {
-  title: "Academic Events & Conferences | MERF",
+  title: "Academic Events, Conferences & FDPs",
   description: "Explore national and international conferences, seminars, Faculty Development Programs (FDP), and Skill Development Programs (SDP) organized by MERF.",
   keywords: [
+    "Academic Events, Conferences & FDPs",
+    "Academic Events & Conferences",
+    "MERF conferences",
     "national conference Jaipur 2026",
     "international academic conference India",
     "faculty development programme FDP Rajasthan",

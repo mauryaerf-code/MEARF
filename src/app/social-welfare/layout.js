@@ -1,9 +1,11 @@
 import React from 'react';
 
 export const metadata = {
-  title: "Social Welfare & Community Impact (SVBSPS) | MERF",
+  title: "Social Welfare & Community Impact (SVBSPS)",
   description: "Learn about Swami Vivekanand Balika Shiksha Prachar Samiti (SVBSPS), the registered social welfare wing of MERF dedicated to girl-child education, women empowerment, health, and environmental sustainability.",
   keywords: [
+    "Social Welfare & Community Impact (SVBSPS)",
+    "Social Welfare & Community Impact",
     "Swami Vivekanand Balika Shiksha Prachar Samiti",
     "SVBSPS",
     "MERF social welfare",

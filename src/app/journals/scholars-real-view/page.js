@@ -99,7 +99,6 @@ export default function ScholarsRealView() {
     };
 
     useEffect(() => {
-        document.title = "The Scholar's Real View | Maurya Education and Research Foundation";
         fetchArticles(page, activeSearch);
     }, [page, activeSearch]);
 

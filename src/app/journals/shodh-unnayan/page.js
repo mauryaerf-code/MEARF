@@ -99,7 +99,6 @@ export default function ShodhUnnayan() {
     };
 
     useEffect(() => {
-        document.title = "Shodh Unnayan (Hindi Journal) | Maurya Education and Research Foundation";
         fetchArticles(page, activeSearch);
     }, [page, activeSearch]);
 

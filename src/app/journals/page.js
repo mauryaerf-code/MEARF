@@ -2,11 +2,16 @@ import React from 'react';
 import Link from 'next/link';
 
 export const metadata = {
-  title: "RISSR Academic Journals | Peer-Reviewed Research Publications",
+  title: "Research Journals (Published by RISSR & MERF)",
   description: "Explore peer-reviewed multidisciplinary academic journals published by Rajasthan Institute of Social Science Research (RISSR) under MERF. Call for research papers.",
   keywords: [
+    "Research Journals (Published by RISSR & MERF)",
+    "Research Journals Published by RISSR & MERF",
+    "Research Journals",
     "RISSR Academic Journals",
+    "MERF Research Journals",
     "Rajasthan Institute of Social Science Research",
+    "Maurya Education and Research Foundation journals",
     "peer reviewed journals Jaipur Rajasthan",
     "multidisciplinary research journal India",
     "call for research papers 2026",
@@ -14,24 +19,26 @@ export const metadata = {
     "refereed journal publications India",
     "Shodh Unnayan",
     "The Scholars Real View",
-    "Vanijyam journal",
-    "MERF online journal"
+    "Vanijyam VIJCMBS",
+    "Reforming Research online journal",
+    "academic research journals India",
+    "Dr Shailendar Maurya journals"
   ],
   alternates: {
     canonical: "/journals",
   },
   openGraph: {
-    title: "RISSR Academic Journals | Peer-Reviewed Research Publications",
+    title: "Research Journals (Published by RISSR & MERF)",
     description: "Submit and read peer-reviewed research papers in social sciences, humanities, commerce, and multidisciplinary studies.",
     url: "https://www.mauryaerf.com/journals",
     siteName: "Maurya Education and Research Foundation",
-    images: [{ url: "/assets/logo.jpeg", width: 800, height: 800, alt: "RISSR Academic Journals" }],
+    images: [{ url: "/assets/logo.jpeg", width: 800, height: 800, alt: "Research Journals RISSR MERF" }],
     locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary",
-    title: "RISSR Academic Journals | Peer-Reviewed Research Publications",
+    title: "Research Journals (Published by RISSR & MERF)",
     description: "Browse academic research journals published by RISSR (MERF) in Jaipur, Rajasthan.",
     images: ["/assets/logo.jpeg"],
   },
@@ -40,7 +47,7 @@ export const metadata = {
 const journalsSchema = {
   "@context": "https://schema.org",
   "@type": "CollectionPage",
-  name: "RISSR Peer-Reviewed Academic Journals",
+  name: "Research Journals (Published by RISSR & MERF)",
   url: "https://www.mauryaerf.com/journals",
   description: "Collection of peer-reviewed international academic journals by Rajasthan Institute of Social Science Research (RISSR).",
   publisher: {
@@ -59,8 +66,8 @@ export default function JournalsLanding() {
             />
             <section className="hero" style={{ padding: '60px 0', backgroundImage: `linear-gradient(135deg, rgba(7, 17, 36, 0.9) 0%, rgba(15, 32, 70, 0.8) 100%), url('https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?q=80&w=1200&auto=format&fit=crop')` }}>
                 <div className="container text-center">
-                    <h1 style={{ color: 'var(--text-light)', fontSize: '2.75rem', marginBottom: '10px' }}>Research (RISSR)</h1>
-                    <p style={{ color: 'var(--accent)', fontSize: '1.1rem', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: 0 }}>Rajasthan Institute of Social Science Research (NITI Aayog Recognized)</p>
+                    <h1 style={{ color: 'var(--text-light)', fontSize: '2.75rem', marginBottom: '10px' }}>Research Journals</h1>
+                    <p style={{ color: 'var(--accent)', fontSize: '1.1rem', letterSpacing: '0.5px', marginBottom: 0 }}>(Published by RISSR &amp; MERF)</p>
                 </div>
             </section>
 
@@ -95,6 +102,7 @@ export default function JournalsLanding() {
                                     <div className="meta-row"><span className="meta-label">Frequency:</span><span className="meta-value">Quarterly</span></div>
                                     <div className="meta-row"><span className="meta-label">Language:</span><span className="meta-value">Multiple Languages</span></div>
                                     <div className="meta-row"><span className="meta-label">Format:</span><span className="meta-value">Online Publication</span></div>
+                                    <div className="meta-row"><span className="meta-label">Chief Editor:</span><span className="meta-value">Dr. Shailendar Maurya</span></div>
                                 </div>
                             </div>
                             <div style={{ marginTop: '30px' }}>
@@ -158,6 +166,7 @@ export default function JournalsLanding() {
                                     <div className="meta-row"><span className="meta-label">Frequency:</span><span className="meta-value">Yearly / Annually</span></div>
                                     <div className="meta-row"><span className="meta-label">Language:</span><span className="meta-value">Multiple Languages</span></div>
                                     <div className="meta-row"><span className="meta-label">Format:</span><span className="meta-value">Print Publication</span></div>
+                                    <div className="meta-row"><span className="meta-label">Chief Editor:</span><span className="meta-value">Dr. Vinod Kumar Meena</span></div>
                                 </div>
                             </div>
                             <div style={{ marginTop: '30px' }}>

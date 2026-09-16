@@ -4,15 +4,20 @@ export const metadata = {
   title: "Shodh Unnayan (शोध उन्नयन) | Peer-Reviewed Hindi Research Journal | ISSN: 3048-846X",
   description: "Shodh Unnayan is a quarterly peer-reviewed multidisciplinary Hindi research journal published by RISSR (MERF). Submit original Hindi research papers for publication.",
   keywords: [
+    "Shodh Unnayan",
+    "शोध उन्नयन",
+    "Shodh Unnayan (शोध उन्नयन)",
+    "Peer-Reviewed Hindi Research Journal",
+    "ISSN 3048-846X",
     "Shodh Unnayan journal",
     "शोध उन्नयन शोध पत्रिका",
     "peer reviewed Hindi research journal",
     "multidisciplinary Hindi journal India",
     "publish Hindi research paper",
-    "ISSN 3048-846X",
     "RISSR Hindi journal",
+    "MERF Hindi journal",
     "quarterly research journal Jaipur",
-    "UGC CARE guideline Hindi journal",
+    "Dr Shailendar Maurya Shodh Unnayan",
     "social science research Hindi journal",
     "Hindi research paper submission"
   ],
@@ -42,6 +47,12 @@ const shodhSchema = {
   name: "Shodh Unnayan (शोध उन्नयन)",
   issn: "3048-846X",
   inLanguage: "hi",
+  editor: {
+    "@type": "Person",
+    name: "Dr. Shailendar Maurya",
+    jobTitle: "Founder & Chief Editor",
+    telephone: "+91-9636635216"
+  },
   url: "https://www.mauryaerf.com/journals/shodh-unnayan",
   description: "Peer-reviewed refereed multidisciplinary quarterly international journal in the Hindi language.",
   publisher: {

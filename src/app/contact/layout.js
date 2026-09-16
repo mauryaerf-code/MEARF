@@ -1,10 +1,13 @@
 import React from 'react';
 
 export const metadata = {
-  title: "Contact Us | Maurya Education and Research Foundation",
+  title: "Contact Us & Editorial Office",
   description: "Get in touch with Maurya Education and Research Foundation (MERF) in Jaipur, Rajasthan for research journal submissions, ISBN book publishing, and academic inquiries.",
   keywords: [
+    "Contact Us & Editorial Office",
+    "Contact Maurya Education and Research Foundation",
     "contact MERF",
+    "MERF editorial office contact",
     "Maurya Education and Research Foundation address Jaipur",
     "research paper submission enquiry",
     "publish book with ISBN contact",
@@ -12,7 +15,7 @@ export const metadata = {
     "MERF phone number email",
     "academic publishing support Jaipur",
     "Dr Shailendar Maurya contact",
-    "MERF Jaipur office"
+    "MERF Jaipur office phone"
   ],
   alternates: {
     canonical: "/contact",

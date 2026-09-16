@@ -1,25 +1,30 @@
 import React from 'react';
 
 export const metadata = {
-  title: "Publications & ISBN Book Publishing | Maurya Publications",
+  title: "Books Publications & ISBN Book Publishing | Maurya Publications",
   description: "Publish your academic books, research monographs, and edited volumes with registered ISBN. Maurya Publications & Distributors provides end-to-end publishing and distribution services.",
   keywords: [
+    "Books Publications & ISBN Book Publishing",
+    "Books Publications",
+    "Maurya Publications",
+    "Maurya Publications and Distributors",
+    "ISBN Book Publishing",
     "publish book with ISBN India",
     "ISBN book publication services Jaipur",
     "academic book publisher Rajasthan",
     "publish research monograph ISBN",
     "edited book chapter publication call",
-    "Maurya Publications and Distributors",
     "conference proceedings publication with ISBN",
     "academic textbook publisher Jaipur",
     "get ISBN for my book India",
-    "low cost ISBN publication India"
+    "low cost ISBN publication India",
+    "MERF book publication"
   ],
   alternates: {
     canonical: "/books-publications",
   },
   openGraph: {
-    title: "Publications & ISBN Book Publishing | Maurya Publications",
+    title: "Books Publications & ISBN Book Publishing | Maurya Publications",
     description: "Get your academic book or monograph published with registered ISBN through Maurya Publications & Distributors.",
     url: "https://www.mauryaerf.com/books-publications",
     siteName: "Maurya Education and Research Foundation",
@@ -29,7 +34,7 @@ export const metadata = {
   },
   twitter: {
     card: "summary",
-    title: "Publications & ISBN Book Publishing Services | MERF",
+    title: "Books Publications & ISBN Book Publishing Services | MERF",
     description: "Publish academic books, monographs, and conference proceedings with ISBN.",
     images: ["/assets/logo.jpeg"],
   },

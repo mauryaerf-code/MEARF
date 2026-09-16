@@ -99,7 +99,7 @@ export default function Home() {
                                 </p>
                                 <h3 style={{ color: 'var(--accent)', fontSize: '1.6rem', marginBottom: '15px', fontFamily: 'var(--font-heading)' }}>Our Core Pillars</h3>
                                 <ul style={{ listStyle: 'none', paddingLeft: 0, display: 'grid', gap: '10px' }}>
-                                    <li><i className="fas fa-check-circle" style={{ color: 'var(--accent)', marginRight: '10px' }}></i> Academic Research (RISSR)</li>
+                                    <li><i className="fas fa-check-circle" style={{ color: 'var(--accent)', marginRight: '10px' }}></i> Research Journals</li>
                                     <li><i className="fas fa-check-circle" style={{ color: 'var(--accent)', marginRight: '10px' }}></i> Book & Journal Publishing</li>
                                     <li><i className="fas fa-check-circle" style={{ color: 'var(--accent)', marginRight: '10px' }}></i> Conferences & Training</li>
                                     <li><i className="fas fa-check-circle" style={{ color: 'var(--accent)', marginRight: '10px' }}></i> Women Empowerment (SVBSPS)</li>
@@ -120,7 +120,7 @@ export default function Home() {
                     <div className="grid grid-3">
                         <div className="card" id="wing-card-rissr">
                             <div className="card-icon"><i className="fas fa-graduation-cap"></i></div>
-                            <h3 className="card-title">Research & Journals (RISSR)</h3>
+                            <h3 className="card-title">Research Journals</h3>
                             <p>Managed under the Rajasthan Institute of Social Science Research. Recognized by NITI Aayog, Government of India. Publishes four peer-reviewed academic journals with dedicated peer-review and editorial infrastructure.</p>
                             <Link href="/journals" className="btn btn-outline btn-sm" style={{ marginTop: '15px' }}>
                                 Explore Journals

@@ -20,8 +20,6 @@ export default function About() {
     const [activePhoto, setActivePhoto] = useState(null);
 
     useEffect(() => {
-        document.title = "About Us | Maurya Education and Research Foundation";
-        
         const fetchMembers = async () => {
             try {
                 const { data, error } = await supabase

@@ -33,6 +33,17 @@ const nextConfig = {
   async redirects() {
     return [
       {
+        source: '/:path*',
+        has: [
+          {
+            type: 'host',
+            value: 'mauryaerf.com',
+          },
+        ],
+        destination: 'https://www.mauryaerf.com/:path*',
+        permanent: true,
+      },
+      {
         source: '/journals/online',
         destination: '/journals/reforming-research',
         permanent: true,
