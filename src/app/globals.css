@@ -507,6 +507,70 @@ a:hover {
 .badge-accent { background-color: rgba(212, 175, 55, 0.2); color: var(--accent-dark); }
 .badge-success { background-color: rgba(16, 185, 129, 0.1); color: #10b981; }
 
+/* Journal Specifications Card and Rows */
+.specs-card-responsive {
+    padding: 35px;
+    background-color: var(--bg-white);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+}
+
+.spec-item {
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid var(--border-color);
+    padding: 12px 0;
+    gap: 15px;
+    align-items: flex-start;
+}
+
+.spec-item:last-child {
+    border-bottom: none;
+}
+
+.spec-label {
+    flex: 0 0 170px;
+    font-weight: 700;
+    color: var(--primary-dark);
+    font-size: 0.92rem;
+}
+
+.spec-value {
+    flex: 1;
+    color: var(--text-dark, #1f2937);
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+@media (max-width: 991px) {
+    .spec-item {
+        flex-direction: column;
+        gap: 4px;
+        padding: 10px 0;
+    }
+    .spec-label {
+        flex: none;
+        font-size: 0.82rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    .spec-value {
+        font-size: 0.92rem;
+    }
+    .specs-card-responsive {
+        padding: 25px 20px !important;
+    }
+}
+
+#guidelines {
+    scroll-margin-top: 120px;
+}
+
 /* Hero Section */
 .hero {
     background-color: var(--primary-dark);

@@ -109,6 +109,37 @@ export default function Publications() {
         if (section) section.scrollIntoView({ behavior: 'smooth' });
     };
 
+    const handleSubmitProposal = (e) => {
+        e.preventDefault();
+        const email = 'drshailendar@mauryaerf.com';
+        const subject = encodeURIComponent('Book Proposal Submission - Maurya Publications');
+        const mailtoUrl = `mailto:${email}?subject=${subject}`;
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        
+        if (isMobile) {
+            window.location.href = mailtoUrl;
+        } else {
+            const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${subject}`;
+            const win = window.open(gmailUrl, '_blank');
+            if (!win || win.closed || typeof win.closed === 'undefined') {
+                window.location.href = mailtoUrl;
+            }
+        }
+    };
+
+    const handleScrollToGuidelines = (e) => {
+        e.preventDefault();
+        const el = document.getElementById('guidelines');
+        if (el) {
+            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            if (typeof window !== 'undefined' && window.history.pushState) {
+                window.history.pushState(null, '', '#guidelines');
+            }
+        } else {
+            window.location.href = '/books-publications#guidelines';
+        }
+    };
+
     const totalPages = Math.ceil(totalCount / pageSize);
 
     return (
@@ -144,22 +175,28 @@ export default function Publications() {
                             
                             <div style={{ marginTop: '30px', display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
                                 <a 
-                                    href="mailto:drshailendar@mauryaerf.com?subject=Book Proposal Submission - Maurya Publications" 
+                                    href="mailto:drshailendar@mauryaerf.com?subject=Book%20Proposal%20Submission%20-%20Maurya%20Publications" 
+                                    onClick={handleSubmitProposal}
                                     className="btn btn-primary" 
                                     id="email-ms-btn"
+                                    style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}
                                 >
+                                    <i className="fas fa-envelope"></i>
                                     Submit Book Proposal
                                 </a>
                                 <a 
                                     href="#guidelines" 
+                                    onClick={handleScrollToGuidelines}
                                     className="btn btn-outline"
+                                    style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}
                                 >
+                                    <i className="fas fa-file-alt"></i>
                                     View Formatting Guidelines
                                 </a>
                             </div>
                         </div>
                         <div>
-                            <div className="card card-accent" id="guidelines" style={{ padding: '35px', backgroundColor: 'var(--bg-white)' }}>
+                            <div className="card card-accent" id="guidelines" style={{ padding: '35px', backgroundColor: 'var(--bg-white)', scrollMarginTop: '120px' }}>
                                 <h3 style={{ fontSize: '1.35rem', marginBottom: '20px', color: 'var(--primary-dark)', borderBottom: '2px solid var(--accent)', paddingBottom: '10px' }}>Format & Style Guidelines</h3>
                                 <p style={{ fontSize: '0.95rem', marginBottom: '20px' }}>All books and monographs must follow these styles prior to final draft review:</p>
                                 

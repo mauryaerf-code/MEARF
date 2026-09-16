@@ -85,50 +85,7 @@ export default function OnlineJournal() {
 
     return (
         <>
-            <style dangerouslySetInnerHTML={{ __html: `
-                .spec-item {
-                    display: flex;
-                    flex-direction: row;
-                    border-bottom: 1px solid var(--border-color);
-                    padding: 12px 0;
-                    gap: 15px;
-                    align-items: flex-start;
-                }
-                .spec-item:last-child {
-                    border-bottom: none;
-                }
-                .spec-label {
-                    flex: 0 0 170px;
-                    font-weight: 700;
-                    color: var(--primary-dark);
-                    font-size: 0.92rem;
-                }
-                .spec-value {
-                    flex: 1;
-                    color: var(--text-dark);
-                    font-size: 0.95rem;
-                    line-height: 1.5;
-                }
-                @media (max-width: 991px) {
-                    .spec-item {
-                        flex-direction: column;
-                        gap: 4px;
-                        padding: 10px 0;
-                    }
-                    .spec-label {
-                        flex: none;
-                        font-size: 0.85rem;
-                        text-transform: uppercase;
-                        letter-spacing: 0.5px;
-                    }
-                    .spec-value {
-                        font-size: 0.92rem;
-                    }
-                    .specs-card-responsive {
-                        padding: 25px 20px !important;
-                    }
-                }
-            `}} />
+
 
             <section className="hero" style={{ padding: '60px 0', backgroundImage: `linear-gradient(135deg, rgba(7, 17, 36, 0.9) 0%, rgba(15, 32, 70, 0.8) 100%), url('https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1200&auto=format&fit=crop')` }}>
                 <div className="container text-center">

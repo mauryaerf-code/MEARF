@@ -132,50 +132,7 @@ export default function VanijyamJournal() {
 
     return (
         <>
-            <style dangerouslySetInnerHTML={{ __html: `
-                .spec-item {
-                    display: flex;
-                    flex-direction: row;
-                    border-bottom: 1px solid var(--border-color);
-                    padding: 12px 0;
-                    gap: 15px;
-                    align-items: flex-start;
-                }
-                .spec-item:last-child {
-                    border-bottom: none;
-                }
-                .spec-label {
-                    flex: 0 0 170px;
-                    font-weight: 700;
-                    color: var(--primary-dark);
-                    font-size: 0.92rem;
-                }
-                .spec-value {
-                    flex: 1;
-                    color: var(--text-dark);
-                    font-size: 0.95rem;
-                    line-height: 1.5;
-                }
-                @media (max-width: 991px) {
-                    .spec-item {
-                        flex-direction: column;
-                        gap: 4px;
-                        padding: 10px 0;
-                    }
-                    .spec-label {
-                        flex: none;
-                        font-size: 0.85rem;
-                        text-transform: uppercase;
-                        letter-spacing: 0.5px;
-                    }
-                    .spec-value {
-                        font-size: 0.92rem;
-                    }
-                    .specs-card-responsive {
-                        padding: 25px 20px !important;
-                    }
-                }
-            `}} />
+
 
             <section className="hero" style={{ padding: '60px 0', backgroundImage: `linear-gradient(135deg, rgba(7, 17, 36, 0.9) 0%, rgba(15, 32, 70, 0.8) 100%), url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=1200&auto=format&fit=crop')` }}>
                 <div className="container text-center">
@@ -211,13 +168,13 @@ export default function VanijyamJournal() {
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', flex: 1 }}>
                                 <p style={{ fontSize: '0.98rem', lineHeight: '1.8', color: 'var(--text-dark)', textAlign: 'justify', margin: 0 }}>
                                     <strong>Vanijyam <br>
-                                    </br>International Journal of Commerce, Management and Business Studies (VIJCMBS)</strong> is an annual peer-reviewed multi-language journal published under RISSR (MERF) committed to advancing high-quality research in Commerce, Management, Economics, Business Studies, Accounting, Finance, Banking, Tourism, and Entrepreneurship.
+                                    </br>International Journal of Commerce, Management and Business Studies (VIJCMBS)</strong> is committed to publishing high-quality, original research that advances knowledge in Commerce, Management, Economics, Business Studies, Accounting, Finance, Banking, Human Resource Management, Tourism, Marketing, Entrepreneurship and related disciplines.
                                 </p>
                                 <p style={{ fontSize: '0.98rem', lineHeight: '1.8', color: 'var(--text-dark)', textAlign: 'justify', margin: 0 }}>
-                                    As a multilanguage, interdisciplinary journal, we welcome contributions in English, Hindi, and other Indian languages. All submissions undergo a double-blind peer review process to ensure academic rigor and integrity.
+                                    As a multilanguage, interdisciplinary journal, we welcome contributions in English, Hindi, and other Indian languages. All submissions undergo a peer review process to ensure academic rigor and integrity.
                                 </p>
                                 <p style={{ fontSize: '0.98rem', lineHeight: '1.8', color: 'var(--primary-dark)', fontWeight: '600', marginTop: 'auto', paddingTop: '10px', marginBottom: 0 }}>
-                                    Published by Rajasthan Institute of Social Science Research (RISSR) under Maurya Education and Research Foundation, Jaipur, Rajasthan.
+                                    VIJCMBS is published by Maurya Education and Research Foundation - MERF, Jaipur, Rajasthan.
                                 </p>
                             </div>
                         </div>
@@ -270,6 +227,7 @@ export default function VanijyamJournal() {
                                     <div className="spec-item">
                                         <div className="spec-label">Contact / Phone:</div>
                                         <div className="spec-value" style={{ fontWeight: '600', color: 'var(--accent-dark)' }}>
+                                            <i className="fas fa-phone-alt" style={{ marginRight: '6px' }}></i>+91-9460931698 <br></br>
                                             <i className="fas fa-phone-alt" style={{ marginRight: '6px' }}></i>+91-9636635216
                                         </div>
                                     </div>

@@ -88,7 +88,7 @@ export default function Header() {
                                 <ul className="dropdown-menu">
                                     <li>
                                         <Link href="/journals/reforming-research" className="dropdown-link-with-img" onClick={handleLinkClick}>
-                                            <img src="/assets/home/online.png" alt="Reforming Research Journal Cover" style={{ objectFit: 'cover' }} />
+                                            <img src="/assets/home/online.png" alt="Reforming Research Journal Cover" style={{ objectFit: 'cover' }} loading="lazy" />
                                             <div className="dropdown-link-text">
                                                 <span className="dropdown-link-title">Reforming Research</span>
                                                 <span className="dropdown-link-subtitle">Online Multi-Language (Quarterly)</span>
@@ -97,7 +97,7 @@ export default function Header() {
                                     </li>
                                     <li>
                                         <Link href="/journals/shodh-unnayan" className="dropdown-link-with-img" onClick={handleLinkClick}>
-                                            <img src="/assets/home/Shodh Unnayan.png" alt="Shodh Unnayan Journal Cover" />
+                                            <img src="/assets/home/Shodh Unnayan.png" alt="Shodh Unnayan Journal Cover" loading="lazy" />
                                             <div className="dropdown-link-text">
                                                 <span className="dropdown-link-title">Shodh Unnayan</span>
                                                 <span className="dropdown-link-subtitle">Hindi (Quarterly)</span>
@@ -106,7 +106,7 @@ export default function Header() {
                                     </li>
                                     <li>
                                         <Link href="/journals/scholars-real-view" className="dropdown-link-with-img" onClick={handleLinkClick}>
-                                            <img src="/assets/home/Scholar.png" alt="The Scholar's Real View Cover" />
+                                            <img src="/assets/home/Scholar.png" alt="The Scholar's Real View Cover" loading="lazy" />
                                             <div className="dropdown-link-text">
                                                 <span className="dropdown-link-title">The Scholar's Real View</span>
                                                 <span className="dropdown-link-subtitle">English (Half-Yearly)</span>
@@ -115,7 +115,7 @@ export default function Header() {
                                     </li>
                                     <li>
                                         <Link href="/journals/vanijyam" className="dropdown-link-with-img" onClick={handleLinkClick}>
-                                            <img src="/assets/home/vanijyam.png" alt="Vanijyam Journal Cover" style={{ objectFit: 'cover' }} />
+                                            <img src="/assets/home/vanijyam.png" alt="Vanijyam Journal Cover" style={{ objectFit: 'cover' }} loading="lazy" />
                                             <div className="dropdown-link-text">
                                                 <span className="dropdown-link-title">Vanijyam</span>
                                                 <span className="dropdown-link-subtitle">Multi-Language (Annually)</span>

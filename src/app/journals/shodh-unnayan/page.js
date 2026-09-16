@@ -140,7 +140,8 @@ export default function ShodhUnnayan() {
             <section className="hero" style={{ padding: '60px 0', backgroundImage: `linear-gradient(135deg, rgba(7, 17, 36, 0.9) 0%, rgba(15, 32, 70, 0.8) 100%), url('https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?q=80&w=1200&auto=format&fit=crop')` }}>
                 <div className="container text-center">
                     <h1 style={{ color: 'var(--text-light)', fontSize: '2.75rem', marginBottom: '10px' }}>शोध उन्नयन (Shodh Unnayan)</h1>
-                    <p style={{ color: 'var(--accent)', fontSize: '1.1rem', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: 0 }}>Rajasthan Institute of Social Science Research (RISSR)</p>
+                    <p style={{ color: 'var(--accent)', fontSize: '1.1rem', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: 0 }}>Peer Reviewed Referred Multi disciplining quarterly International Journal in Hindi language</p>
+                    <p style={{ color: 'var(--accent)', fontSize: '1.1rem', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: 0 }}>Published by Rajasthan Institute of Social Science Research (RISSR)</p>
                 </div>
             </section>
 
@@ -178,36 +179,74 @@ export default function ShodhUnnayan() {
                             </div>
                         </div>
 
-                        <div>
-                            <div className="card card-accent" style={{ padding: '40px', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-                                <div>
-                                    <h3 style={{ fontSize: '1.5rem', marginBottom: '25px', borderBottom: '2px solid var(--accent)', paddingBottom: '10px' }}>Journal Specifications</h3>
-                                    <div className="journal-meta">
-                                        <div className="meta-row"><span className="meta-label">Frequency:</span><span className="meta-value">Quarterly (4 issues/year)</span></div>
-                                        <div className="meta-row"><span className="meta-label">Language:</span><span className="meta-value">Hindi</span></div>
-                                        <div className="meta-row"><span className="meta-label">Chief Editor:</span><span className="meta-value">Dr. Shailendar Maurya</span></div>
-                                        <div className="meta-row"><span className="meta-label">Publisher:</span><span className="meta-value">RISSR, Jaipur</span></div>
-                                        <div className="meta-row"><span className="meta-label">Review Period:</span><span className="meta-value">10-15 Working Days</span></div>
+                        {/* Right Card: Journal Specifications */}
+                        <div className="card specs-card-responsive">
+                            <div>
+                                <h3 style={{ fontSize: '1.5rem', marginBottom: '20px', borderBottom: '2.5px solid var(--accent)', paddingBottom: '10px', color: 'var(--primary-dark)', fontWeight: '700', fontFamily: 'var(--font-heading)' }}>
+                                    <i className="fas fa-list-check" style={{ marginRight: '10px', color: 'var(--accent-dark)' }}></i>
+                                    Journal Specifications
+                                </h3>
+                                
+                                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                    <div className="spec-item">
+                                        <div className="spec-label">Title of Research Journal:</div>
+                                        <div className="spec-value" style={{ fontWeight: '700', color: 'var(--primary)' }}>Shodh Unnayan</div>
                                     </div>
-                                    <div style={{ marginTop: '35px' }}>
-                                        <h4 style={{ marginBottom: '10px', fontSize: '1.1rem', color: 'var(--primary)' }}>Chief Editor Contact:</h4>
-                                        <p style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--accent-dark)' }}>
-                                            <i className="fas fa-phone-alt"></i> +91-9636635216
-                                        </p>
+                                    <div className="spec-item">
+                                        <div className="spec-label">ISSN:</div>
+                                        <div className="spec-value">
+                                            <span className="badge badge-accent" style={{ fontSize: '0.85rem', padding: '3px 10px', fontWeight: '700' }}>3048-846X</span>
+                                        </div>
+                                    </div>
+                                    <div className="spec-item">
+                                        <div className="spec-label">Frequency:</div>
+                                        <div className="spec-value">Quarterly</div>
+                                    </div>
+                                    <div className="spec-item">
+                                        <div className="spec-label">Publication Format:</div>
+                                        <div className="spec-value">offline/ Print</div>
+                                    </div>
+                                    <div className="spec-item">
+                                        <div className="spec-label">Subjects:</div>
+                                        <div className="spec-value">Interdisciplinary</div>
+                                    </div>
+                                    <div className="spec-item">
+                                        <div className="spec-label">Language:</div>
+                                        <div className="spec-value" style={{ fontWeight: '600' }}>Hindi Languages</div>
+                                    </div>
+                                    <div className="spec-item">
+                                        <div className="spec-label">Starting Year:</div>
+                                        <div className="spec-value" style={{ fontWeight: '600' }}>2024</div>
+                                    </div>
+                                    <div className="spec-item">
+                                        <div className="spec-label">Chief Editor:</div>
+                                        <div className="spec-value" style={{ fontWeight: '600' }}>Dr. Shailendar Maurya</div>
+                                    </div>
+                                    <div className="spec-item">
+                                        <div className="spec-label">Name of Publisher:</div>
+                                        <div className="spec-value">Rajasthan Institute of Social Science Research (RISSR) Jaipur, Rajasthan, India</div>
+                                    </div>
+
+                                    <div className="spec-item">
+                                        <div className="spec-label">Chief Editor Contact:</div>
+                                        <div className="spec-value" style={{ fontWeight: '600', color: 'var(--accent-dark)' }}>
+                                            <i className="fas fa-phone-alt" style={{ marginRight: '6px' }}></i>+91-9636635216
+                                        </div>
                                     </div>
                                 </div>
-                                <div style={{ marginTop: '40px' }}>
-                                    <button 
-                                        onClick={openGmail} 
-                                        className="btn btn-accent" 
-                                        style={{ width: '100%', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px', border: 'none' }}
-                                    >
-                                        <i className="far fa-envelope"></i> Online Submission Inquiry
-                                    </button>
-                                    <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '10px', textAlign: 'center' }}>
-                                        Clicking this button will open Gmail Compose in a new tab addressed to <strong>drshailendar@mauryaerf.com</strong>.
-                                    </p>
-                                </div>
+                            </div>
+
+                            <div style={{ marginTop: '25px', paddingTop: '15px', borderTop: '1px solid var(--border-color)' }}>
+                                <button 
+                                    onClick={openGmail} 
+                                    className="btn btn-accent" 
+                                    style={{ width: '100%', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px', border: 'none', cursor: 'pointer', fontWeight: '600' }}
+                                >
+                                    <i className="fas fa-paper-plane"></i> Submit Manuscript / Online Inquiry
+                                </button>
+                                <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '8px', textAlign: 'center', marginBottom: 0 }}>
+                                    Opens Gmail addressed to <strong>drshailendar@mauryaerf.com</strong>
+                                </p>
                             </div>
                         </div>
                     </div>
