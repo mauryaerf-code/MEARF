@@ -5,6 +5,7 @@ import { supabase } from '@/lib/supabase';
 
 const getDirectDriveUrl = (url) => {
     if (!url) return '';
+    if (url.startsWith('/') || url.startsWith('data:') || !url.includes('drive.google.com')) return url;
     const regExp = /(?:id=|\/d\/|d=)([a-zA-Z0-9_-]{25,})/;
     const match = url.match(regExp);
     if (match && match[1]) {
@@ -15,6 +16,7 @@ const getDirectDriveUrl = (url) => {
 
 const getDownloadDriveUrl = (url) => {
     if (!url) return '';
+    if (url.startsWith('/') || url.startsWith('data:') || !url.includes('drive.google.com')) return url;
     const regExp = /(?:id=|\/d\/|d=)([a-zA-Z0-9_-]{25,})/;
     const match = url.match(regExp);
     if (match && match[1]) {
@@ -23,71 +25,87 @@ const getDownloadDriveUrl = (url) => {
     return url;
 };
 
-const DEFAULT_VANIJYAM_ARTICLES = [];
+const DEFAULT_VANIJYAM_ARTICLES = [
+    { id: 'v-cover', year: '2026', volume: 'Volume 1', issue: 'Cover', pdfUrl: '/vanijyam/Cover.pdf' },
+    { id: 'v-disclaimer', year: '2026', volume: 'Volume 1', issue: 'Disclaimer', pdfUrl: '/vanijyam/Disclaimer.pdf' },
+    { id: 'v-editor-board', year: '2026', volume: 'Volume 1', issue: 'Editorial Board', pdfUrl: '/vanijyam/Editor%20Board.pdf' },
+    { id: 'v-art-1', year: '2026', volume: 'Volume 1', issue: 'Article 1', pdfUrl: '/vanijyam/Article%201.pdf' },
+    { id: 'v-art-2', year: '2026', volume: 'Volume 1', issue: 'Article 2', pdfUrl: '/vanijyam/Article%202.pdf' },
+    { id: 'v-art-3', year: '2026', volume: 'Volume 1', issue: 'Article 3', pdfUrl: '/vanijyam/Article%203.pdf' },
+    { id: 'v-art-4', year: '2026', volume: 'Volume 1', issue: 'Article 4', pdfUrl: '/vanijyam/Article%204.pdf' },
+    { id: 'v-art-5', year: '2026', volume: 'Volume 1', issue: 'Article 5', pdfUrl: '/vanijyam/Article%205.pdf' },
+    { id: 'v-art-6', year: '2026', volume: 'Volume 1', issue: 'Article 6', pdfUrl: '/vanijyam/Article%206.pdf' },
+    { id: 'v-art-7', year: '2026', volume: 'Volume 1', issue: 'Article 7', pdfUrl: '/vanijyam/Article%207.pdf' },
+    { id: 'v-art-8', year: '2026', volume: 'Volume 1', issue: 'Article 8', pdfUrl: '/vanijyam/Article%208.pdf' },
+    { id: 'v-art-9', year: '2026', volume: 'Volume 1', issue: 'Article 9', pdfUrl: '/vanijyam/Article%209.pdf' },
+    { id: 'v-art-10', year: '2026', volume: 'Volume 1', issue: 'Article 10', pdfUrl: '/vanijyam/Article%2010.pdf' },
+    { id: 'v-art-11', year: '2026', volume: 'Volume 1', issue: 'Article 11', pdfUrl: '/vanijyam/Article%2011.pdf' },
+];
 
 export default function VanijyamJournal() {
-    const [articles, setArticles] = useState([]);
+    const [articles, setArticles] = useState(DEFAULT_VANIJYAM_ARTICLES);
     const [searchQuery, setSearchQuery] = useState('');
     const [activeSearch, setActiveSearch] = useState('');
     const [page, setPage] = useState(1);
-    const [totalCount, setTotalCount] = useState(0);
-    const [loading, setLoading] = useState(true);
+    const [totalCount, setTotalCount] = useState(DEFAULT_VANIJYAM_ARTICLES.length);
+    const [loading, setLoading] = useState(false);
 
-    const pageSize = 10;
+    const pageSize = 20;
 
     const fetchArticles = async (currentPage, searchVal) => {
         try {
-            setLoading(true);
-            let queryBuilder = supabase
+            let supaData = [];
+            const { data, error } = await supabase
                 .from('merf_issues')
-                .select('*', { count: 'exact' })
-                .eq('journal', "Vanijyam");
+                .select('*')
+                .eq('journal', "Vanijyam")
+                .order('id', { ascending: false });
 
+            if (!error && data) {
+                // Strictly exclude any Google Drive records
+                supaData = data
+                    .filter(art => {
+                        const url = art.pdfurl || art.pdfUrl || '';
+                        return !url.includes('drive.google.com');
+                    })
+                    .map(art => ({
+                        id: art.id,
+                        year: art.year,
+                        volume: art.volume || '',
+                        issue: art.issue || '',
+                        pdfUrl: art.pdfurl || art.pdfUrl
+                    }));
+            }
+
+            // Combine the local public PDFs with any additional verified issues
+            const combined = [
+                ...DEFAULT_VANIJYAM_ARTICLES,
+                ...supaData.filter(si => !DEFAULT_VANIJYAM_ARTICLES.some(dv => dv.id === si.id))
+            ];
+
+            let filtered = combined;
             if (searchVal.trim()) {
-                const q = `%${searchVal.trim()}%`;
-                queryBuilder = queryBuilder.or(`volume.ilike.${q},issue.ilike.${q},year.ilike.${q}`);
+                const q = searchVal.trim().toLowerCase();
+                filtered = combined.filter(item => 
+                    (item.volume || '').toLowerCase().includes(q) ||
+                    (item.issue || '').toLowerCase().includes(q) ||
+                    (item.year || '').toLowerCase().includes(q)
+                );
             }
 
             const fromRange = (currentPage - 1) * pageSize;
-            const toRange = fromRange + pageSize - 1;
+            const toRange = fromRange + pageSize;
 
-            const { data, count, error } = await queryBuilder
-                .order('id', { ascending: false })
-                .range(fromRange, toRange);
+            setArticles(filtered.slice(fromRange, toRange));
+            setTotalCount(filtered.length);
 
-            if (!error && data) {
-                const mapped = data.map(art => ({
-                    id: art.id,
-                    year: art.year,
-                    volume: art.volume || '',
-                    issue: art.issue || '',
-                    pdfUrl: art.pdfurl || art.pdfUrl
-                }));
-                setArticles(mapped);
-                setTotalCount(count || 0);
-            } else {
-                if (error) console.error("Error fetching articles:", error.message);
-                const storedArticles = localStorage.getItem('merf_vanijyam_articles');
-                let all = [];
-                if (storedArticles && !searchVal.trim()) {
-                    all = JSON.parse(storedArticles);
-                } else if (!searchVal.trim()) {
-                    all = DEFAULT_VANIJYAM_ARTICLES;
-                }
-
-                const mapped = all.map(item => ({
-                    id: item.id,
-                    year: item.year,
-                    volume: item.volume || '',
-                    issue: item.issue || '',
-                    pdfUrl: item.pdfUrl
-                }));
-
-                setArticles(mapped.slice(fromRange, toRange + 1));
-                setTotalCount(mapped.length);
+            if (typeof window !== 'undefined' && !searchVal.trim()) {
+                localStorage.setItem('merf_vanijyam_articles', JSON.stringify(combined));
             }
         } catch (err) {
             console.error("Failed to query journal articles:", err);
+            setArticles(DEFAULT_VANIJYAM_ARTICLES.slice(0, pageSize));
+            setTotalCount(DEFAULT_VANIJYAM_ARTICLES.length);
         } finally {
             setLoading(false);
         }
@@ -210,7 +228,7 @@ export default function VanijyamJournal() {
                                     </div>
                                     <div className="spec-item">
                                         <div className="spec-label">Language:</div>
-                                        <div className="spec-value">Multiple Languages</div>
+                                        <div className="spec-value">Multiple Languages(Hindi & English)</div>
                                     </div>
                                     <div className="spec-item">
                                         <div className="spec-label">Starting Year:</div>

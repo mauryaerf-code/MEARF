@@ -5,7 +5,7 @@ import { supabase } from '@/lib/supabase';
 
 const getDirectDriveUrl = (url) => {
     if (!url) return '';
-    if (url.startsWith('data:')) return url;
+    if (url.startsWith('/') || url.startsWith('data:') || !url.includes('drive.google.com')) return url;
     const regExp = /(?:id=|\/d\/|d=)([a-zA-Z0-9_-]{25,})/;
     const match = url.match(regExp);
     if (match && match[1]) {
@@ -14,6 +14,22 @@ const getDirectDriveUrl = (url) => {
     return url;
 };
 
+const REFORMING_RESEARCH_DOCS = [
+    { id: 'rr-cover', title: 'Cover', type: 'cover', pdfurl: '/reforming-research/cover.pdf' },
+    { id: 'rr-disclaimer', title: 'Disclaimer', type: 'disclaimer', pdfurl: '/reforming-research/Disclaimer.pdf' },
+    { id: 'rr-editor-board', title: 'Editorial Board', type: 'editor-board', pdfurl: '/reforming-research/Editor Board.pdf' },
+    { id: 'rr-art-1', title: 'Article 1', type: 'article', pdfurl: '/reforming-research/Article 1.pdf' },
+    { id: 'rr-art-2', title: 'Article 2', type: 'article', pdfurl: '/reforming-research/Article 2.pdf' },
+    { id: 'rr-art-3', title: 'Article 3', type: 'article', pdfurl: '/reforming-research/Article 3.pdf' },
+    { id: 'rr-art-4', title: 'Article 4', type: 'article', pdfurl: '/reforming-research/Article 4.pdf' },
+    { id: 'rr-art-5', title: 'Article 5', type: 'article', pdfurl: '/reforming-research/Article 5.pdf' },
+    { id: 'rr-art-6', title: 'Article 6', type: 'article', pdfurl: '/reforming-research/Article 6.pdf' },
+    { id: 'rr-art-7', title: 'Article 7', type: 'article', pdfurl: '/reforming-research/Article 7.pdf' },
+    { id: 'rr-art-8', title: 'Article 8', type: 'article', pdfurl: '/reforming-research/Article 8.pdf' },
+    { id: 'rr-art-9', title: 'Article 9', type: 'article', pdfurl: '/reforming-research/Article 9.pdf' },
+    { id: 'rr-art-10', title: 'Article 10', type: 'article', pdfurl: '/reforming-research/Article 10.pdf' },
+];
+
 export default function OnlineJournal() {
     const [groupedIssues, setGroupedIssues] = useState([]);
     const [expandedLabelId, setExpandedLabelId] = useState(null);
@@ -21,8 +37,6 @@ export default function OnlineJournal() {
 
     const fetchOnlinePublications = async () => {
         try {
-            setLoading(true);
-            
             // 1. Fetch all labels
             const { data: labels, error: labelsError } = await supabase
                 .from('merf_online_labels')
@@ -43,20 +57,47 @@ export default function OnlineJournal() {
                 console.error("Error fetching online articles:", articlesError.message);
             }
 
-            if (labels) {
-                const grouped = labels.map(lbl => ({
-                    ...lbl,
-                    articles: articles ? articles.filter(art => art.label_id === lbl.id) : []
-                }));
-                setGroupedIssues(grouped);
-                
-                // Expand the first label by default if available
-                if (grouped.length > 0) {
-                    setExpandedLabelId(grouped[0].id);
-                }
+            let grouped = [];
+            if (labels && labels.length > 0) {
+                grouped = labels.map((lbl, idx) => {
+                    const supaArticles = articles ? articles.filter(art => art.label_id === lbl.id) : [];
+                    // Populate current issue label with the ordered public documents
+                    if (idx === 0 || lbl.name.toLowerCase().includes('reforming')) {
+                        const extraArticles = supaArticles.filter(sa => 
+                            !REFORMING_RESEARCH_DOCS.some(rd => rd.title.toLowerCase() === (sa.title || '').toLowerCase())
+                        );
+                        return {
+                            ...lbl,
+                            articles: [...REFORMING_RESEARCH_DOCS, ...extraArticles]
+                        };
+                    }
+                    return {
+                        ...lbl,
+                        articles: supaArticles
+                    };
+                });
+            } else {
+                grouped = [{
+                    id: 'reforming-research-current-issue',
+                    name: 'Reforming Research (Volume 1, Issue 1 - 2026)',
+                    articles: REFORMING_RESEARCH_DOCS
+                }];
+            }
+            setGroupedIssues(grouped);
+            
+            // Expand the first label by default if available
+            if (grouped.length > 0) {
+                setExpandedLabelId(grouped[0].id);
             }
         } catch (err) {
             console.error("Failed to query online journal data:", err);
+            const fallbackGrouped = [{
+                id: 'reforming-research-current-issue',
+                name: 'Reforming Research (Volume 1, Issue 1 - 2026)',
+                articles: REFORMING_RESEARCH_DOCS
+            }];
+            setGroupedIssues(fallbackGrouped);
+            setExpandedLabelId('reforming-research-current-issue');
         } finally {
             setLoading(false);
         }
@@ -160,7 +201,7 @@ export default function OnlineJournal() {
                                     </div>
                                     <div className="spec-item">
                                         <div className="spec-label">Language:</div>
-                                        <div className="spec-value">Multiple Languages</div>
+                                        <div className="spec-value">Multiple Languages(Hindi & English)</div>
                                     </div>
                                     <div className="spec-item">
                                         <div className="spec-label">Starting Year:</div>
@@ -393,20 +434,36 @@ export default function OnlineJournal() {
                                                                 borderRadius: '6px', 
                                                                 backgroundColor: 'var(--bg-light)', 
                                                                 border: '1px solid rgba(0,0,0,0.03)',
-                                                                gap: '15px'
+                                                                gap: '15px',
+                                                                flexWrap: 'wrap'
                                                             }}
                                                         >
-                                                            <span style={{ fontSize: '0.9rem', fontWeight: '500', color: 'var(--text-dark)', lineHeight: '1.4' }}>
-                                                                {art.title}
-                                                            </span>
+                                                            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                                                                <i className="far fa-file-pdf" style={{ color: 'var(--accent-dark)', fontSize: '1.1rem' }}></i>
+                                                                <span style={{ fontSize: '0.92rem', fontWeight: '600', color: 'var(--text-dark)', lineHeight: '1.4' }}>
+                                                                    {art.title}
+                                                                </span>
+                                                                {art.type === 'cover' && (
+                                                                    <span className="badge badge-accent" style={{ fontSize: '0.68rem', padding: '2px 8px', textTransform: 'uppercase' }}>Cover</span>
+                                                                )}
+                                                                {art.type === 'disclaimer' && (
+                                                                    <span className="badge badge-primary" style={{ fontSize: '0.68rem', padding: '2px 8px', textTransform: 'uppercase' }}>Disclaimer</span>
+                                                                )}
+                                                                {art.type === 'editor-board' && (
+                                                                    <span className="badge badge-accent" style={{ fontSize: '0.68rem', padding: '2px 8px', textTransform: 'uppercase' }}>Editorial Board</span>
+                                                                )}
+                                                                {art.type === 'article' && (
+                                                                    <span className="badge" style={{ backgroundColor: '#e2e8f0', color: '#334155', fontSize: '0.68rem', padding: '2px 8px', textTransform: 'uppercase' }}>Research Paper</span>
+                                                                )}
+                                                            </div>
                                                             <a 
-                                                                href={getDirectDriveUrl(art.pdfurl)} 
+                                                                href={getDirectDriveUrl(art.pdfurl || art.pdfUrl)} 
                                                                 target="_blank" 
                                                                 rel="noopener noreferrer" 
                                                                 className="btn btn-outline btn-xs"
-                                                                style={{ padding: '4px 10px', fontSize: '0.75rem', display: 'inline-flex', alignItems: 'center', gap: '5px', whiteSpace: 'nowrap' }}
+                                                                style={{ padding: '5px 12px', fontSize: '0.78rem', display: 'inline-flex', alignItems: 'center', gap: '6px', whiteSpace: 'nowrap' }}
                                                             >
-                                                                <i className="far fa-file-pdf"></i> Read Article
+                                                                <i className="far fa-file-pdf"></i> {art.type === 'article' ? 'Read Article' : 'View PDF'}
                                                             </a>
                                                         </div>
                                                     ))
