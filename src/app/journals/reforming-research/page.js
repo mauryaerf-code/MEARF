@@ -30,6 +30,58 @@ const REFORMING_RESEARCH_DOCS = [
     { id: 'rr-art-10', title: 'Article 10', type: 'article', pdfurl: '/reforming-research/Article 10.pdf' },
 ];
 
+const EDITORIAL_BOARD_MEMBERS = [
+    {
+        name: 'Dr. Dolly Mogra',
+        designation: 'Incharge Head, Department of Fashion Technology and Designing',
+        institution: 'UCSSH, Mohanlal Sukhadia University, Udaipur',
+        email: 'fashiontechnology@mlsu.ac.in',
+        profileUrl: 'https://share.google/oZ9JzfNFeJdqAgkXe',
+    },
+    {
+        name: 'Dr. Vikas Choudhary',
+        designation: 'Assistant Professor, Department of Prakrit',
+        institution: 'Shri Lal Bahadur Shastri National Sanskrit University (Central University), New Delhi',
+        email: 'vikas_choudhary@slbsrsv.ac.in',
+        profileUrl: 'https://www.slbsrsv.ac.in/faculties-and-departments/faculty-sahitya-and-sanskriti/department-prakrit',
+    },
+    {
+        name: 'Dr. Brijesh Kumar Mishra',
+        designation: 'Assistant Professor, Department of Political Science / Department of Humanities',
+        institution: 'Shri Lal Bahadur Shastri National Sanskrit University (Central University), New Delhi',
+        email: 'brajesh@slbsrsv.ac.in',
+        profileUrl: 'https://www.slbsrsv.ac.in/faculties-and-departments/faculty-adhunik-vidya/department-humanities',
+    },
+    {
+        name: 'Dr. Pragesh Kumar Mishra',
+        designation: 'Assistant Professor, Department of Psychology',
+        institution: 'Indira Gandhi National Tribal University, Amarkantak (MP) - 484887',
+        email: 'pragyesh.mishra@igntu.ac.in',
+        profileUrl: 'https://igntu.ac.in/departments/Psychology',
+    },
+    {
+        name: 'Dr. Harish Kumar',
+        designation: 'Assistant Professor, School of Tourism, Travel and Hospitality Management',
+        institution: 'Central University of Himachal Pradesh (HP)',
+        email: 'gautamharish.mta@hpcu.ac.in',
+        profileUrl: 'https://www.cuhimachal.ac.in/index.php/Home/faculty_details/dept_tourism_travel',
+    },
+    {
+        name: 'Dr. Indi Akurugoda',
+        designation: 'Senior Lecturer Grade 1, Department of Public Policy',
+        institution: 'University of Ruhuna, Wellamadama, Matara, Sri Lanka',
+        email: 'irakurugoda@hss.ruh.ac.lk',
+        profileUrl: 'https://hss.ruh.ac.lk/staff/ariyarathne',
+    },
+    {
+        name: 'Dr. Nisanka Sajeewani Ariyarathne',
+        designation: 'Senior Lecturer Grade 1, Department of Public Policy',
+        institution: 'University of Ruhuna, Wellamadama, Matara, Sri Lanka',
+        email: 'ariyarathnen@hss.ruh.ac.lk',
+        profileUrl: 'https://hss.ruh.ac.lk/staff/ariyarathne',
+    },
+];
+
 export default function OnlineJournal() {
     const [groupedIssues, setGroupedIssues] = useState([]);
     const [expandedLabelId, setExpandedLabelId] = useState(null);
@@ -42,17 +94,17 @@ export default function OnlineJournal() {
                 .from('merf_online_labels')
                 .select('*')
                 .order('created_at', { ascending: false });
-                
+
             if (labelsError) {
                 console.error("Error fetching online labels:", labelsError.message);
             }
-            
+
             // 2. Fetch all articles
             const { data: articles, error: articlesError } = await supabase
                 .from('merf_online_articles')
                 .select('*')
                 .order('created_at', { ascending: true });
-                
+
             if (articlesError) {
                 console.error("Error fetching online articles:", articlesError.message);
             }
@@ -63,7 +115,7 @@ export default function OnlineJournal() {
                     const supaArticles = articles ? articles.filter(art => art.label_id === lbl.id) : [];
                     // Populate current issue label with the ordered public documents
                     if (idx === 0 || lbl.name.toLowerCase().includes('reforming')) {
-                        const extraArticles = supaArticles.filter(sa => 
+                        const extraArticles = supaArticles.filter(sa =>
                             !REFORMING_RESEARCH_DOCS.some(rd => rd.title.toLowerCase() === (sa.title || '').toLowerCase())
                         );
                         return {
@@ -84,7 +136,7 @@ export default function OnlineJournal() {
                 }];
             }
             setGroupedIssues(grouped);
-            
+
             // Expand the first label by default if available
             if (grouped.length > 0) {
                 setExpandedLabelId(grouped[0].id);
@@ -139,10 +191,10 @@ export default function OnlineJournal() {
 
             <section className="section" id="online-journal-overview" style={{ paddingBottom: '40px' }}>
                 <div className="container" style={{ maxWidth: '1200px' }}>
-                    
+
                     {/* Top Row: Two Cards Side-by-Side (Left: About, Right: Specifications) */}
                     <div className="grid grid-2" style={{ gap: '30px', alignItems: 'stretch', marginBottom: '40px' }}>
-                        
+
                         {/* Left Card: About the Journal with Cover Image & Badge */}
                         <div className="card" style={{ padding: '35px', backgroundColor: 'var(--bg-white)', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-sm)', display: 'flex', flexDirection: 'column', height: '100%' }}>
                             <div style={{ display: 'flex', gap: '20px', alignItems: 'center', marginBottom: '20px', flexWrap: 'wrap' }}>
@@ -177,7 +229,7 @@ export default function OnlineJournal() {
                                     <i className="fas fa-list-check" style={{ marginRight: '10px', color: 'var(--accent-dark)' }}></i>
                                     Journal Specifications
                                 </h3>
-                                
+
                                 <div style={{ display: 'flex', flexDirection: 'column' }}>
                                     <div className="spec-item">
                                         <div className="spec-label">Title of Research Journal:</div>
@@ -201,7 +253,8 @@ export default function OnlineJournal() {
                                     </div>
                                     <div className="spec-item">
                                         <div className="spec-label">Language:</div>
-                                        <div className="spec-value">Multiple Languages(Hindi & English)</div>
+                                        <div className="spec-value">Multiple Languages(English, Hindi, Sanskrit,
+                                            Rajasthani, Gujarati, Panjabi, Marathi & Nepali)</div>
                                     </div>
                                     <div className="spec-item">
                                         <div className="spec-label">Starting Year:</div>
@@ -350,9 +403,9 @@ export default function OnlineJournal() {
                         </div>
 
                         <div style={{ marginTop: '35px', borderTop: '1px solid var(--border-color)', paddingTop: '25px' }}>
-                            <button 
-                                onClick={openGmail} 
-                                className="btn btn-accent" 
+                            <button
+                                onClick={openGmail}
+                                className="btn btn-accent"
                                 style={{ width: '100%', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px', border: 'none', padding: '14px 20px', fontSize: '1rem', fontWeight: '600' }}
                             >
                                 <i className="far fa-envelope"></i> Submit Manuscript via Email
@@ -360,6 +413,352 @@ export default function OnlineJournal() {
                             <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: '12px', textAlign: 'center', marginBottom: 0 }}>
                                 Send your manuscript and cover letter to <strong>drshailendar@mauryaerf.com</strong>.
                             </p>
+                        </div>
+                    </div>
+
+                    {/* Member of Editorial Board Card */}
+                    <div className="eb-section-card">
+                        <style>{`
+                            .eb-section-card {
+                                padding: 36px 40px;
+                                background-color: var(--bg-white);
+                                border: 1px solid var(--border-color);
+                                border-radius: var(--radius-lg);
+                                box-shadow: var(--shadow-md);
+                                margin-bottom: 35px;
+                                position: relative;
+                                overflow: hidden;
+                            }
+                            .eb-section-card::before {
+                                content: '';
+                                position: absolute;
+                                top: 0;
+                                left: 0;
+                                right: 0;
+                                height: 4px;
+                                background: linear-gradient(90deg, var(--accent) 0%, var(--primary) 100%);
+                            }
+                            .eb-header {
+                                margin-bottom: 22px;
+                                border-bottom: 2.5px solid var(--accent);
+                                padding-bottom: 14px;
+                                display: flex;
+                                justify-content: space-between;
+                                align-items: flex-end;
+                                flex-wrap: wrap;
+                                gap: 12px;
+                            }
+                            .eb-title {
+                                font-size: 1.65rem;
+                                color: var(--primary-dark);
+                                font-weight: 700;
+                                font-family: var(--font-heading);
+                                margin: 0;
+                                display: flex;
+                                align-items: center;
+                                gap: 12px;
+                            }
+                            .eb-badge-count {
+                                display: inline-flex;
+                                align-items: center;
+                                gap: 6px;
+                                background: linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(15, 32, 66, 0.08) 100%);
+                                color: var(--primary-dark);
+                                border: 1px solid rgba(212, 175, 55, 0.35);
+                                border-radius: 9999px;
+                                padding: 4px 12px;
+                                font-size: 0.8rem;
+                                font-weight: 600;
+                                letter-spacing: 0.3px;
+                            }
+                            .eb-description {
+                                font-size: 0.98rem;
+                                color: var(--text-muted);
+                                margin-bottom: 26px;
+                                line-height: 1.6;
+                            }
+                            .eb-grid {
+                                display: grid;
+                                grid-template-columns: repeat(3, 1fr);
+                                gap: 22px;
+                            }
+                            .eb-member-card {
+                                background: #ffffff;
+                                border: 1px solid var(--border-color);
+                                border-radius: 14px;
+                                box-shadow: 0 2px 8px rgba(15, 32, 66, 0.04);
+                                display: flex;
+                                flex-direction: column;
+                                justify-content: space-between;
+                                padding: 22px;
+                                transition: all 0.28s ease;
+                                position: relative;
+                                overflow: hidden;
+                            }
+                            .eb-member-card:hover {
+                                transform: translateY(-4px);
+                                box-shadow: 0 12px 24px -4px rgba(15, 32, 66, 0.12), 0 4px 8px -2px rgba(15, 32, 66, 0.06);
+                                border-color: var(--accent);
+                            }
+                            .eb-member-card::after {
+                                content: '';
+                                position: absolute;
+                                top: 0;
+                                left: 0;
+                                right: 0;
+                                height: 3px;
+                                background: linear-gradient(90deg, var(--accent) 0%, var(--primary-light) 100%);
+                                opacity: 0;
+                                transition: opacity 0.25s ease;
+                            }
+                            .eb-member-card:hover::after {
+                                opacity: 1;
+                            }
+                            .eb-profile-header {
+                                display: flex;
+                                align-items: flex-start;
+                                gap: 14px;
+                                margin-bottom: 16px;
+                            }
+                            .eb-avatar-circle {
+                                width: 48px;
+                                height: 48px;
+                                border-radius: 50%;
+                                background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+                                color: var(--accent);
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                font-size: 1.15rem;
+                                flex-shrink: 0;
+                                border: 2px solid rgba(212, 175, 55, 0.35);
+                                box-shadow: 0 3px 8px rgba(7, 17, 36, 0.15);
+                            }
+                            .eb-profile-info {
+                                flex: 1;
+                                min-width: 0;
+                            }
+                            .eb-name {
+                                font-family: var(--font-heading);
+                                font-size: 1.18rem;
+                                font-weight: 700;
+                                color: var(--primary-dark);
+                                margin: 0 0 5px 0;
+                                line-height: 1.3;
+                                overflow-wrap: break-word;
+                            }
+                            .eb-tag {
+                                display: inline-flex;
+                                align-items: center;
+                                gap: 5px;
+                                font-size: 0.72rem;
+                                font-weight: 700;
+                                text-transform: uppercase;
+                                letter-spacing: 0.5px;
+                                color: var(--accent-dark);
+                                background: rgba(212, 175, 55, 0.12);
+                                border: 1px solid rgba(212, 175, 55, 0.25);
+                                padding: 2.5px 9px;
+                                border-radius: 9999px;
+                            }
+                            .eb-info-list {
+                                display: flex;
+                                flex-direction: column;
+                                gap: 11px;
+                                margin-bottom: 18px;
+                            }
+                            .eb-info-row {
+                                display: flex;
+                                align-items: flex-start;
+                                gap: 10px;
+                                font-size: 0.88rem;
+                                line-height: 1.5;
+                            }
+                            .eb-info-icon {
+                                width: 26px;
+                                height: 26px;
+                                border-radius: 6px;
+                                background: rgba(15, 32, 66, 0.05);
+                                color: var(--primary);
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                font-size: 0.78rem;
+                                flex-shrink: 0;
+                                margin-top: 1px;
+                            }
+                            .eb-info-text {
+                                flex: 1;
+                                min-width: 0;
+                                overflow-wrap: anywhere;
+                                word-break: break-word;
+                            }
+                            .eb-designation-text {
+                                font-weight: 600;
+                                color: var(--primary);
+                            }
+                            .eb-institution-text {
+                                color: var(--text-muted);
+                            }
+                            .eb-email-link {
+                                color: var(--primary-dark);
+                                font-weight: 600;
+                                text-decoration: none;
+                                transition: color 0.2s ease;
+                            }
+                            .eb-email-link:hover {
+                                color: var(--accent-dark);
+                                text-decoration: underline;
+                            }
+                            .eb-footer-actions {
+                                border-top: 1px solid var(--border-color);
+                                padding-top: 14px;
+                                margin-top: auto;
+                            }
+                            .eb-profile-btn {
+                                display: inline-flex;
+                                align-items: center;
+                                justify-content: center;
+                                gap: 8px;
+                                width: 100%;
+                                padding: 9px 16px;
+                                border-radius: var(--radius-md);
+                                font-size: 0.84rem;
+                                font-weight: 600;
+                                color: var(--primary);
+                                background: #ffffff;
+                                border: 1.5px solid var(--primary);
+                                text-decoration: none;
+                                transition: all 0.22s ease;
+                                box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+                            }
+                            .eb-profile-btn:hover {
+                                background: var(--primary);
+                                color: #ffffff;
+                                transform: translateY(-1px);
+                                box-shadow: 0 4px 10px rgba(15, 32, 66, 0.18);
+                            }
+                            @media (max-width: 1080px) {
+                                .eb-grid {
+                                    grid-template-columns: repeat(2, 1fr);
+                                    gap: 18px;
+                                }
+                            }
+                            @media (max-width: 768px) {
+                                .eb-section-card {
+                                    padding: 26px 18px;
+                                    margin-bottom: 25px;
+                                }
+                                .eb-title {
+                                    font-size: 1.35rem;
+                                }
+                                .eb-grid {
+                                    grid-template-columns: 1fr;
+                                    gap: 16px;
+                                }
+                                .eb-member-card {
+                                    padding: 18px;
+                                }
+                            }
+                            @media (max-width: 480px) {
+                                .eb-section-card {
+                                    padding: 20px 14px;
+                                }
+                                .eb-header {
+                                    flex-direction: column;
+                                    align-items: flex-start;
+                                    gap: 8px;
+                                }
+                                .eb-avatar-circle {
+                                    width: 42px;
+                                    height: 42px;
+                                    font-size: 1.05rem;
+                                }
+                                .eb-name {
+                                    font-size: 1.08rem;
+                                }
+                            }
+                        `}</style>
+
+                        <div className="eb-header">
+                            <h3 className="eb-title">
+                                <i className="fas fa-users-viewfinder" style={{ color: 'var(--accent-dark)' }}></i>
+                                Member of Editorial Board
+                            </h3>
+                            <span className="eb-badge-count">
+                                <i className="fas fa-certificate" style={{ color: 'var(--accent-dark)', fontSize: '0.75rem' }}></i>
+                                {EDITORIAL_BOARD_MEMBERS.length} Eminent Scholars
+                            </span>
+                        </div>
+
+                        <p className="eb-description">
+                            Distinguished academic scholars and peer researchers serving on the editorial board of <strong>Reforming Research</strong>.
+                        </p>
+
+                        <div className="eb-grid">
+                            {EDITORIAL_BOARD_MEMBERS.map((member, index) => (
+                                <div key={index} className="eb-member-card">
+                                    <div>
+                                        <div className="eb-profile-header">
+                                            <div className="eb-avatar-circle">
+                                                <i className="fas fa-user-graduate"></i>
+                                            </div>
+                                            <div className="eb-profile-info">
+                                                <h4 className="eb-name">{member.name}</h4>
+                                                <span className="eb-tag">
+                                                    <i className="fas fa-award" style={{ fontSize: '0.65rem' }}></i>
+                                                    Editorial Board
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <div className="eb-info-list">
+                                            <div className="eb-info-row">
+                                                <div className="eb-info-icon">
+                                                    <i className="fas fa-briefcase"></i>
+                                                </div>
+                                                <div className="eb-info-text eb-designation-text">
+                                                    {member.designation}
+                                                </div>
+                                            </div>
+
+                                            <div className="eb-info-row">
+                                                <div className="eb-info-icon">
+                                                    <i className="fas fa-building-columns"></i>
+                                                </div>
+                                                <div className="eb-info-text eb-institution-text">
+                                                    {member.institution}
+                                                </div>
+                                            </div>
+
+                                            <div className="eb-info-row">
+                                                <div className="eb-info-icon">
+                                                    <i className="fas fa-envelope"></i>
+                                                </div>
+                                                <div className="eb-info-text">
+                                                    <a href={`mailto:${member.email}`} className="eb-email-link">
+                                                        {member.email}
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {member.profileUrl && (
+                                        <div className="eb-footer-actions">
+                                            <a
+                                                href={member.profileUrl}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="eb-profile-btn"
+                                            >
+                                                <span>Institutional Profile</span>
+                                                <i className="fas fa-arrow-up-right-from-square" style={{ fontSize: '0.75rem' }}></i>
+                                            </a>
+                                        </div>
+                                    )}
+                                </div>
+                            ))}
                         </div>
                     </div>
 
@@ -386,7 +785,7 @@ export default function OnlineJournal() {
                                 groupedIssues.map((issue) => (
                                     <div key={issue.id} style={{ border: '1px solid var(--border-color)', borderRadius: '8px', backgroundColor: 'var(--bg-white)', overflow: 'hidden', boxShadow: 'var(--shadow-sm)' }}>
                                         {/* Accordion Header */}
-                                        <button 
+                                        <button
                                             onClick={() => toggleAccordion(issue.id)}
                                             style={{
                                                 width: '100%',
@@ -414,7 +813,7 @@ export default function OnlineJournal() {
                                                 )}
                                             </span>
                                         </button>
-                                        
+
                                         {/* Accordion Content */}
                                         {expandedLabelId === issue.id && (
                                             <div style={{ padding: '10px 24px 24px 24px', borderTop: '1px solid rgba(0,0,0,0.04)', display: 'flex', flexDirection: 'column', gap: '10px' }}>
@@ -424,15 +823,15 @@ export default function OnlineJournal() {
                                                     </p>
                                                 ) : (
                                                     issue.articles.map((art) => (
-                                                        <div 
-                                                            key={art.id} 
-                                                            style={{ 
-                                                                display: 'flex', 
-                                                                justifyContent: 'space-between', 
-                                                                alignItems: 'center', 
-                                                                padding: '12px 16px', 
-                                                                borderRadius: '6px', 
-                                                                backgroundColor: 'var(--bg-light)', 
+                                                        <div
+                                                            key={art.id}
+                                                            style={{
+                                                                display: 'flex',
+                                                                justifyContent: 'space-between',
+                                                                alignItems: 'center',
+                                                                padding: '12px 16px',
+                                                                borderRadius: '6px',
+                                                                backgroundColor: 'var(--bg-light)',
                                                                 border: '1px solid rgba(0,0,0,0.03)',
                                                                 gap: '15px',
                                                                 flexWrap: 'wrap'
@@ -456,10 +855,10 @@ export default function OnlineJournal() {
                                                                     <span className="badge" style={{ backgroundColor: '#e2e8f0', color: '#334155', fontSize: '0.68rem', padding: '2px 8px', textTransform: 'uppercase' }}>Research Paper</span>
                                                                 )}
                                                             </div>
-                                                            <a 
-                                                                href={getDirectDriveUrl(art.pdfurl || art.pdfUrl)} 
-                                                                target="_blank" 
-                                                                rel="noopener noreferrer" 
+                                                            <a
+                                                                href={getDirectDriveUrl(art.pdfurl || art.pdfUrl)}
+                                                                target="_blank"
+                                                                rel="noopener noreferrer"
                                                                 className="btn btn-outline btn-xs"
                                                                 style={{ padding: '5px 12px', fontSize: '0.78rem', display: 'inline-flex', alignItems: 'center', gap: '6px', whiteSpace: 'nowrap' }}
                                                             >
