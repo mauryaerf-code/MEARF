@@ -15,11 +15,19 @@ const getEmbeddableDriveUrl = (url) => {
     return url;
 };
 
+const formatExternalUrl = (url) => {
+    if (!url) return '';
+    const trimmed = String(url).trim();
+    if (!trimmed) return '';
+    if (/^(https?:\/\/|mailto:|tel:)/i.test(trimmed)) return trimmed;
+    return `https://${trimmed}`;
+};
+
 const DEFAULT_BOOKS = [
-    { id: "bk-1", title: "Research Methodology in Social Sciences", authors: "Dr. Shailendar Maurya", isbn: "978-81-9556-XX-X", year: 2025, coverUrl: "" },
-    { id: "bk-2", title: "Modern Education & IKS under NEP 2020", authors: "Prof. Ram Gopal", isbn: "978-81-9556-XX-Y", year: 2026, coverUrl: "" },
-    { id: "bk-3", title: "Women Centric Skill Dev in Rajasthan", authors: "Dr. S. Maurya", isbn: "978-81-9556-XX-Z", year: 2026, coverUrl: "" },
-    { id: "bk-4", title: "Sustainable Development Perspectives", authors: "Dr. Shailendar Maurya", isbn: "978-81-9556-XX-A", year: 2024, coverUrl: "" }
+    { id: "bk-1", title: "Research Methodology in Social Sciences", authors: "Dr. Shailendar Maurya", isbn: "978-81-9556-XX-X", year: 2025, coverUrl: "", price: "₹450", purchaseLink: "" },
+    { id: "bk-2", title: "Modern Education & IKS under NEP 2020", authors: "Prof. Ram Gopal", isbn: "978-81-9556-XX-Y", year: 2026, coverUrl: "", price: "₹500", purchaseLink: "" },
+    { id: "bk-3", title: "Women Centric Skill Dev in Rajasthan", authors: "Dr. S. Maurya", isbn: "978-81-9556-XX-Z", year: 2026, coverUrl: "", price: "₹350", purchaseLink: "" },
+    { id: "bk-4", title: "Sustainable Development Perspectives", authors: "Dr. Shailendar Maurya", isbn: "978-81-9556-XX-A", year: 2024, coverUrl: "", price: "₹600", purchaseLink: "" }
 ];
 
 export default function Publications() {
@@ -60,7 +68,9 @@ export default function Publications() {
                     authors: b.author || b.authors,
                     isbn: b.isbn,
                     year: parseInt(b.year, 10) || b.year,
-                    coverUrl: b.coverurl || b.coverUrl || b.coverURL
+                    coverUrl: b.coverurl || b.coverUrl || b.coverURL,
+                    price: b.price || b.Price || '',
+                    purchaseLink: b.puchase_link || b.purchase_link || b.puchaselink || b.purchaselink || ''
                 }));
                 setBooks(mappedBooks);
                 setTotalCount(count || 0);
@@ -69,7 +79,11 @@ export default function Publications() {
                 // Fallback to local storage cache
                 const storedBooks = localStorage.getItem('merf_books');
                 if (storedBooks && !searchVal.trim()) {
-                    const all = JSON.parse(storedBooks);
+                    const all = JSON.parse(storedBooks).map(b => ({
+                        ...b,
+                        price: b.price || b.Price || '',
+                        purchaseLink: b.puchase_link || b.purchase_link || b.purchaseLink || ''
+                    }));
                     setBooks(all.slice(fromRange, toRange + 1));
                     setTotalCount(all.length);
                 } else if (!searchVal.trim()) {
@@ -154,24 +168,26 @@ export default function Publications() {
             <section className="section" id="pub-about-section">
                 <div className="container">
                     <div className="grid grid-2">
-                        <div>
-                            <div style={{ display: 'flex', gap: '20px', alignItems: 'center', marginBottom: '20px', flexWrap: 'wrap' }}>
-                                <div style={{ flex: '0 0 100px', maxWidth: '100px' }}>
-                                    <img src="/assets/Publicationss/image.png" alt="Publications Cover Image" style={{ width: '100%', height: 'auto', borderRadius: 'var(--radius-sm)', boxShadow: 'var(--shadow-md)' }} />
+                        <div className="card card-accent" style={{ padding: '35px', backgroundColor: 'var(--bg-white)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                            <div>
+                                <div style={{ display: 'flex', gap: '20px', alignItems: 'center', marginBottom: '20px', flexWrap: 'wrap' }}>
+                                    <div style={{ flex: '0 0 100px', maxWidth: '100px' }}>
+                                        <img src="/assets/Publicationss/image.png" alt="Publications Cover Image" style={{ width: '100%', height: 'auto', borderRadius: 'var(--radius-sm)', boxShadow: 'var(--shadow-md)' }} />
+                                    </div>
+                                    <div style={{ flex: '1', minWidth: '200px' }}>
+                                        <h2 style={{ fontSize: '1.85rem', marginBottom: '0' }}>Platform for Budding & Established Authors</h2>
+                                    </div>
                                 </div>
-                                <div style={{ flex: '1', minWidth: '200px' }}>
-                                    <h2 style={{ fontSize: '1.85rem', marginBottom: '0' }}>Platform for Budding & Established Authors</h2>
-                                </div>
+                                <p style={{ fontSize: '1.02rem', fontFamily: '"Outfit", "Inter", sans-serif', lineHeight: '1.8', color: 'var(--text-dark)', textAlign: 'justify', marginBottom: '15px' }}>
+                                    <strong>Maurya Publications & Distributors</strong> serves as an ideal platform for both the established as well as budding authors for getting their books published at an earliest date.
+                                </p>
+                                <p style={{ fontSize: '1.02rem', fontFamily: '"Outfit", "Inter", sans-serif', lineHeight: '1.8', color: 'var(--text-dark)', textAlign: 'justify', marginBottom: '15px' }}>
+                                    Since inception (in <strong>2022</strong>) we believe in providing high quality books at reasonable prices. We strongly believe in being in close contact with all our authors on the production, promotion and distribution of their books. Maintaining high academic and production standards is our priority.
+                                </p>
+                                <p style={{ fontSize: '1.02rem', fontFamily: '"Outfit", "Inter", sans-serif', lineHeight: '1.8', color: 'var(--text-dark)', textAlign: 'justify', marginBottom: 0 }}>
+                                    Manuscripts received would be thoroughly assessed for their viability across the globe. We intend to inform the authors ASAP on the acceptance or rejection of their works. Moreover, <strong>ISBN</strong> is allotted to all our publications. Our books are at the forefront of knowledge and often break new ground in research. As an independent publisher, we are more willing to take risks by publishing in emerging disciplines.
+                                </p>
                             </div>
-                            <p style={{ fontSize: '1.02rem', fontFamily: '"Outfit", "Inter", sans-serif', lineHeight: '1.8', color: 'var(--text-dark)', textAlign: 'justify', marginBottom: '15px' }}>
-                                <strong>Maurya Publications & Distributors</strong> serves as an ideal platform for both the established as well as budding authors for getting their books published at an earliest date.
-                            </p>
-                            <p style={{ fontSize: '1.02rem', fontFamily: '"Outfit", "Inter", sans-serif', lineHeight: '1.8', color: 'var(--text-dark)', textAlign: 'justify', marginBottom: '15px' }}>
-                                Since inception (in <strong>2022</strong>) we believe in providing high quality books at reasonable prices. We strongly believe in being in close contact with all our authors on the production, promotion and distribution of their books. Maintaining high academic and production standards is our priority.
-                            </p>
-                            <p style={{ fontSize: '1.02rem', fontFamily: '"Outfit", "Inter", sans-serif', lineHeight: '1.8', color: 'var(--text-dark)', textAlign: 'justify', marginBottom: 0 }}>
-                                Manuscripts received would be thoroughly assessed for their viability across the globe. We intend to inform the authors ASAP on the acceptance or rejection of their works. Moreover, <strong>ISBN</strong> is allotted to all our publications. Our books are at the forefront of knowledge and often break new ground in research. As an independent publisher, we are more willing to take risks by publishing in emerging disciplines.
-                            </p>
                             
                             <div style={{ marginTop: '30px', display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
                                 <a 
@@ -325,11 +341,42 @@ export default function Publications() {
                                                 </div>
                                             )}
                                         </div>
-                                        <div style={{ flex: '1', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                                            <h4 style={{ fontSize: '0.95rem', marginBottom: '6px', lineHeight: '1.4', fontWeight: 600, color: 'var(--primary-dark)' }}>{bk.title}</h4>
-                                            <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '5px' }}>By {bk.authors}</p>
-                                            <p style={{ fontSize: '0.75rem', color: 'var(--accent-dark)', fontWeight: 'bold', marginBottom: '5px' }}>ISBN: {bk.isbn}</p>
-                                            <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: 0 }}>Published: {bk.year}</p>
+                                        <div style={{ flex: '1', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', width: '100%' }}>
+                                            <div>
+                                                <h4 style={{ fontSize: '0.95rem', marginBottom: '6px', lineHeight: '1.4', fontWeight: 600, color: 'var(--primary-dark)' }}>{bk.title}</h4>
+                                                <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '5px' }}>By {bk.authors}</p>
+                                                <p style={{ fontSize: '0.75rem', color: 'var(--accent-dark)', fontWeight: 'bold', marginBottom: '5px' }}>ISBN: {bk.isbn}</p>
+                                                <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '14px' }}>Published: {bk.year}</p>
+                                            </div>
+                                            <div style={{ marginTop: 'auto', paddingTop: '8px' }}>
+                                                <a 
+                                                    href={bk.purchaseLink ? formatExternalUrl(bk.purchaseLink) : '#'}
+                                                    target={bk.purchaseLink ? '_blank' : '_self'}
+                                                    rel={bk.purchaseLink ? 'noopener noreferrer' : undefined}
+                                                    onClick={(e) => {
+                                                        if (!bk.purchaseLink) {
+                                                            e.preventDefault();
+                                                        }
+                                                    }}
+                                                    className="btn btn-primary btn-sm"
+                                                    style={{ 
+                                                        width: '100%', 
+                                                        display: 'inline-flex', 
+                                                        alignItems: 'center', 
+                                                        justifyContent: 'center', 
+                                                        gap: '6px', 
+                                                        padding: '7px 12px', 
+                                                        fontSize: '0.85rem',
+                                                        borderRadius: 'var(--radius-sm, 6px)',
+                                                        textDecoration: 'none',
+                                                        cursor: bk.purchaseLink ? 'pointer' : 'default',
+                                                        opacity: bk.purchaseLink ? 1 : 0.85
+                                                    }}
+                                                >
+                                                    <i className="fas fa-shopping-cart" style={{ fontSize: '0.8rem' }}></i>
+                                                    <span>{bk.price || 'Purchase'}</span>
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
                                 ))}

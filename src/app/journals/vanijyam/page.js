@@ -1,7 +1,19 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { supabase } from '@/lib/supabase';
+import EditorialBoard from '@/components/EditorialBoard';
+import { getPdfViewerUrl } from '@/lib/pdfHelper';
+
+const getDirectDriveImageUrl = (url) => {
+    if (!url) return '';
+    if (url.startsWith('/') || url.startsWith('data:')) return url;
+    const match = url.match(/(?:id=|\/d\/|d=)([a-zA-Z0-9_-]{25,})/);
+    if (match && match[1]) {
+        return `/api/proxy-image?id=${match[1]}`;
+    }
+    return url;
+};
 
 const getDirectDriveUrl = (url) => {
     if (!url) return '';
@@ -25,71 +37,77 @@ const getDownloadDriveUrl = (url) => {
     return url;
 };
 
-const DEFAULT_VANIJYAM_ARTICLES = [
-    { id: 'v-cover', year: '2026', volume: 'Volume 1', issue: 'Cover', pdfUrl: '/vanijyam/Cover.pdf' },
-    { id: 'v-disclaimer', year: '2026', volume: 'Volume 1', issue: 'Disclaimer', pdfUrl: '/vanijyam/Disclaimer.pdf' },
-    { id: 'v-editor-board', year: '2026', volume: 'Volume 1', issue: 'Editorial Board', pdfUrl: '/vanijyam/Editor%20Board.pdf' },
-    { id: 'v-art-1', year: '2026', volume: 'Volume 1', issue: 'Article 1', pdfUrl: '/vanijyam/Article%201.pdf' },
-    { id: 'v-art-2', year: '2026', volume: 'Volume 1', issue: 'Article 2', pdfUrl: '/vanijyam/Article%202.pdf' },
-    { id: 'v-art-3', year: '2026', volume: 'Volume 1', issue: 'Article 3', pdfUrl: '/vanijyam/Article%203.pdf' },
-    { id: 'v-art-4', year: '2026', volume: 'Volume 1', issue: 'Article 4', pdfUrl: '/vanijyam/Article%204.pdf' },
-    { id: 'v-art-5', year: '2026', volume: 'Volume 1', issue: 'Article 5', pdfUrl: '/vanijyam/Article%205.pdf' },
-    { id: 'v-art-6', year: '2026', volume: 'Volume 1', issue: 'Article 6', pdfUrl: '/vanijyam/Article%206.pdf' },
-    { id: 'v-art-7', year: '2026', volume: 'Volume 1', issue: 'Article 7', pdfUrl: '/vanijyam/Article%207.pdf' },
-    { id: 'v-art-8', year: '2026', volume: 'Volume 1', issue: 'Article 8', pdfUrl: '/vanijyam/Article%208.pdf' },
-    { id: 'v-art-9', year: '2026', volume: 'Volume 1', issue: 'Article 9', pdfUrl: '/vanijyam/Article%209.pdf' },
-    { id: 'v-art-10', year: '2026', volume: 'Volume 1', issue: 'Article 10', pdfUrl: '/vanijyam/Article%2010.pdf' },
-    { id: 'v-art-11', year: '2026', volume: 'Volume 1', issue: 'Article 11', pdfUrl: '/vanijyam/Article%2011.pdf' },
-];
+const DEFAULT_VANIJYAM_ARTICLES = [];
 
 export default function VanijyamJournal() {
-    const [articles, setArticles] = useState(DEFAULT_VANIJYAM_ARTICLES);
+    const [articles, setArticles] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [activeSearch, setActiveSearch] = useState('');
     const [page, setPage] = useState(1);
-    const [totalCount, setTotalCount] = useState(DEFAULT_VANIJYAM_ARTICLES.length);
-    const [loading, setLoading] = useState(false);
+    const [totalCount, setTotalCount] = useState(0);
+    const [loading, setLoading] = useState(true);
+    const [expandedLabels, setExpandedLabels] = useState({});
+
+    const toggleLabel = (id) => {
+        setExpandedLabels(prev => ({
+            ...prev,
+            [id]: prev[id] === undefined ? false : !prev[id]
+        }));
+    };
 
     const pageSize = 20;
 
-    const fetchArticles = async (currentPage, searchVal) => {
+        const fetchArticles = async (currentPage, searchVal) => {
         try {
-            let supaData = [];
+            setLoading(true);
             const { data, error } = await supabase
                 .from('merf_issues')
                 .select('*')
-                .eq('journal', "Vanijyam")
-                .order('id', { ascending: false });
+                .eq('journal', 'Vanijyam')
+                .order('created_at', { ascending: false });
 
-            if (!error && data) {
-                // Strictly exclude any Google Drive records
-                supaData = data
-                    .filter(art => {
-                        const url = art.pdfurl || art.pdfUrl || '';
-                        return !url.includes('drive.google.com');
-                    })
-                    .map(art => ({
-                        id: art.id,
-                        year: art.year,
-                        volume: art.volume || '',
-                        issue: art.issue || '',
-                        pdfUrl: art.pdfurl || art.pdfUrl
-                    }));
+            if (error) {
+                console.error("Failed to query Vanijyam issues from database:", error.message);
+                setArticles([]);
+                setTotalCount(0);
+                return;
             }
 
-            // Combine the local public PDFs with any additional verified issues
-            const combined = [
-                ...DEFAULT_VANIJYAM_ARTICLES,
-                ...supaData.filter(si => !DEFAULT_VANIJYAM_ARTICLES.some(dv => dv.id === si.id))
-            ];
+            const supaData = (data || []).map(art => {
+                const dbLabel = (art.label && String(art.label).trim()) || 
+                                (art.issue && String(art.issue).trim()) || 
+                                (art.Author && String(art.Author).trim()) || 
+                                (art.author && String(art.author).trim()) || 
+                                'Published Issues';
+                const dbTitle = (art.title && String(art.title).trim()) ? String(art.title).trim() : '';
+                const dbIssueNo = (art.issue && String(art.issue).trim()) ? String(art.issue).trim() : '';
+                const dbAuthor = (art.Author && String(art.Author).trim()) || 
+                                 (art.author && String(art.author).trim()) || 
+                                 (art.volume && String(art.volume).trim()) || '';
+                const dbYear = (art.year && String(art.year).trim()) ? String(art.year).trim() : '';
 
-            let filtered = combined;
+                return {
+                    id: art.id,
+                    year: dbYear,
+                    issueNo: dbIssueNo,
+                    author: dbAuthor,
+                    label: dbLabel,
+                    image: art.image || '',
+                    title: dbTitle,
+                    createdAt: art.created_at || '',
+                    pdfUrl: art.url || art.pdfurl || art.pdfUrl || ''
+                };
+            });
+
+            let filtered = supaData;
             if (searchVal.trim()) {
                 const q = searchVal.trim().toLowerCase();
-                filtered = combined.filter(item => 
-                    (item.volume || '').toLowerCase().includes(q) ||
-                    (item.issue || '').toLowerCase().includes(q) ||
-                    (item.year || '').toLowerCase().includes(q)
+                filtered = supaData.filter(item =>
+                    (item.title || '').toLowerCase().includes(q) ||
+                    (item.issueNo || '').toLowerCase().includes(q) ||
+                    (item.author || '').toLowerCase().includes(q) ||
+                    (item.year || '').toLowerCase().includes(q) ||
+                    (item.label || '').toLowerCase().includes(q)
                 );
             }
 
@@ -98,14 +116,10 @@ export default function VanijyamJournal() {
 
             setArticles(filtered.slice(fromRange, toRange));
             setTotalCount(filtered.length);
-
-            if (typeof window !== 'undefined' && !searchVal.trim()) {
-                localStorage.setItem('merf_vanijyam_articles', JSON.stringify(combined));
-            }
         } catch (err) {
             console.error("Failed to query journal articles:", err);
-            setArticles(DEFAULT_VANIJYAM_ARTICLES.slice(0, pageSize));
-            setTotalCount(DEFAULT_VANIJYAM_ARTICLES.length);
+            setArticles([]);
+            setTotalCount(0);
         } finally {
             setLoading(false);
         }
@@ -120,6 +134,40 @@ export default function VanijyamJournal() {
         setPage(1);
         setActiveSearch(searchQuery);
     };
+
+    
+        // Group articles by Issue Label with Cover Image - Newest on Top
+    const groupedIssues = useMemo(() => {
+        const map = new Map();
+        articles.forEach(item => {
+            const labelKey = (item.label && item.label.trim())
+                ? item.label.trim()
+                : (item.issueNo || item.author || 'Published Issues');
+
+            if (!map.has(labelKey)) {
+                map.set(labelKey, {
+                    id: labelKey,
+                    label: labelKey,
+                    image: item.image || '',
+                    year: item.year || '',
+                    latestCreatedAt: item.createdAt || '',
+                    items: []
+                });
+            }
+            const grp = map.get(labelKey);
+            if (!grp.image && item.image) grp.image = item.image;
+            if (!grp.year && item.year) grp.year = item.year;
+            if (item.createdAt && (!grp.latestCreatedAt || new Date(item.createdAt) > new Date(grp.latestCreatedAt))) {
+                grp.latestCreatedAt = item.createdAt;
+            }
+            grp.items.push(item);
+        });
+
+        const groups = Array.from(map.values());
+        // Sort so newest label is on top
+        groups.sort((a, b) => new Date(b.latestCreatedAt || 0) - new Date(a.latestCreatedAt || 0));
+        return groups;
+    }, [articles]);
 
     const handleClearSearch = () => {
         setSearchQuery('');
@@ -168,10 +216,10 @@ export default function VanijyamJournal() {
 
             <section className="section" id="vanijyam-content" style={{ paddingBottom: '40px' }}>
                 <div className="container" style={{ maxWidth: '1200px' }}>
-                    
+
                     {/* Top Row: Two Cards Side-by-Side (Left: About, Right: Specifications) */}
                     <div className="grid grid-2" style={{ gap: '30px', alignItems: 'stretch', marginBottom: '40px' }}>
-                        
+
                         {/* Left Card: About the Journal with Cover Image & Badge */}
                         <div className="card" style={{ padding: '35px', backgroundColor: 'var(--bg-white)', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-sm)', display: 'flex', flexDirection: 'column', height: '100%' }}>
                             <div style={{ display: 'flex', gap: '20px', alignItems: 'center', marginBottom: '20px', flexWrap: 'wrap' }}>
@@ -179,7 +227,7 @@ export default function VanijyamJournal() {
                                     <img src="/assets/home/vanijyam.png" alt="Vanijyam Journal Cover" style={{ width: '100%', height: 'auto', borderRadius: 'var(--radius-sm)', boxShadow: 'var(--shadow-md)' }} />
                                 </div>
                                 <div style={{ flex: '1', minWidth: '180px' }}>
-                                    <span className="badge badge-primary" style={{ marginBottom: '10px' }}>ISSN: Applied</span>
+                                    <span className="badge badge-primary" style={{ marginBottom: '10px' }}>ISSN: 2839-5980</span>
                                     <h2 style={{ fontSize: '1.8rem', marginBottom: '0', fontFamily: 'var(--font-heading)' }}>Vanijyam (VIJCMBS)</h2>
                                 </div>
                             </div>
@@ -198,13 +246,13 @@ export default function VanijyamJournal() {
                         </div>
 
                         {/* Right Card: Journal Specifications */}
-                        <div className="card specs-card-responsive" style={{ padding: '35px', backgroundColor: 'var(--bg-white)', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-sm)', display: 'flex', flexDirection: 'column', height: '100%', justifyContent: 'space-between' }}>
+                        <div className="card specs-card-responsive" style={{ padding: '35px', backgroundColor: 'var(--bg-white)', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-sm)', display: 'flex', flexDirection: 'column', height: '100%' }}>
                             <div>
                                 <h3 style={{ fontSize: '1.5rem', marginBottom: '20px', borderBottom: '2.5px solid var(--accent)', paddingBottom: '10px', color: 'var(--primary-dark)', fontWeight: '700', fontFamily: 'var(--font-heading)' }}>
                                     <i className="fas fa-list-check" style={{ marginRight: '10px', color: 'var(--accent-dark)' }}></i>
                                     Journal Specifications
                                 </h3>
-                                
+
                                 <div style={{ display: 'flex', flexDirection: 'column' }}>
                                     <div className="spec-item">
                                         <div className="spec-label">Title of Research Journal:</div>
@@ -212,11 +260,13 @@ export default function VanijyamJournal() {
                                     </div>
                                     <div className="spec-item">
                                         <div className="spec-label">ISSN:</div>
-                                        <div className="spec-value" style={{ letterSpacing: '1px', fontWeight: '600', color: 'var(--text-muted)' }}>......................</div>
+                                        <div className="spec-value">
+                                            <span className="badge badge-primary" style={{ fontSize: '0.85rem', padding: '3px 10px', fontWeight: '700' }}>2839-5980</span>
+                                        </div>
                                     </div>
                                     <div className="spec-item">
                                         <div className="spec-label">Frequency:</div>
-                                        <div className="spec-value">Yearly/Annually</div>
+                                        <div className="spec-value">Yearly / Annually</div>
                                     </div>
                                     <div className="spec-item">
                                         <div className="spec-label">Publication Format:</div>
@@ -228,7 +278,7 @@ export default function VanijyamJournal() {
                                     </div>
                                     <div className="spec-item">
                                         <div className="spec-label">Language:</div>
-                                        <div className="spec-value">Multiple Languages(Hindi & English)</div>
+                                        <div className="spec-value">Multiple Languages (Hindi & English)</div>
                                     </div>
                                     <div className="spec-item">
                                         <div className="spec-label">Starting Year:</div>
@@ -236,7 +286,13 @@ export default function VanijyamJournal() {
                                     </div>
                                     <div className="spec-item">
                                         <div className="spec-label">Chief Editor:</div>
-                                        <div className="spec-value" style={{ fontWeight: '600' }}>Dr. Vinod Kumar Meena <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'block', fontWeight: '400' }}>(Assistant Professor, MLSU, Udaipur)</span></div>
+                                        <div className="spec-value" style={{ fontWeight: '600' }}>Dr. Shailendar Maurya</div>
+                                    </div>
+                                    <div className="spec-item">
+                                        <div className="spec-label">Associate Editor:</div>
+                                        <div className="spec-value" style={{ fontWeight: '600' }}>
+                                            Dr. Vinod Kumar Meena <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'block', fontWeight: '400' }}>(Assistant Professor, MLSU, Udaipur)</span>
+                                        </div>
                                     </div>
                                     <div className="spec-item">
                                         <div className="spec-label">Name of Publisher:</div>
@@ -245,8 +301,8 @@ export default function VanijyamJournal() {
                                     <div className="spec-item">
                                         <div className="spec-label">Contact / Phone:</div>
                                         <div className="spec-value" style={{ fontWeight: '600', color: 'var(--accent-dark)' }}>
-                                            <i className="fas fa-phone-alt" style={{ marginRight: '6px' }}></i>+91-9460931698 <br></br>
-                                            <i className="fas fa-phone-alt" style={{ marginRight: '6px' }}></i>+91-9636635216
+                                            <div><i className="fas fa-phone-alt" style={{ marginRight: '6px' }}></i>+91-9460931698</div>
+                                            <div style={{ marginTop: '4px' }}><i className="fas fa-phone-alt" style={{ marginRight: '6px' }}></i>+91-9636635216</div>
                                         </div>
                                     </div>
                                 </div>
@@ -380,20 +436,23 @@ export default function VanijyamJournal() {
                         {/* Action Buttons: Submit via Email & Membership Link */}
                         <div style={{ marginTop: '35px', borderTop: '1px solid var(--border-color)', paddingTop: '25px', display: 'flex', flexDirection: 'column', gap: '15px' }}>
                             <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
-                                <button 
-                                    onClick={openGmail} 
-                                    className="btn btn-primary" 
+                                <button
+                                    onClick={openGmail}
+                                    className="btn btn-primary"
                                     style={{ flex: '1', minWidth: '220px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px', border: 'none', padding: '14px 20px', fontSize: '1rem', fontWeight: '600' }}
                                 >
                                     <i className="far fa-envelope"></i> Submit Manuscript via Email
                                 </button>
-                               
+
                             </div>
                             <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', textAlign: 'center', marginBottom: 0 }}>
                                 Send manuscripts directly to <strong>editorvanijam@gmail.com</strong>.
                             </p>
                         </div>
                     </div>
+
+                    {/* Member of Editorial Board */}
+                    <EditorialBoard journalName="Vanijyam" />
 
                 </div>
             </section>
@@ -412,15 +471,15 @@ export default function VanijyamJournal() {
                             <div style={{ display: 'flex', alignItems: 'center', paddingLeft: '15px', color: 'var(--text-muted)' }}>
                                 <i className="fas fa-search"></i>
                             </div>
-                            <input 
-                                type="text" 
+                            <input
+                                type="text"
                                 className="search-input"
-                                placeholder="Search by volume, issue or year..." 
+                                placeholder="Search by volume, issue or year..."
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
                             />
                             {searchQuery && (
-                                <button 
+                                <button
                                     type="button"
                                     onClick={handleClearSearch}
                                     style={{
@@ -452,43 +511,115 @@ export default function VanijyamJournal() {
                                     <p style={{ margin: 0, color: 'var(--text-muted)' }}>No issues published yet. Check back soon for the 2026 maiden issue!</p>
                                 </div>
                             ) : (
-                                <div className="table-responsive" style={{ marginTop: '20px' }}>
-                                    <table className="admin-table" style={{ width: '100%', borderCollapse: 'collapse', backgroundColor: '#ffffff', borderRadius: '8px', overflow: 'hidden', boxShadow: 'var(--shadow-sm)' }}>
-                                        <thead style={{ backgroundColor: 'var(--primary)', color: '#ffffff' }}>
-                                            <tr>
-                                                <th style={{ padding: '12px 15px', textAlign: 'left', fontWeight: '600' }}>No.</th>
-                                                <th style={{ padding: '12px 15px', textAlign: 'left', fontWeight: '600' }}>Year</th>
-                                                <th style={{ padding: '12px 15px', textAlign: 'left', fontWeight: '600' }}>Volume</th>
-                                                <th style={{ padding: '12px 15px', textAlign: 'left', fontWeight: '600' }}>Issue</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {articles.map((item, index) => (
-                                                <tr key={item.id} style={{ borderBottom: '1px solid var(--border-color)' }}>
-                                                    <td style={{ padding: '12px 15px', color: 'var(--text-muted)' }}>{(page - 1) * pageSize + index + 1}</td>
-                                                    <td style={{ padding: '12px 15px', fontWeight: '500' }}>{item.year}</td>
-                                                    <td style={{ padding: '12px 15px' }}>{item.volume}</td>
-                                                    <td style={{ padding: '12px 15px' }}>
-                                                        {item.pdfUrl ? (
-                                                            <a href={getDirectDriveUrl(item.pdfUrl)} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent-dark)', fontWeight: 'bold', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-                                                                <i className="far fa-file-pdf"></i> {item.issue}
-                                                            </a>
-                                                        ) : (
-                                                            item.issue
-                                                        )}
-                                                    </td>
-                                                </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
-                                </div>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', marginTop: '25px' }}>
+                                {groupedIssues.length === 0 ? (
+                                    <div style={{ textAlign: 'center', padding: '50px 20px', backgroundColor: '#ffffff', borderRadius: '12px', border: '1px solid var(--border-color)' }}>
+                                        <p style={{ margin: 0, color: 'var(--text-muted)' }}>No issues found matching your search.</p>
+                                    </div>
+                                ) : (
+                                    groupedIssues.map((group, gIndex) => {
+                                        const isExpanded = expandedLabels[group.id] !== undefined ? expandedLabels[group.id] : (gIndex === 0);
+                                        return (
+                                            <div key={group.id} className="journal-issue-card">
+                                                {/* ROW 1: Cover Image First */}
+                                                <div className="journal-cover-showcase">
+                                                    <div style={{ textAlign: 'center' }}>
+                                                        <img 
+                                                            src={getDirectDriveImageUrl(group.image) || '/assets/home/vanijyam.png'} 
+                                                            alt={group.label ? `${group.label} Cover` : 'Vanijyam Cover'} 
+                                                            className="journal-cover-img" referrerPolicy="no-referrer"
+                                                            onError={(e) => { e.currentTarget.src = '/assets/home/vanijyam.png'; }}
+                                                        />
+                                                        <div style={{ marginTop: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                                                            <span className="badge badge-accent" style={{ fontSize: '0.74rem', padding: '3px 10px', fontWeight: '700' }}>
+                                                                <i className="fas fa-book-open" style={{ marginRight: '5px' }}></i> Issue Cover
+                                                            </span>
+                                                            {group.year && (
+                                                                <span className="badge" style={{ backgroundColor: '#f1f5f9', color: '#475569', fontSize: '0.74rem', padding: '3px 8px' }}>
+                                                                    {group.year}
+                                                                </span>
+                                                            )}
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                {/* ROW 2: In New Row: Label Title + Down Drop Accordion Toggle */}
+                                                <div 
+                                                    onClick={() => toggleLabel(group.id)}
+                                                    className={`journal-dropdown-header ${isExpanded ? 'is-expanded' : ''}`}
+                                                >
+                                                    <div style={{ flex: 1, minWidth: 0 }}>
+                                                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap', marginBottom: '4px' }}>
+                                                            <span className="badge" style={{ backgroundColor: 'var(--primary)', color: '#ffffff', fontSize: '0.74rem', padding: '3px 9px', fontWeight: '600' }}>
+                                                                <i className="fas fa-bookmark" style={{ marginRight: '5px' }}></i> Issue Label
+                                                            </span>
+                                                        </div>
+                                                        <h3 className="journal-dropdown-title">
+                                                            {group.label}
+                                                        </h3>
+                                                        <p className="journal-dropdown-hint">
+                                                            {isExpanded ? 'Click to collapse articles' : 'Click to drop down and view published articles'}
+                                                        </p>
+                                                    </div>
+
+                                                    {/* Down Drop Toggle Indicator */}
+                                                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexShrink: 0 }}>
+                                                        <span className="journal-dropdown-btn-text">
+                                                            {isExpanded ? 'Hide' : 'View Articles'}
+                                                        </span>
+                                                        <div 
+                                                            className="journal-toggle-circle"
+                                                            style={{ 
+                                                                backgroundColor: isExpanded ? 'var(--primary)' : '#f1f5f9', 
+                                                                color: isExpanded ? '#ffffff' : 'var(--text-dark)'
+                                                            }}
+                                                        >
+                                                            <i className={`fas fa-chevron-${isExpanded ? 'up' : 'down'}`} style={{ fontSize: '0.88rem' }}></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                {/* ROW 3: Inside Down Drop Div - Responsive Table Structure */}
+                                                {isExpanded && (
+                                                    <div className="journal-table-wrapper">
+                                                        <div className="journal-articles-list">
+                                                                {group.items.map((art, aIdx) => (
+                                                                    <div key={art.id || aIdx} className="journal-article-item">
+                                                                        <div className="journal-article-main">
+                                                                            <div className="journal-article-title">{art.title || '-'}</div>
+                                                                            <div className="journal-article-author">{art.author || '-'}</div>
+                                                                        </div>
+                                                                        <div className="journal-article-action">
+                                                                            {(art.pdfUrl || art.pdfurl) ? (
+                                                                                <a 
+                                                                                    href={getPdfViewerUrl(art.pdfUrl || art.pdfurl, { title: art.title, author: art.author, journal: 'Vanijyam (VIJCMBS)', from: '/journals/vanijyam' })} 
+                                                                                    className="btn btn-primary btn-sm"
+                                                                                    style={{ padding: '6px 14px', fontSize: '0.82rem', display: 'inline-flex', alignItems: 'center', gap: '6px', whiteSpace: 'nowrap', borderRadius: '4px' }}
+                                                                                >
+                                                                                    <i className="far fa-file-pdf"></i> Read PDF
+                                                                                </a>
+                                                                            ) : (
+                                                                                <span style={{ color: 'var(--text-muted)', fontSize: '0.82rem' }}>No PDF</span>
+                                                                            )}
+                                                                        </div>
+                                                                    </div>
+                                                                ))}
+                                                            </div>
+                                                    </div>
+                                                )}
+
+                                            </div>
+                                        );
+                                    })
+                                )}
+                            </div>
                             )}
 
                             {totalPages > 1 && (
                                 <div style={{ display: 'flex', justifyContent: 'center', gap: '10px', marginTop: '40px' }}>
-                                    <button 
-                                        className="btn btn-outline btn-sm" 
-                                        disabled={page === 1} 
+                                    <button
+                                        className="btn btn-outline btn-sm"
+                                        disabled={page === 1}
                                         onClick={() => handlePageChange(page - 1)}
                                     >
                                         Previous
@@ -496,9 +627,9 @@ export default function VanijyamJournal() {
                                     <span style={{ display: 'flex', alignItems: 'center', padding: '0 10px', fontSize: '0.9rem' }}>
                                         Page {page} of {totalPages}
                                     </span>
-                                    <button 
-                                        className="btn btn-outline btn-sm" 
-                                        disabled={page === totalPages} 
+                                    <button
+                                        className="btn btn-outline btn-sm"
+                                        disabled={page === totalPages}
                                         onClick={() => handlePageChange(page + 1)}
                                     >
                                         Next

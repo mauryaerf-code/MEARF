@@ -30,6 +30,10 @@ export default function Header() {
         return pathname.startsWith(path) ? 'active' : '';
     };
 
+    if (pathname === '/pdf-viewer' || pathname?.startsWith('/pdf-viewer')) {
+        return null;
+    }
+
     return (
         <>
             <div className="top-bar" id="top-bar-utility">
@@ -108,7 +112,7 @@ export default function Header() {
                                         <Link href="/journals/scholars-real-view" className="dropdown-link-with-img" onClick={handleLinkClick}>
                                             <img src="/assets/home/Scholar.png" alt="The Scholar's Real View Cover" loading="lazy" />
                                             <div className="dropdown-link-text">
-                                                <span className="dropdown-link-title">The Scholar's Real View</span>
+                                                <span className="dropdown-link-title">The Scholar&apos;s Real View</span>
                                                 <span className="dropdown-link-subtitle">English (Half-Yearly)</span>
                                             </div>
                                         </Link>

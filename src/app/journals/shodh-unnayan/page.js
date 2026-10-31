@@ -1,7 +1,21 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { supabase } from '@/lib/supabase';
+import EditorialBoard from '@/components/EditorialBoard';
+import AuthorSubmissionGuidelines from '@/components/AuthorSubmissionGuidelines';
+import HindiSubmissionGuidelines from '@/components/HindiSubmissionGuidelines';
+import { getPdfViewerUrl } from '@/lib/pdfHelper';
+
+const getDirectDriveImageUrl = (url) => {
+    if (!url) return '';
+    if (url.startsWith('/') || url.startsWith('data:')) return url;
+    const match = url.match(/(?:id=|\/d\/|d=)([a-zA-Z0-9_-]{25,})/);
+    if (match && match[1]) {
+        return `/api/proxy-image?id=${match[1]}`;
+    }
+    return url;
+};
 
 const getDirectDriveUrl = (url) => {
     if (!url) return '';
@@ -23,10 +37,7 @@ const getDownloadDriveUrl = (url) => {
     return url;
 };
 
-const DEFAULT_SHODH_ARTICLES = [
-    { id: "sa-1", volume: "Volume 1", issue: "Issue 1 (January - March)", year: "2025", pdfUrl: "https://drive.google.com/file/d/1_mock_nep2020_hindi/view" },
-    { id: "sa-2", volume: "Volume 1", issue: "Issue 2 (April - June)", year: "2026", pdfUrl: "https://drive.google.com/file/d/1_mock_rajasthan_culture/view" }
-];
+const DEFAULT_SHODH_ARTICLES = [];
 
 export default function ShodhUnnayan() {
     const [articles, setArticles] = useState([]);
@@ -35,64 +46,80 @@ export default function ShodhUnnayan() {
     const [page, setPage] = useState(1);
     const [totalCount, setTotalCount] = useState(0);
     const [loading, setLoading] = useState(true);
+    const [expandedLabels, setExpandedLabels] = useState({});
+
+    const toggleLabel = (id) => {
+        setExpandedLabels(prev => ({
+            ...prev,
+            [id]: prev[id] === undefined ? false : !prev[id]
+        }));
+    };
 
     const pageSize = 10;
 
-    const fetchArticles = async (currentPage, searchVal) => {
+        const fetchArticles = async (currentPage, searchVal) => {
         try {
             setLoading(true);
-            let queryBuilder = supabase
+            const { data, error } = await supabase
                 .from('merf_issues')
-                .select('*', { count: 'exact' })
-                .eq('journal', 'Shodh Unnayan'); // Matches string stored by Admin panel
-            
+                .select('*')
+                .eq('journal', 'Shodh Unnayan')
+                .order('created_at', { ascending: false });
+
+            if (error) {
+                console.error("Failed to query Shodh Unnayan issues from database:", error.message);
+                setArticles([]);
+                setTotalCount(0);
+                return;
+            }
+
+            const supaData = (data || []).map(art => {
+                const dbLabel = (art.label && String(art.label).trim()) || 
+                                (art.issue && String(art.issue).trim()) || 
+                                (art.Author && String(art.Author).trim()) || 
+                                (art.author && String(art.author).trim()) || 
+                                'Published Issues';
+                const dbTitle = (art.title && String(art.title).trim()) ? String(art.title).trim() : '';
+                const dbIssueNo = (art.issue && String(art.issue).trim()) ? String(art.issue).trim() : '';
+                const dbAuthor = (art.Author && String(art.Author).trim()) || 
+                                 (art.author && String(art.author).trim()) || 
+                                 (art.volume && String(art.volume).trim()) || '';
+                const dbYear = (art.year && String(art.year).trim()) ? String(art.year).trim() : '';
+
+                return {
+                    id: art.id,
+                    year: dbYear,
+                    issueNo: dbIssueNo,
+                    author: dbAuthor,
+                    label: dbLabel,
+                    image: art.image || '',
+                    title: dbTitle,
+                    createdAt: art.created_at || '',
+                    pdfUrl: art.url || art.pdfurl || art.pdfUrl || ''
+                };
+            });
+
+            let filtered = supaData;
             if (searchVal.trim()) {
-                const q = `%${searchVal.trim()}%`;
-                // Backwards compatible: search across new columns (volume, issue) and old columns (title, author)
-                queryBuilder = queryBuilder.or(`volume.ilike.${q},issue.ilike.${q},title.ilike.${q},author.ilike.${q}`);
+                const q = searchVal.trim().toLowerCase();
+                filtered = supaData.filter(item =>
+                    (item.title || '').toLowerCase().includes(q) ||
+                    (item.issueNo || '').toLowerCase().includes(q) ||
+                    (item.author || '').toLowerCase().includes(q) ||
+                    (item.year || '').toLowerCase().includes(q) ||
+                    (item.label || '').toLowerCase().includes(q)
+                );
             }
 
             const fromRange = (currentPage - 1) * pageSize;
-            const toRange = fromRange + pageSize - 1;
+            const toRange = fromRange + pageSize;
 
-            const { data, count, error } = await queryBuilder
-                .order('id', { ascending: false })
-                .range(fromRange, toRange);
-
-            if (!error && data) {
-                const mapped = data.map(art => ({
-                    id: art.id,
-                    year: art.year,
-                    volume: art.volume || '',
-                    issue: art.issue || '',
-                    pdfUrl: art.pdfurl || art.pdfUrl
-                }));
-                setArticles(mapped);
-                setTotalCount(count || 0);
-            } else {
-                if (error) console.error("Error fetching articles:", error.message);
-                // Fallback to local storage cache
-                const storedArticles = localStorage.getItem('merf_shodh_articles');
-                let all = [];
-                if (storedArticles && !searchVal.trim()) {
-                    all = JSON.parse(storedArticles);
-                } else if (!searchVal.trim()) {
-                    all = DEFAULT_SHODH_ARTICLES;
-                }
-                
-                const mapped = all.map(item => ({
-                    id: item.id,
-                    year: item.year,
-                    volume: item.volume || '',
-                    issue: item.issue || '',
-                    pdfUrl: item.pdfUrl
-                }));
-
-                setArticles(mapped.slice(fromRange, toRange + 1));
-                setTotalCount(mapped.length);
-            }
+            setArticles(filtered.slice(fromRange, toRange));
+            setTotalCount(filtered.length);
         } catch (err) {
             console.error("Failed to query journal articles:", err);
+            setArticles([]);
+            setTotalCount(0);
         } finally {
             setLoading(false);
         }
@@ -107,6 +134,40 @@ export default function ShodhUnnayan() {
         setPage(1);
         setActiveSearch(searchQuery);
     };
+
+    
+        // Group articles by Issue Label with Cover Image - Newest on Top
+    const groupedIssues = useMemo(() => {
+        const map = new Map();
+        articles.forEach(item => {
+            const labelKey = (item.label && item.label.trim())
+                ? item.label.trim()
+                : (item.issueNo || item.author || 'Published Issues');
+
+            if (!map.has(labelKey)) {
+                map.set(labelKey, {
+                    id: labelKey,
+                    label: labelKey,
+                    image: item.image || '',
+                    year: item.year || '',
+                    latestCreatedAt: item.createdAt || '',
+                    items: []
+                });
+            }
+            const grp = map.get(labelKey);
+            if (!grp.image && item.image) grp.image = item.image;
+            if (!grp.year && item.year) grp.year = item.year;
+            if (item.createdAt && (!grp.latestCreatedAt || new Date(item.createdAt) > new Date(grp.latestCreatedAt))) {
+                grp.latestCreatedAt = item.createdAt;
+            }
+            grp.items.push(item);
+        });
+
+        const groups = Array.from(map.values());
+        // Sort so newest label is on top
+        groups.sort((a, b) => new Date(b.latestCreatedAt || 0) - new Date(a.latestCreatedAt || 0));
+        return groups;
+    }, [articles]);
 
     const handleClearSearch = () => {
         setSearchQuery('');
@@ -147,8 +208,8 @@ export default function ShodhUnnayan() {
 
             <section className="section" id="shodh-unnayan-content">
                 <div className="container">
-                    <div className="grid grid-2" style={{ gap: '50px' }}>
-                        <div>
+                    <div className="grid grid-2" style={{ gap: '50px', marginBottom: '35px' }}>
+                        <div className="card" style={{ padding: '35px', backgroundColor: 'var(--bg-white)', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-sm)', display: 'flex', flexDirection: 'column', height: '100%' }}>
                             <div style={{ display: 'flex', gap: '20px', alignItems: 'center', marginBottom: '20px', flexWrap: 'wrap' }}>
                                 <div style={{ flex: '0 0 100px', maxWidth: '100px' }}>
                                     <img src="/assets/home/Shodh Unnayan.png" alt="Shodh Unnayan Journal Cover" style={{ width: '100%', height: 'auto', borderRadius: 'var(--radius-sm)', boxShadow: 'var(--shadow-md)' }} />
@@ -165,22 +226,10 @@ export default function ShodhUnnayan() {
                                 यह शोध पत्रिका हिंदी भाषा में विभिन्न विषयों पर मौलिक और शोधपूर्ण आलेखों को प्रकाशित करती है। सभी शोध आलेख विशेषज्ञों द्वारा डबल-ब्लाइंड समीक्षा (Peer-Reviewed) के पश्चात ही स्वीकार किए जाते हैं।
                             </p>
                             
-                            <div style={{ backgroundColor: 'var(--bg-white)', padding: '25px', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border-color)', marginTop: '30px' }}>
-                                <h3 style={{ fontSize: '1.2rem', marginBottom: '15px', color: 'var(--accent-dark)' }}><i className="fas fa-file-alt"></i> आलेख भेजने सम्बन्धी आवश्यक निर्देश:</h3>
-                                <ul style={{ paddingLeft: '10px', fontSize: '0.95rem', lineHeight: '1.8', color: 'var(--text-muted)' }}>
-                                    <li style={{ marginBottom: '6px' }}>आलेख <strong>एमएस वर्ड (MS Word)</strong> फाइल फॉर्मेट में होना चाहिए।</li>
-                                    <li style={{ marginBottom: '6px' }}>आलेख की फ़ॉन्ट <strong>कृतिदेव-10 (Kruti Dev 010)</strong> में ही स्वीकार्य है।</li>
-                                    <li style={{ marginBottom: '6px' }}>शीर्षक/उप-शीर्षक की फ़ॉन्ट साइज <strong>16</strong> तथा अन्य विवरणों की फ़ॉन्ट साइज <strong>14</strong> होनी चाहिए।</li>
-                                    <li style={{ marginBottom: '6px' }}>आलेख में कम से कम 10 संदर्भ सूची (References) होना अनिवार्य है।</li>
-                                    <li style={{ marginBottom: '6px' }}>शब्द सीमा: न्यूनतम <strong>2,000 शब्द</strong>, अधिकतम <strong>2,500 शब्द</strong>।</li>
-                                    <li style={{ marginBottom: '6px' }}>आलेख के साथ 150 शब्दों का शोध-सार (Abstract) तथा कम से कम 10 मूल शब्द (Keywords) भेजें।</li>
-                                    <li style={{ marginBottom: '6px' }}>आलेख में लेखक का नाम, पद, संस्थान का नाम, ईमेल और मोबाइल नंबर अंत में अवश्य लिखें।</li>
-                                </ul>
                             </div>
-                        </div>
 
                         {/* Right Card: Journal Specifications */}
-                        <div className="card specs-card-responsive">
+                        <div className="card specs-card-responsive" style={{ padding: '35px', backgroundColor: 'var(--bg-white)', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-sm)', display: 'flex', flexDirection: 'column', height: '100%' }}>
                             <div>
                                 <h3 style={{ fontSize: '1.5rem', marginBottom: '20px', borderBottom: '2.5px solid var(--accent)', paddingBottom: '10px', color: 'var(--primary-dark)', fontWeight: '700', fontFamily: 'var(--font-heading)' }}>
                                     <i className="fas fa-list-check" style={{ marginRight: '10px', color: 'var(--accent-dark)' }}></i>
@@ -250,6 +299,19 @@ export default function ShodhUnnayan() {
                             </div>
                         </div>
                     </div>
+
+                    {/* Author Submission Guidelines */}
+                    <AuthorSubmissionGuidelines 
+                        journalName="Shodh Unnayan"
+                        publisherName="Rajasthan Institute of Social Science Research (RISSR)"
+                        email="drshailendar@mauryaerf.com"
+                    />
+
+                    {/* Hindi Submission Guidelines */}
+                    <HindiSubmissionGuidelines />
+
+                    {/* Member of Editorial Board */}
+                    <EditorialBoard journalName="Shodh Unnayan" />
                 </div>
             </section>
 
@@ -302,35 +364,107 @@ export default function ShodhUnnayan() {
                         </div>
                     ) : (
                         <>
-                            <div className="table-responsive" style={{ marginTop: '20px' }}>
-                                <table className="admin-table" style={{ width: '100%', borderCollapse: 'collapse', backgroundColor: '#ffffff', borderRadius: '8px', overflow: 'hidden', boxShadow: 'var(--shadow-sm)' }}>
-                                    <thead style={{ backgroundColor: 'var(--primary)', color: '#ffffff' }}>
-                                        <tr>
-                                            <th style={{ padding: '12px 15px', textAlign: 'left', fontWeight: '600' }}>No. / क्र.</th>
-                                            <th style={{ padding: '12px 15px', textAlign: 'left', fontWeight: '600' }}>Year / वर्ष</th>
-                                            <th style={{ padding: '12px 15px', textAlign: 'left', fontWeight: '600' }}>Volume / भाग (वॉल्यूम)</th>
-                                            <th style={{ padding: '12px 15px', textAlign: 'left', fontWeight: '600' }}>Issue / अंक (इश्यू)</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {articles.map((item, index) => (
-                                            <tr key={item.id} style={{ borderBottom: '1px solid var(--border-color)' }}>
-                                                <td style={{ padding: '12px 15px', color: 'var(--text-muted)' }}>{(page - 1) * pageSize + index + 1}</td>
-                                                <td style={{ padding: '12px 15px', fontWeight: '500' }}>{item.year}</td>
-                                                <td style={{ padding: '12px 15px' }}>{item.volume}</td>
-                                                <td style={{ padding: '12px 15px' }}>
-                                                    {item.pdfUrl ? (
-                                                        <a href={getDirectDriveUrl(item.pdfUrl)} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent-dark)', fontWeight: 'bold', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-                                                            <i className="far fa-file-pdf"></i> {item.issue}
-                                                        </a>
-                                                    ) : (
-                                                        item.issue
-                                                    )}
-                                                </td>
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', marginTop: '25px' }}>
+                                {groupedIssues.length === 0 ? (
+                                    <div style={{ textAlign: 'center', padding: '50px 20px', backgroundColor: '#ffffff', borderRadius: '12px', border: '1px solid var(--border-color)' }}>
+                                        <p style={{ margin: 0, color: 'var(--text-muted)' }}>No issues found matching your search.</p>
+                                    </div>
+                                ) : (
+                                    groupedIssues.map((group, gIndex) => {
+                                        const isExpanded = expandedLabels[group.id] !== undefined ? expandedLabels[group.id] : (gIndex === 0);
+                                        return (
+                                            <div key={group.id} className="journal-issue-card">
+                                                {/* ROW 1: Cover Image First */}
+                                                <div className="journal-cover-showcase">
+                                                    <div style={{ textAlign: 'center' }}>
+                                                        <img 
+                                                            src={getDirectDriveImageUrl(group.image) || '/assets/home/Shodh Unnayan.png'} 
+                                                            alt={`${group.label} Cover`} 
+                                                            className="journal-cover-img" referrerPolicy="no-referrer"
+                                                            onError={(e) => { e.currentTarget.src = '/assets/home/Shodh Unnayan.png'; }}
+                                                        />
+                                                        <div style={{ marginTop: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                                                            <span className="badge badge-accent" style={{ fontSize: '0.74rem', padding: '3px 10px', fontWeight: '700' }}>
+                                                                <i className="fas fa-book-open" style={{ marginRight: '5px' }}></i> Issue Cover
+                                                            </span>
+                                                            {group.year && (
+                                                                <span className="badge" style={{ backgroundColor: '#f1f5f9', color: '#475569', fontSize: '0.74rem', padding: '3px 8px' }}>
+                                                                    {group.year}
+                                                                </span>
+                                                            )}
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                {/* ROW 2: In New Row: Label Title + Down Drop Accordion Toggle */}
+                                                <div 
+                                                    onClick={() => toggleLabel(group.id)}
+                                                    className={`journal-dropdown-header ${isExpanded ? 'is-expanded' : ''}`}
+                                                >
+                                                    <div style={{ flex: 1, minWidth: 0 }}>
+                                                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap', marginBottom: '4px' }}>
+                                                            <span className="badge" style={{ backgroundColor: 'var(--primary)', color: '#ffffff', fontSize: '0.74rem', padding: '3px 9px', fontWeight: '600' }}>
+                                                                <i className="fas fa-bookmark" style={{ marginRight: '5px' }}></i> Issue Label
+                                                            </span>
+                                                        </div>
+                                                        <h3 className="journal-dropdown-title">
+                                                            {group.label}
+                                                        </h3>
+                                                        <p className="journal-dropdown-hint">
+                                                            {isExpanded ? 'Click to collapse articles' : 'Click to drop down and view published articles'}
+                                                        </p>
+                                                    </div>
+
+                                                    {/* Down Drop Toggle Indicator */}
+                                                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexShrink: 0 }}>
+                                                        <span className="journal-dropdown-btn-text">
+                                                            {isExpanded ? 'Hide' : 'View Articles'}
+                                                        </span>
+                                                        <div 
+                                                            className="journal-toggle-circle"
+                                                            style={{ 
+                                                                backgroundColor: isExpanded ? 'var(--primary)' : '#f1f5f9', 
+                                                                color: isExpanded ? '#ffffff' : 'var(--text-dark)'
+                                                            }}
+                                                        >
+                                                            <i className={`fas fa-chevron-${isExpanded ? 'up' : 'down'}`} style={{ fontSize: '0.88rem' }}></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                {/* ROW 3: Inside Down Drop Div - Responsive Table Structure */}
+                                                {isExpanded && (
+                                                    <div className="journal-table-wrapper">
+                                                        <div className="journal-articles-list">
+                                                                {group.items.map((art, aIdx) => (
+                                                                    <div key={art.id || aIdx} className="journal-article-item">
+                                                                        <div className="journal-article-main">
+                                                                            <div className="journal-article-title">{art.title || '-'}</div>
+                                                                            <div className="journal-article-author">{art.author || '-'}</div>
+                                                                        </div>
+                                                                        <div className="journal-article-action">
+                                                                            {(art.pdfUrl || art.pdfurl) ? (
+                                                                                <a 
+                                                                                    href={getPdfViewerUrl(art.pdfUrl || art.pdfurl, { title: art.title, author: art.author, journal: 'शोध उन्नयन (Shodh Unnayan)', from: '/journals/shodh-unnayan' })} 
+                                                                                    className="btn btn-primary btn-sm"
+                                                                                    style={{ padding: '6px 14px', fontSize: '0.82rem', display: 'inline-flex', alignItems: 'center', gap: '6px', whiteSpace: 'nowrap', borderRadius: '4px' }}
+                                                                                >
+                                                                                    <i className="far fa-file-pdf"></i> Read PDF
+                                                                                </a>
+                                                                            ) : (
+                                                                                <span style={{ color: 'var(--text-muted)', fontSize: '0.82rem' }}>No PDF</span>
+                                                                            )}
+                                                                        </div>
+                                                                    </div>
+                                                                ))}
+                                                            </div>
+                                                    </div>
+                                                )}
+
+                                            </div>
+                                        );
+                                    })
+                                )}
                             </div>
                             
                             {articles.length === 0 && (

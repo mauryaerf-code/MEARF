@@ -27,7 +27,7 @@ export default function SocialWelfare() {
                     </div>
 
                     <div className="social-welfare-grid">
-                        <div>
+                        <div className="card card-accent" style={{ padding: '35px', backgroundColor: 'var(--bg-white)' }}>
                             <h2 style={{ fontSize: '1.85rem', marginBottom: '20px', color: 'var(--primary-dark)', fontFamily: 'var(--font-heading)' }}>About SVBSPS</h2>
                             
                             <p style={{ fontFamily: '"Inter", "Outfit", sans-serif', fontSize: '1.05rem', lineHeight: '1.85', color: '#2c3e50', marginBottom: '20px', textAlign: 'justify', letterSpacing: '0.1px' }}>
@@ -35,7 +35,7 @@ export default function SocialWelfare() {
                             </p>
  
                             <p style={{ fontFamily: '"Inter", "Outfit", sans-serif', fontSize: '1.05rem', lineHeight: '1.85', color: '#2c3e50', marginBottom: '20px', textAlign: 'justify', letterSpacing: '0.1px' }}>
-                                <strong>Swami Vivekananda Balika Shiksha Prachar Samiti (SVBSPS)</strong> is one such organization which has been continuously striving for girl’s education and women's development for the last 22 years. The informal establishment of the institution took place on <strong>11 May 2002</strong> and the formal formation of the institution took place on <strong>8 September 2004</strong> through registration under the Rajasthan Institutions Registration Act 1958 (Rajasthan Act No- 28, 1958). Even before its formal formation, it has been continuously working for the promotion of girls education through free classes, organizing classes in slums under adult education, camps and workshops. The organization has been organizing academic programs like seminars, lectures, workshops, webinars etc. from time to time for the promotion of education, especially for women and girls.
+                                <strong>Swami Vivekananda Balika Shiksha Prachar Samiti (SVBSPS)</strong> is one such organization which has been continuously striving for girl&apos;s education and women&apos;s development for the last 22 years. The informal establishment of the institution took place on <strong>11 May 2002</strong> and the formal formation of the institution took place on <strong>8 September 2004</strong> through registration under the Rajasthan Institutions Registration Act 1958 (Rajasthan Act No- 28, 1958). Even before its formal formation, it has been continuously working for the promotion of girls education through free classes, organizing classes in slums under adult education, camps and workshops. The organization has been organizing academic programs like seminars, lectures, workshops, webinars etc. from time to time for the promotion of education, especially for women and girls.
                             </p>
  
                             <p style={{ fontFamily: '"Inter", "Outfit", sans-serif', fontSize: '1.05rem', lineHeight: '1.85', color: '#2c3e50', marginBottom: 0, textAlign: 'justify', letterSpacing: '0.1px' }}>
@@ -55,7 +55,7 @@ export default function SocialWelfare() {
                                     </li>
                                     <li>
                                         <strong>Registration:</strong><br />
-                                        <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>Registered under Rajasthan Institutions Registration Act, 1958 (Rajasthan Act No- 28, 1958) & Societies Registration Act, 1860</span>
+                                        <span style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>Registered under Rajasthan Institutions Registration Act, 1958 (Rajasthan Act No- 28, 1958) &amp; Societies Registration Act, 1860</span>
                                     </li>
                                     <li>
                                         <strong>Core Areas:</strong><br />
@@ -71,7 +71,7 @@ export default function SocialWelfare() {
             <section className="section" id="svbsps-programs" style={{ backgroundColor: 'var(--bg-white)' }}>
                 <div className="container">
                     <div className="section-header">
-                        <h2>6 Core Social Programs & Impact</h2>
+                        <h2>6 Core Social Programs &amp; Impact</h2>
                         <p>Detailed look at the key action plans implemented by SVBSPS to achieve sustainable community development.</p>
                     </div>
 
@@ -80,7 +80,7 @@ export default function SocialWelfare() {
                             <div className="program-icon"><i className="fas fa-user-graduate"></i></div>
                             <h3>A. Girl Child Education</h3>
                             <p style={{ fontSize: '0.875rem' }}>
-                                Providing free and subsidized schooling for underprivileged girls, running bridge courses for school dropouts, and supporting hostel facilities for rural students. Focuses on <em>"Sa Vidya Ya Vimuktaye"</em>—education for self-reliance.
+                                Providing free and subsidized schooling for underprivileged girls, running bridge courses for school dropouts, and supporting hostel facilities for rural students. Focuses on <em>&quot;Sa Vidya Ya Vimuktaye&quot;</em>—education for self-reliance.
                             </p>
                         </div>
 
@@ -94,25 +94,25 @@ export default function SocialWelfare() {
 
                         <div className="card program-card" id="prog-card-health">
                             <div className="program-icon"><i className="fas fa-heartbeat"></i></div>
-                            <h3>C. Health & Hygiene</h3>
+                            <h3>C. Health &amp; Hygiene</h3>
                             <p style={{ fontSize: '0.875rem' }}>
-                                Conducting free health check-up camps, menstrual hygiene awareness drives, anemia detection checks, and yoga & nutrition workshops. Free distribution of sanitary kits in rural villages.
+                                Conducting free health check-up camps, menstrual hygiene awareness drives, anemia detection checks, and yoga &amp; nutrition workshops. Free distribution of sanitary kits in rural villages.
                             </p>
                         </div>
 
                         <div className="card program-card" id="prog-card-legal">
                             <div className="program-icon"><i className="fas fa-gavel"></i></div>
-                            <h3>D. Legal & Social Awareness</h3>
+                            <h3>D. Legal &amp; Social Awareness</h3>
                             <p style={{ fontSize: '0.875rem' }}>
-                                Conducting educational workshops on women's rights, the POCSO Act, domestic violence laws, and cyber safety. Running a local legal aid cell in collaboration with the District Legal Services Authority.
+                                Conducting educational workshops on women&apos;s rights, the POCSO Act, domestic violence laws, and cyber safety. Running a local legal aid cell in collaboration with the District Legal Services Authority.
                             </p>
                         </div>
 
                         <div className="card program-card" id="prog-card-environment">
                             <div className="program-icon"><i className="fas fa-leaf"></i></div>
-                            <h3>E. Environment & Sustainability</h3>
+                            <h3>E. Environment &amp; Sustainability</h3>
                             <p style={{ fontSize: '0.875rem' }}>
-                                Leading local tree plantation drives, plastic-free community campaigns, and water conservation projects led by student volunteers. Actively executing the <strong>“Each Girl, One Tree”</strong> initiative.
+                                Leading local tree plantation drives, plastic-free community campaigns, and water conservation projects led by student volunteers. Actively executing the <strong>&ldquo;Each Girl, One Tree&rdquo;</strong> initiative.
                             </p>
                         </div>
 
@@ -120,7 +120,7 @@ export default function SocialWelfare() {
                             <div className="program-icon"><i className="fas fa-praying-hands"></i></div>
                             <h3>F. Cultural Preservation</h3>
                             <p style={{ fontSize: '0.875rem' }}>
-                                Providing training in regional folk arts, Vedic chanting, and essential Bhartiya value systems. Organizing the annual <strong>Balika Sanskar Shivir</strong> based on Swami Vivekananda's teachings.
+                                Providing training in regional folk arts, Vedic chanting, and essential Bhartiya value systems. Organizing the annual <strong>Balika Sanskar Shivir</strong> based on Swami Vivekananda&apos;s teachings.
                             </p>
                         </div>
                     </div>

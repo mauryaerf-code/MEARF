@@ -2,59 +2,59 @@ import React from 'react';
 import Link from 'next/link';
 
 export const metadata = {
-  title: "Research Journals (Published by RISSR & MERF)",
-  description: "Explore peer-reviewed multidisciplinary academic journals published by Rajasthan Institute of Social Science Research (RISSR) under MERF. Call for research papers.",
-  keywords: [
-    "Research Journals (Published by RISSR & MERF)",
-    "Research Journals Published by RISSR & MERF",
-    "Research Journals",
-    "RISSR Academic Journals",
-    "MERF Research Journals",
-    "Rajasthan Institute of Social Science Research",
-    "Maurya Education and Research Foundation journals",
-    "peer reviewed journals Jaipur Rajasthan",
-    "multidisciplinary research journal India",
-    "call for research papers 2026",
-    "publish research paper Jaipur",
-    "refereed journal publications India",
-    "Shodh Unnayan",
-    "The Scholars Real View",
-    "Vanijyam VIJCMBS",
-    "Reforming Research online journal",
-    "academic research journals India",
-    "Dr Shailendar Maurya journals"
-  ],
-  alternates: {
-    canonical: "/journals",
-  },
-  openGraph: {
     title: "Research Journals (Published by RISSR & MERF)",
-    description: "Submit and read peer-reviewed research papers in social sciences, humanities, commerce, and multidisciplinary studies.",
-    url: "https://www.mauryaerf.com/journals",
-    siteName: "Maurya Education and Research Foundation",
-    images: [{ url: "/assets/logo.jpeg", width: 800, height: 800, alt: "Research Journals RISSR MERF" }],
-    locale: "en_US",
-    type: "website",
-  },
-  twitter: {
-    card: "summary",
-    title: "Research Journals (Published by RISSR & MERF)",
-    description: "Browse academic research journals published by RISSR (MERF) in Jaipur, Rajasthan.",
-    images: ["/assets/logo.jpeg"],
-  },
+    description: "Explore peer-reviewed multidisciplinary academic journals published by Rajasthan Institute of Social Science Research (RISSR) under MERF. Call for research papers.",
+    keywords: [
+        "Research Journals (Published by RISSR & MERF)",
+        "Research Journals Published by RISSR & MERF",
+        "Research Journals",
+        "RISSR Academic Journals",
+        "MERF Research Journals",
+        "Rajasthan Institute of Social Science Research",
+        "Maurya Education and Research Foundation journals",
+        "peer reviewed journals Jaipur Rajasthan",
+        "multidisciplinary research journal India",
+        "call for research papers 2026",
+        "publish research paper Jaipur",
+        "refereed journal publications India",
+        "Shodh Unnayan",
+        "The Scholars Real View",
+        "Vanijyam VIJCMBS",
+        "Reforming Research online journal",
+        "academic research journals India",
+        "Dr Shailendar Maurya journals"
+    ],
+    alternates: {
+        canonical: "/journals",
+    },
+    openGraph: {
+        title: "Research Journals (Published by RISSR & MERF)",
+        description: "Submit and read peer-reviewed research papers in social sciences, humanities, commerce, and multidisciplinary studies.",
+        url: "https://www.mauryaerf.com/journals",
+        siteName: "Maurya Education and Research Foundation",
+        images: [{ url: "/assets/logo.jpeg", width: 800, height: 800, alt: "Research Journals RISSR MERF" }],
+        locale: "en_US",
+        type: "website",
+    },
+    twitter: {
+        card: "summary",
+        title: "Research Journals (Published by RISSR & MERF)",
+        description: "Browse academic research journals published by RISSR (MERF) in Jaipur, Rajasthan.",
+        images: ["/assets/logo.jpeg"],
+    },
 };
 
 const journalsSchema = {
-  "@context": "https://schema.org",
-  "@type": "CollectionPage",
-  name: "Research Journals (Published by RISSR & MERF)",
-  url: "https://www.mauryaerf.com/journals",
-  description: "Collection of peer-reviewed international academic journals by Rajasthan Institute of Social Science Research (RISSR).",
-  publisher: {
-    "@type": "EducationalOrganization",
-    name: "Maurya Education and Research Foundation",
-    url: "https://www.mauryaerf.com"
-  }
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: "Research Journals (Published by RISSR & MERF)",
+    url: "https://www.mauryaerf.com/journals",
+    description: "Collection of peer-reviewed international academic journals by Rajasthan Institute of Social Science Research (RISSR).",
+    publisher: {
+        "@type": "EducationalOrganization",
+        name: "Maurya Education and Research Foundation",
+        url: "https://www.mauryaerf.com"
+    }
 };
 
 export default function JournalsLanding() {
@@ -93,7 +93,7 @@ export default function JournalsLanding() {
                         {/* Journal 1 Card: Reforming Research */}
                         <div className="card" style={{ padding: '30px', backgroundColor: 'var(--bg-white)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-lg)' }}>
                             <div>
-                                <span className="badge badge-accent" style={{ marginBottom: '15px' }}>ISSN: ..............</span>
+                                <span className="badge badge-accent" style={{ marginBottom: '15px' }}>ISSN: 2839-5468</span>
                                 <h3 style={{ fontSize: '1.4rem', marginBottom: '15px', color: 'var(--primary-dark)' }}>1. Reforming Research (Online Journal)</h3>
                                 <p style={{ fontSize: '0.88rem', lineHeight: '1.7', color: 'var(--text-muted)' }}>
                                     An International Peer Reviewed Refered Interdisciplinary Quarterly Online Journal in Multi-Language. Global platform showcasing critical and solution-oriented research across Social Sciences, Humanity, Law, Education, Commerce, and Technology.
@@ -107,7 +107,7 @@ export default function JournalsLanding() {
                             </div>
                             <div style={{ marginTop: '30px' }}>
                                 <Link href="/journals/reforming-research" className="btn btn-accent btn-sm" style={{ width: '100%', textAlign: 'center' }}>
-                                    Guidelines & Submissions
+                                    About Journals, Guidelines & Submissions
                                 </Link>
                             </div>
                         </div>
@@ -123,14 +123,15 @@ export default function JournalsLanding() {
                                 <div className="journal-meta" style={{ marginTop: '20px' }}>
                                     <div className="meta-row"><span className="meta-label">Frequency:</span><span className="meta-value">Quarterly</span></div>
                                     <div className="meta-row"><span className="meta-label">Language:</span><span className="meta-value">Hindi</span></div>
-                                    <div className="meta-row"><span className="meta-label">Format:</span><span className="meta-value">Kruti Dev 010 font</span></div>
+                                    <div className="meta-row"><span className="meta-label">Format:</span><span className="meta-value">Offline/Print Publication</span></div>
+                                    <div className="meta-row"><span className="meta-label">Chief Editor:</span><span className="meta-value">Dr. Shailendar Maurya</span></div>
                                 </div>
                             </div>
                             <div style={{ marginTop: '30px' }}>
                                 <Link href="/journals/shodh-unnayan" className="btn btn-accent btn-sm" style={{ width: '100%', textAlign: 'center' }}>
-                                    Guidelines & Submissions
+                                    About Journals, Guidelines & Submissions
                                 </Link>
-                             </div>
+                            </div>
                         </div>
 
                         {/* Journal 3 Card: The Scholar's Real View */}
@@ -144,12 +145,14 @@ export default function JournalsLanding() {
                                 <div className="journal-meta" style={{ marginTop: '20px' }}>
                                     <div className="meta-row"><span className="meta-label">Frequency:</span><span className="meta-value">Half-Yearly</span></div>
                                     <div className="meta-row"><span className="meta-label">Language:</span><span className="meta-value">English</span></div>
-                                    <div className="meta-row"><span className="meta-label">Format:</span><span className="meta-value">MLA or APA referencing</span></div>
+                                    <div className="meta-row"><span className="meta-label">Format:</span><span className="meta-value">Offline/Print Publication</span></div>
+                                    <div className="meta-row"><span className="meta-label">Chief Editor:</span><span className="meta-value">Dr. Shailendar Maurya</span></div>
+
                                 </div>
                             </div>
                             <div style={{ marginTop: '30px' }}>
                                 <Link href="/journals/scholars-real-view" className="btn btn-primary btn-sm" style={{ width: '100%', textAlign: 'center' }}>
-                                    Guidelines & Submissions
+                                    About Journals, Guidelines & Submissions
                                 </Link>
                             </div>
                         </div>
@@ -157,7 +160,7 @@ export default function JournalsLanding() {
                         {/* Journal 4 Card: Vanijyam (VIJCMBS) */}
                         <div className="card" style={{ padding: '30px', backgroundColor: 'var(--bg-white)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-lg)' }}>
                             <div>
-                                <span className="badge badge-primary" style={{ marginBottom: '15px' }}>ISSN: ..........</span>
+                                <span className="badge badge-primary" style={{ marginBottom: '15px' }}>ISSN: 2839-5980</span>
                                 <h3 style={{ fontSize: '1.4rem', marginBottom: '15px', color: 'var(--primary-dark)' }}>4. Vanijyam (VIJCMBS)</h3>
                                 <p style={{ fontSize: '0.88rem', lineHeight: '1.7', color: 'var(--text-muted)' }}>
                                     Vanijyam International Journal of Commerce, Management and Business Studies (VIJCMBS). An International Peer Reviewed Refered Annually Journal in Multi-Language covering commerce, management, and economics.
@@ -165,13 +168,13 @@ export default function JournalsLanding() {
                                 <div className="journal-meta" style={{ marginTop: '20px' }}>
                                     <div className="meta-row"><span className="meta-label">Frequency:</span><span className="meta-value">Yearly / Annually</span></div>
                                     <div className="meta-row"><span className="meta-label">Language:</span><span className="meta-value">Multiple Languages</span></div>
-                                    <div className="meta-row"><span className="meta-label">Format:</span><span className="meta-value">Print Publication</span></div>
-                                    <div className="meta-row"><span className="meta-label">Chief Editor:</span><span className="meta-value">Dr. Vinod Kumar Meena</span></div>
+                                    <div className="meta-row"><span className="meta-label">Format:</span><span className="meta-value">Offline/Print Publication</span></div>
+                                    <div className="meta-row"><span className="meta-label">Chief Editor:</span><span className="meta-value">Dr. Shailendar Maurya</span></div>
                                 </div>
                             </div>
                             <div style={{ marginTop: '30px' }}>
                                 <Link href="/journals/vanijyam" className="btn btn-primary btn-sm" style={{ width: '100%', textAlign: 'center' }}>
-                                    Guidelines & Submissions
+                                    About Journals, Guidelines & Submissions
                                 </Link>
                             </div>
                         </div>
@@ -214,12 +217,12 @@ export default function JournalsLanding() {
                                 <h4 style={{ color: 'var(--primary-dark)', fontSize: '1.15rem', marginBottom: '8px' }}>2. शोध उन्नयन</h4>
                                 <span className="badge badge-accent" style={{ marginBottom: '12px' }}>Hindi Quarterly</span>
                                 <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', lineHeight: '1.6', marginBottom: '15px' }}>
-                                    Hindi multidisciplinary peer-reviewed quarterly journal. Format: Kruti Dev 010 / DevLys 010, font size 14.
+                                    Hindi multidisciplinary peer-reviewed quarterly journal.
                                 </p>
                                 <p style={{ fontSize: '0.82rem', marginBottom: '5px' }}>
                                     <strong>Submission Email:</strong><br />
-                                    <a href="mailto:drshailendar@mauryaerf.com?subject=Manuscript Submission - Shodh Unnayan" style={{ color: 'var(--primary)', wordBreak: 'break-all' }}>
-                                        drshailendar@mauryaerf.com
+                                    <a href="mailto:shodhunnayan@gmail.com?subject=Manuscript Submission - Reforming Research" style={{ color: 'var(--primary)', wordBreak: 'break-all' }}>
+                                        shodhunnayan@gmail.com
                                     </a>
                                 </p>
                             </div>
@@ -234,7 +237,7 @@ export default function JournalsLanding() {
                                 <h4 style={{ color: 'var(--primary-dark)', fontSize: '1.15rem', marginBottom: '8px' }}>3. The Scholar's Real View</h4>
                                 <span className="badge badge-primary" style={{ marginBottom: '12px' }}>English Half-Yearly</span>
                                 <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', lineHeight: '1.6', marginBottom: '15px' }}>
-                                    English multidisciplinary refereed journal. Format: Times New Roman, APA / MLA referencing.
+                                    English multidisciplinary refereed journal.
                                 </p>
                                 <p style={{ fontSize: '0.82rem', marginBottom: '5px' }}>
                                     <strong>Submission Email:</strong><br />

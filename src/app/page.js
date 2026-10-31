@@ -12,7 +12,7 @@ export default function Home() {
         const duration = 1000; // 1 second
         const steps = 30;
         const stepTime = duration / steps;
-        
+
         let step = 0;
         const timer = setInterval(() => {
             step++;
@@ -116,7 +116,7 @@ export default function Home() {
                         <h2>Our Organizational Wings</h2>
                         <p>Discover the departments and initiatives managed under the Maurya Education and Research Foundation umbrella.</p>
                     </div>
-                    
+
                     <div className="grid grid-3">
                         <div className="card" id="wing-card-rissr">
                             <div className="card-icon"><i className="fas fa-graduation-cap"></i></div>
@@ -166,18 +166,18 @@ export default function Home() {
                                     <span className="badge badge-accent" style={{ marginBottom: '10px' }}>Online Multi-Language Quarterly</span>
                                     <h3 className="card-title" style={{ marginTop: '5px' }}>Reforming Research</h3>
                                     <p style={{ fontSize: '0.9rem', marginBottom: '15px' }}>International peer-reviewed refered interdisciplinary quarterly online journal in multi-language covering social sciences, humanities, commerce, law, and technology.</p>
-                                    
+
                                     <div className="journal-meta" style={{ marginBottom: '20px' }}>
                                         <div className="meta-row">
                                             <span className="meta-label">ISSN:</span>
-                                            <span className="meta-value">To Be Allotted</span>
+                                            <span className="meta-value">2839-5468</span>
                                         </div>
                                         <div className="meta-row">
                                             <span className="meta-label">Chief Editor:</span>
                                             <span className="meta-value">Dr. Shailendar Maurya</span>
                                         </div>
                                     </div>
-                                    
+
                                     <div style={{ display: 'flex', gap: '10px' }}>
                                         <Link href="/journals/reforming-research" className="btn btn-primary btn-sm">
                                             Author Guidelines & Submission
@@ -197,7 +197,7 @@ export default function Home() {
                                     <span className="badge badge-accent" style={{ marginBottom: '10px' }}>Hindi Quarterly</span>
                                     <h3 className="card-title" style={{ marginTop: '5px' }}>शोध उन्नयन (Shodh Unnayan)</h3>
                                     <p style={{ fontSize: '0.9rem', marginBottom: '15px' }}>Peer-reviewed refereed multidisciplinary quarterly international journal published in the Hindi language, showcasing original research papers.</p>
-                                    
+
                                     <div className="journal-meta" style={{ marginBottom: '20px' }}>
                                         <div className="meta-row">
                                             <span className="meta-label">ISSN:</span>
@@ -208,7 +208,7 @@ export default function Home() {
                                             <span className="meta-value">Dr. Shailendar Maurya</span>
                                         </div>
                                     </div>
-                                    
+
                                     <div style={{ display: 'flex', gap: '10px' }}>
                                         <Link href="/journals/shodh-unnayan" className="btn btn-primary btn-sm">
                                             Author Guidelines & Submission
@@ -228,7 +228,7 @@ export default function Home() {
                                     <span className="badge badge-primary" style={{ marginBottom: '10px' }}>English Half-Yearly</span>
                                     <h3 className="card-title" style={{ marginTop: '5px' }}>The Scholar's Real View</h3>
                                     <p style={{ fontSize: '0.9rem', marginBottom: '15px' }}>Peer-reviewed refereed multidisciplinary half-yearly international journal published in the English language, encouraging quality academic discussion.</p>
-                                    
+
                                     <div className="journal-meta" style={{ marginBottom: '20px' }}>
                                         <div className="meta-row">
                                             <span className="meta-label">ISSN:</span>
@@ -239,7 +239,7 @@ export default function Home() {
                                             <span className="meta-value">Dr. Shailendar Maurya</span>
                                         </div>
                                     </div>
-                                    
+
                                     <div style={{ display: 'flex', gap: '10px' }}>
                                         <Link href="/journals/scholars-real-view" className="btn btn-primary btn-sm">
                                             Author Guidelines & Submission
@@ -259,18 +259,18 @@ export default function Home() {
                                     <span className="badge badge-primary" style={{ marginBottom: '10px' }}>Multi-Language Annually</span>
                                     <h3 className="card-title" style={{ marginTop: '5px' }}>Vanijyam (VIJCMBS)</h3>
                                     <p style={{ fontSize: '0.9rem', marginBottom: '15px' }}>International peer-reviewed refered interdisciplinary yearly journal in commerce, management, economics, banking, finance, and business studies.</p>
-                                    
+
                                     <div className="journal-meta" style={{ marginBottom: '20px' }}>
                                         <div className="meta-row">
                                             <span className="meta-label">ISSN:</span>
-                                            <span className="meta-value">Applied</span>
+                                            <span className="meta-value">2839-5980</span>
                                         </div>
                                         <div className="meta-row">
                                             <span className="meta-label">Chief Editor:</span>
-                                            <span className="meta-value">Dr. Vinod Kumar Meena</span>
+                                            <span className="meta-value">Dr. Shailendar Maurya</span>
                                         </div>
                                     </div>
-                                    
+
                                     <div style={{ display: 'flex', gap: '10px' }}>
                                         <Link href="/journals/vanijyam" className="btn btn-primary btn-sm">
                                             Author Guidelines & Submission

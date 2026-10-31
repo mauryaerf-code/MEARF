@@ -18,7 +18,9 @@ export const metadata = {
     "finance banking research journal",
     "multilingual commerce journal India",
     "MERF commerce publications",
-    "RISSR Vanijyam journal"
+    "RISSR Vanijyam journal",
+    "ISSN 2839-5980",
+    "Vanijyam ISSN 2839-5980"
   ],
   alternates: {
     canonical: "/journals/vanijyam",
@@ -45,6 +47,7 @@ const vanijyamSchema = {
   "@type": "Periodical",
   name: "Vanijyam International Journal of Commerce Management and Business Studies (VIJCMBS)",
   alternateName: "Vanijyam Journal",
+  issn: "2839-5980",
   inLanguage: ["en", "hi"],
   url: "https://www.mauryaerf.com/journals/vanijyam",
   description: "Annual peer-reviewed multi-language research journal in commerce, management, economics, and business studies.",

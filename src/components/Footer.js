@@ -1,7 +1,16 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 export default function Footer() {
+    const pathname = usePathname();
+
+    if (pathname === '/pdf-viewer' || pathname?.startsWith('/pdf-viewer')) {
+        return null;
+    }
+
     return (
         <footer className="main-footer" id="portal-footer">
             <div className="container footer-grid">

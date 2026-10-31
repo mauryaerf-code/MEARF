@@ -2,6 +2,18 @@
 
 import React, { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
+import HindiSubmissionGuidelines from '@/components/HindiSubmissionGuidelines';
+import { getPdfViewerUrl } from '@/lib/pdfHelper';
+
+const getDirectDriveImageUrl = (url) => {
+    if (!url) return '';
+    if (url.startsWith('/') || url.startsWith('data:')) return url;
+    const match = url.match(/(?:id=|\/d\/|d=)([a-zA-Z0-9_-]{25,})/);
+    if (match && match[1]) {
+        return `/api/proxy-image?id=${match[1]}`;
+    }
+    return url;
+};
 
 const getDirectDriveUrl = (url) => {
     if (!url) return '';
@@ -14,21 +26,16 @@ const getDirectDriveUrl = (url) => {
     return url;
 };
 
-const REFORMING_RESEARCH_DOCS = [
-    { id: 'rr-cover', title: 'Cover', type: 'cover', pdfurl: '/reforming-research/cover.pdf' },
-    { id: 'rr-disclaimer', title: 'Disclaimer', type: 'disclaimer', pdfurl: '/reforming-research/Disclaimer.pdf' },
-    { id: 'rr-editor-board', title: 'Editorial Board', type: 'editor-board', pdfurl: '/reforming-research/Editor Board.pdf' },
-    { id: 'rr-art-1', title: 'Article 1', type: 'article', pdfurl: '/reforming-research/Article 1.pdf' },
-    { id: 'rr-art-2', title: 'Article 2', type: 'article', pdfurl: '/reforming-research/Article 2.pdf' },
-    { id: 'rr-art-3', title: 'Article 3', type: 'article', pdfurl: '/reforming-research/Article 3.pdf' },
-    { id: 'rr-art-4', title: 'Article 4', type: 'article', pdfurl: '/reforming-research/Article 4.pdf' },
-    { id: 'rr-art-5', title: 'Article 5', type: 'article', pdfurl: '/reforming-research/Article 5.pdf' },
-    { id: 'rr-art-6', title: 'Article 6', type: 'article', pdfurl: '/reforming-research/Article 6.pdf' },
-    { id: 'rr-art-7', title: 'Article 7', type: 'article', pdfurl: '/reforming-research/Article 7.pdf' },
-    { id: 'rr-art-8', title: 'Article 8', type: 'article', pdfurl: '/reforming-research/Article 8.pdf' },
-    { id: 'rr-art-9', title: 'Article 9', type: 'article', pdfurl: '/reforming-research/Article 9.pdf' },
-    { id: 'rr-art-10', title: 'Article 10', type: 'article', pdfurl: '/reforming-research/Article 10.pdf' },
-];
+
+const getCategoryBadge = (title, type) => {
+    const t = (type || '').toLowerCase();
+    const tit = (title || '').toLowerCase();
+    if (t === 'cover' || tit.includes('cover')) return <span className="badge badge-accent" style={{ fontSize: '0.72rem', padding: '3px 8px', textTransform: 'uppercase' }}>Cover</span>;
+    if (t === 'disclaimer' || tit.includes('disclaimer')) return <span className="badge badge-primary" style={{ fontSize: '0.72rem', padding: '3px 8px', textTransform: 'uppercase' }}>Disclaimer</span>;
+    if (t === 'editor-board' || tit.includes('editorial') || tit.includes('editor')) return <span className="badge badge-accent" style={{ fontSize: '0.72rem', padding: '3px 8px', textTransform: 'uppercase' }}>Editorial Board</span>;
+    if (t === 'article' || tit.includes('article') || tit.includes('paper')) return <span className="badge" style={{ backgroundColor: '#e2e8f0', color: '#334155', fontSize: '0.72rem', padding: '3px 8px', textTransform: 'uppercase' }}>Research Paper</span>;
+    return <span className="badge" style={{ backgroundColor: '#f1f5f9', color: '#475569', fontSize: '0.72rem', padding: '3px 8px' }}>Document</span>;
+};
 
 const EDITORIAL_BOARD_MEMBERS = [
     {
@@ -89,17 +96,19 @@ export default function OnlineJournal() {
 
     const fetchOnlinePublications = async () => {
         try {
-            // 1. Fetch all labels
+            setLoading(true);
+            // 1. Fetch all labels strictly for Reforming Research
             const { data: labels, error: labelsError } = await supabase
                 .from('merf_online_labels')
                 .select('*')
+                .or('journal.eq.Reforming Research,journal.is.null')
                 .order('created_at', { ascending: false });
 
             if (labelsError) {
                 console.error("Error fetching online labels:", labelsError.message);
             }
 
-            // 2. Fetch all articles
+            // 2. Fetch all articles from merf_online_articles
             const { data: articles, error: articlesError } = await supabase
                 .from('merf_online_articles')
                 .select('*')
@@ -111,45 +120,35 @@ export default function OnlineJournal() {
 
             let grouped = [];
             if (labels && labels.length > 0) {
-                grouped = labels.map((lbl, idx) => {
-                    const supaArticles = articles ? articles.filter(art => art.label_id === lbl.id) : [];
-                    // Populate current issue label with the ordered public documents
-                    if (idx === 0 || lbl.name.toLowerCase().includes('reforming')) {
-                        const extraArticles = supaArticles.filter(sa =>
-                            !REFORMING_RESEARCH_DOCS.some(rd => rd.title.toLowerCase() === (sa.title || '').toLowerCase())
-                        );
-                        return {
-                            ...lbl,
-                            articles: [...REFORMING_RESEARCH_DOCS, ...extraArticles]
-                        };
-                    }
+                grouped = labels.map(lbl => {
+                    // Strictly isolate articles by matching label_id
+                    const supaArticles = (articles || [])
+                        .filter(art => art.label_id === lbl.id)
+                        .map((art, aIdx) => ({
+                            id: art.id,
+                            label_id: art.label_id,
+                            title: (art.title && art.title.trim()) || '', // Demo title fallback
+                            pdfurl: art.url || art.pdfurl || art.pdfUrl || '',
+                            author: (art.author && art.author.trim()) || (art.Author && art.Author.trim()) || '-',
+                            type: art.type || 'article'
+                        }));
+
                     return {
-                        ...lbl,
+                        id: lbl.id,
+                        name: (lbl.name && lbl.name.trim()) || 'Online Issue', // Demo label fallback
+                        image: lbl.image || '', // Demo cover image fallback
                         articles: supaArticles
                     };
                 });
-            } else {
-                grouped = [{
-                    id: 'reforming-research-current-issue',
-                    name: 'Reforming Research (Volume 1, Issue 1 - 2026)',
-                    articles: REFORMING_RESEARCH_DOCS
-                }];
             }
-            setGroupedIssues(grouped);
 
-            // Expand the first label by default if available
+            setGroupedIssues(grouped);
             if (grouped.length > 0) {
                 setExpandedLabelId(grouped[0].id);
             }
         } catch (err) {
-            console.error("Failed to query online journal data:", err);
-            const fallbackGrouped = [{
-                id: 'reforming-research-current-issue',
-                name: 'Reforming Research (Volume 1, Issue 1 - 2026)',
-                articles: REFORMING_RESEARCH_DOCS
-            }];
-            setGroupedIssues(fallbackGrouped);
-            setExpandedLabelId('reforming-research-current-issue');
+            console.error("Failed to query online journal data from database:", err);
+            setGroupedIssues([]);
         } finally {
             setLoading(false);
         }
@@ -237,7 +236,7 @@ export default function OnlineJournal() {
                                     </div>
                                     <div className="spec-item">
                                         <div className="spec-label">ISSN:</div>
-                                        <div className="spec-value" style={{ letterSpacing: '1px', fontWeight: '600', color: 'var(--text-muted)' }}>......................</div>
+                                        <div className="spec-value" style={{ letterSpacing: '1px', fontWeight: '600', color: 'var(--text-muted)' }}>2839-5468</div>
                                     </div>
                                     <div className="spec-item">
                                         <div className="spec-label">Frequency:</div>
@@ -415,6 +414,9 @@ export default function OnlineJournal() {
                             </p>
                         </div>
                     </div>
+
+                    {/* Hindi Submission Guidelines */}
+                    <HindiSubmissionGuidelines />
 
                     {/* Member of Editorial Board Card */}
                     <div className="eb-section-card">
@@ -782,95 +784,109 @@ export default function OnlineJournal() {
                                     <p style={{ margin: 0, color: 'var(--text-muted)' }}>No online issues registered yet. Check back soon for the 2026 maiden issue!</p>
                                 </div>
                             ) : (
-                                groupedIssues.map((issue) => (
-                                    <div key={issue.id} style={{ border: '1px solid var(--border-color)', borderRadius: '8px', backgroundColor: 'var(--bg-white)', overflow: 'hidden', boxShadow: 'var(--shadow-sm)' }}>
-                                        {/* Accordion Header */}
-                                        <button
-                                            onClick={() => toggleAccordion(issue.id)}
-                                            style={{
-                                                width: '100%',
-                                                padding: '18px 24px',
-                                                display: 'flex',
-                                                justifyContent: 'space-between',
-                                                alignItems: 'center',
-                                                background: expandedLabelId === issue.id ? 'rgba(7, 17, 36, 0.03)' : 'none',
-                                                border: 'none',
-                                                outline: 'none',
-                                                textAlign: 'left',
-                                                cursor: 'pointer',
-                                                transition: 'background 0.2s ease'
-                                            }}
-                                        >
-                                            <span style={{ fontSize: '1.08rem', fontWeight: '600', color: 'var(--primary-dark)' }}>
-                                                <i className="far fa-folder-open" style={{ marginRight: '10px', color: 'var(--accent-dark)' }}></i>
-                                                {issue.name}
-                                            </span>
-                                            <span style={{ color: 'var(--text-muted)' }}>
-                                                {expandedLabelId === issue.id ? (
-                                                    <i className="fas fa-chevron-up" style={{ fontSize: '0.85rem' }}></i>
-                                                ) : (
-                                                    <i className="fas fa-chevron-down" style={{ fontSize: '0.85rem' }}></i>
-                                                )}
-                                            </span>
-                                        </button>
-
-                                        {/* Accordion Content */}
-                                        {expandedLabelId === issue.id && (
-                                            <div style={{ padding: '10px 24px 24px 24px', borderTop: '1px solid rgba(0,0,0,0.04)', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                                                {issue.articles.length === 0 ? (
-                                                    <p style={{ margin: 0, padding: '10px 0', fontSize: '0.9rem', color: 'var(--text-muted)', fontStyle: 'italic' }}>
-                                                        No articles uploaded under this issue label yet.
-                                                    </p>
-                                                ) : (
-                                                    issue.articles.map((art) => (
-                                                        <div
-                                                            key={art.id}
-                                                            style={{
-                                                                display: 'flex',
-                                                                justifyContent: 'space-between',
-                                                                alignItems: 'center',
-                                                                padding: '12px 16px',
-                                                                borderRadius: '6px',
-                                                                backgroundColor: 'var(--bg-light)',
-                                                                border: '1px solid rgba(0,0,0,0.03)',
-                                                                gap: '15px',
-                                                                flexWrap: 'wrap'
-                                                            }}
-                                                        >
-                                                            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                                                                <i className="far fa-file-pdf" style={{ color: 'var(--accent-dark)', fontSize: '1.1rem' }}></i>
-                                                                <span style={{ fontSize: '0.92rem', fontWeight: '600', color: 'var(--text-dark)', lineHeight: '1.4' }}>
-                                                                    {art.title}
-                                                                </span>
-                                                                {art.type === 'cover' && (
-                                                                    <span className="badge badge-accent" style={{ fontSize: '0.68rem', padding: '2px 8px', textTransform: 'uppercase' }}>Cover</span>
-                                                                )}
-                                                                {art.type === 'disclaimer' && (
-                                                                    <span className="badge badge-primary" style={{ fontSize: '0.68rem', padding: '2px 8px', textTransform: 'uppercase' }}>Disclaimer</span>
-                                                                )}
-                                                                {art.type === 'editor-board' && (
-                                                                    <span className="badge badge-accent" style={{ fontSize: '0.68rem', padding: '2px 8px', textTransform: 'uppercase' }}>Editorial Board</span>
-                                                                )}
-                                                                {art.type === 'article' && (
-                                                                    <span className="badge" style={{ backgroundColor: '#e2e8f0', color: '#334155', fontSize: '0.68rem', padding: '2px 8px', textTransform: 'uppercase' }}>Research Paper</span>
-                                                                )}
-                                                            </div>
-                                                            <a
-                                                                href={getDirectDriveUrl(art.pdfurl || art.pdfUrl)}
-                                                                target="_blank"
-                                                                rel="noopener noreferrer"
-                                                                className="btn btn-outline btn-xs"
-                                                                style={{ padding: '5px 12px', fontSize: '0.78rem', display: 'inline-flex', alignItems: 'center', gap: '6px', whiteSpace: 'nowrap' }}
-                                                            >
-                                                                <i className="far fa-file-pdf"></i> {art.type === 'article' ? 'Read Article' : 'View PDF'}
-                                                            </a>
-                                                        </div>
-                                                    ))
-                                                )}
+                                groupedIssues.map((issue) => {
+                                    const isExpanded = expandedLabelId === issue.id;
+                                    return (
+                                        <div key={issue.id} className="journal-issue-card">
+                                            
+                                            {/* ROW 1: Cover Image First */}
+                                            <div className="journal-cover-showcase">
+                                                <div style={{ textAlign: 'center' }}>
+                                                    <img 
+                                                        src={getDirectDriveImageUrl(issue.image) || '/assets/home/online.png'} 
+                                                        alt={issue.name ? `${issue.name} Cover` : 'Online Issue Cover'} 
+                                                        className="journal-cover-img"
+                                                        referrerPolicy="no-referrer"
+                                                        onError={(e) => { e.currentTarget.src = '/assets/home/online.png'; }}
+                                                    />
+                                                    <div style={{ marginTop: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
+                                                        <span className="badge badge-accent" style={{ fontSize: '0.74rem', padding: '3px 10px', fontWeight: '700' }}>
+                                                            <i className="fas fa-book-open" style={{ marginRight: '5px' }}></i> Online Issue Cover
+                                                        </span>
+                                                        
+                                                    </div>
+                                                </div>
                                             </div>
-                                        )}
-                                    </div>
-                                ))
+
+                                            {/* ROW 2: In New Row: Label Title + Down Drop Accordion Toggle */}
+                                            <button
+                                                onClick={() => toggleAccordion(issue.id)}
+                                                className={`journal-dropdown-header ${isExpanded ? 'is-expanded' : ''}`}
+                                            >
+                                                <div style={{ minWidth: 0, flex: 1 }}>
+                                                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap', marginBottom: '4px' }}>
+                                                        <span className="badge" style={{ backgroundColor: 'var(--primary)', color: '#ffffff', fontSize: '0.74rem', padding: '3px 9px', fontWeight: '600' }}>
+                                                            <i className="fas fa-bookmark" style={{ marginRight: '5px' }}></i> Issue Label
+                                                        </span>
+                                                        <span className="badge" style={{ backgroundColor: '#f1f5f9', color: '#475569', fontSize: '0.74rem', padding: '3px 8px' }}>
+                                                            Refereed & Peer Reviewed
+                                                        </span>
+                                                    </div>
+                                                    <h3 className="journal-dropdown-title">
+                                                        {issue.name}
+                                                    </h3>
+                                                    <p className="journal-dropdown-hint">
+                                                        {isExpanded ? 'Click to collapse articles' : 'Click to drop down and view research papers'}
+                                                    </p>
+                                                </div>
+                                                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexShrink: 0 }}>
+                                                    <span className="journal-dropdown-btn-text">
+                                                        {isExpanded ? 'Hide' : 'View Papers'}
+                                                    </span>
+                                                    <div style={{ 
+                                                        width: '38px', 
+                                                        height: '38px', 
+                                                        borderRadius: '50%', 
+                                                        backgroundColor: isExpanded ? 'var(--primary)' : '#f1f5f9', 
+                                                        color: isExpanded ? '#ffffff' : 'var(--text-dark)', 
+                                                        display: 'flex', 
+                                                        alignItems: 'center', 
+                                                        justifyContent: 'center', 
+                                                        transition: 'all 0.25s ease' 
+                                                    }}>
+                                                        <i className={`fas fa-chevron-${isExpanded ? 'up' : 'down'}`} style={{ fontSize: '0.88rem' }} style={{ fontSize: '0.88rem' }}></i>
+                                                    </div>
+                                                </div>
+                                            </button>
+
+                                            {/* ROW 3: Inside Down Drop Div - Table Structure */}
+                                            {isExpanded && (
+                                                <div className="journal-table-wrapper">
+                                                    {issue.articles.length === 0 ? (
+                                                        <p style={{ margin: 0, padding: '10px 0', fontSize: '0.9rem', color: 'var(--text-muted)', fontStyle: 'italic' }}>
+                                                            No articles uploaded under this issue label yet.
+                                                        </p>
+                                                    ) : (
+                                                        <div className="journal-articles-list">
+                                                            {issue.articles.map((art, aIdx) => (
+                                                                <div key={art.id || aIdx} className="journal-article-item">
+                                                                    <div className="journal-article-main">
+                                                                        <div className="journal-article-title">{art.title || '-'}</div>
+                                                                        <div className="journal-article-author">{art.author || '-'}</div>
+                                                                    </div>
+                                                                    <div className="journal-article-action">
+                                                                        {(art.pdfurl || art.pdfUrl) ? (
+                                                                            <a
+                                                                                href={getPdfViewerUrl(art.pdfurl || art.pdfUrl, { title: art.title, author: art.author, journal: 'Reforming Research', from: '/journals/reforming-research' })}
+                                                                                className="btn btn-primary btn-sm"
+                                                                                style={{ padding: '6px 14px', fontSize: '0.82rem', display: 'inline-flex', alignItems: 'center', gap: '6px', whiteSpace: 'nowrap', borderRadius: '4px' }}
+                                                                            >
+                                                                                <i className="far fa-file-pdf"></i> Read PDF
+                                                                            </a>
+                                                                        ) : (
+                                                                            <span style={{ color: 'var(--text-muted)', fontSize: '0.82rem' }}>No PDF</span>
+                                                                        )}
+                                                                    </div>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            )}
+
+                                        </div>
+                                    );
+                                })
                             )}
                         </div>
                     )}

@@ -1045,6 +1045,26 @@ textarea.form-control {
 }
 
 @media (max-width: 480px) {
+    .event-modal-dialog {
+        width: 96% !important;
+        border-radius: 12px !important;
+    }
+    .event-modal-header-content {
+        padding-right: 38px !important;
+    }
+    .event-modal-close-btn {
+        top: 12px !important;
+        right: 12px !important;
+        width: 32px !important;
+        height: 32px !important;
+        font-size: 1rem !important;
+    }
+    .event-modal-title {
+        font-size: 1.05rem !important;
+    }
+    .event-modal-body {
+        padding: 14px 14px !important;
+    }
     .hero h2 {
         font-size: 1.85rem !important;
     }
@@ -1268,3 +1288,630 @@ textarea.form-control {
         display: none !important; /* Hide Community Development Model on Mobile */
     }
 }
+
+/* Event Page & Read Modal Responsive Design (matching Publication Book Card ratio) */
+.event-poster-container {
+    width: 100%;
+    height: 220px;
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    position: relative;
+    background-color: #eef2f5;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    margin-bottom: 15px;
+    transition: var(--transition);
+}
+
+.event-detail-modal-grid {
+    display: grid;
+    grid-template-columns: 290px 1fr;
+    gap: 24px;
+    align-items: start;
+}
+
+.event-detail-modal-grid.no-image {
+    grid-template-columns: 1fr;
+}
+
+.event-detail-poster-box {
+    width: 100%;
+    height: 380px;
+    background-color: #eef2f5;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 10px;
+    position: relative;
+}
+
+@media (max-width: 768px) {
+    .event-poster-container {
+        height: 180px !important;
+    }
+    .event-detail-modal-grid {
+        grid-template-columns: 1fr !important;
+        gap: 18px !important;
+    }
+    .event-detail-poster-box {
+        height: 230px !important;
+        padding: 6px !important;
+    }
+    .event-modal-dialog {
+        width: 95% !important;
+        max-height: 94vh !important;
+        border-radius: 14px !important;
+    }
+    .event-modal-header-content {
+        padding-right: 42px !important;
+        width: 100% !important;
+    }
+    .event-modal-close-btn {
+        position: absolute !important;
+        top: 14px !important;
+        right: 14px !important;
+        z-index: 10 !important;
+    }
+    .event-modal-title {
+        font-size: 1.18rem !important;
+        line-height: 1.32 !important;
+    }
+    .event-modal-body {
+        padding: 16px 18px !important;
+    }
+    .event-modal-footer {
+        padding: 12px 18px !important;
+        flex-direction: column-reverse !important;
+        align-items: stretch !important;
+        gap: 8px !important;
+    }
+    .event-modal-footer .btn {
+        width: 100% !important;
+        justify-content: center !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .event-poster-container {
+        height: 160px !important;
+    }
+    .event-detail-poster-box {
+        height: 190px !important;
+    }
+    .event-modal-dialog {
+        width: 96% !important;
+        border-radius: 12px !important;
+    }
+    .event-modal-header-content {
+        padding-right: 38px !important;
+    }
+    .event-modal-close-btn {
+        top: 12px !important;
+        right: 12px !important;
+        width: 32px !important;
+        height: 32px !important;
+        font-size: 1rem !important;
+    }
+    .event-modal-title {
+        font-size: 1.05rem !important;
+    }
+    .event-modal-body {
+        padding: 14px 14px !important;
+    }
+}
+
+
+
+/* ==========================================================================
+   JOURNAL DROPDOWN ISSUE CARDS & FULLY RESPONSIVE TABLES
+   ========================================================================== */
+.journal-issue-card {
+    background-color: #ffffff;
+    border-radius: 14px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 16px rgba(15, 32, 66, 0.05);
+    overflow: hidden;
+    transition: all 0.25s ease;
+    margin-bottom: 24px;
+}
+
+.journal-cover-showcase {
+    padding: 24px 20px 18px 20px;
+    background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.journal-cover-img {
+    height: 170px;
+    width: 122px;
+    max-width: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 8px 22px rgba(15, 32, 66, 0.16);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    transition: transform 0.25s ease;
+}
+
+.journal-cover-img:hover {
+    transform: scale(1.02);
+}
+
+.journal-dropdown-header {
+    width: 100%;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    cursor: pointer;
+    background: #ffffff;
+    border: none;
+    border-bottom: none;
+    outline: none;
+    text-align: left;
+    user-select: none;
+    transition: background 0.2s ease;
+}
+
+.journal-dropdown-header.is-expanded {
+    background: rgba(212, 175, 55, 0.08);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.journal-dropdown-title {
+    margin: 0;
+    font-size: 1.24rem;
+    color: var(--primary-dark);
+    font-weight: 700;
+    font-family: var(--font-heading);
+    word-break: break-word;
+    line-height: 1.35;
+}
+
+.journal-dropdown-hint {
+    margin: 4px 0 0 0;
+    font-size: 0.84rem;
+    color: var(--text-muted);
+}
+
+.journal-dropdown-btn-text {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.journal-toggle-circle {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.25s ease;
+    flex-shrink: 0;
+}
+
+.journal-table-wrapper {
+    padding: 20px 24px;
+    background-color: #fafbfc;
+}
+
+.journal-data-table {
+    width: 100%;
+    min-width: 580px;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+
+.journal-articles-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.journal-article-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 16px 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+    text-align: left;
+    transition: all 0.2s ease;
+}
+
+.journal-article-item:hover {
+    border-color: var(--primary);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.journal-article-main {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    text-align: left;
+}
+
+.journal-article-title {
+    font-weight: 600;
+    color: var(--primary-dark);
+    font-size: 1rem;
+    line-height: 1.45;
+    text-align: left;
+    margin: 0;
+}
+
+.journal-article-author {
+    font-size: 0.88rem;
+    color: var(--text-dark);
+    font-weight: 500;
+    text-align: left;
+    margin: 0;
+}
+
+.journal-article-action {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 4px;
+}
+
+/* Responsive Breakpoints for Tablet & Mobile */
+@media (max-width: 768px) {
+    .journal-cover-showcase {
+        padding: 18px 14px 14px 14px;
+    }
+    .journal-cover-img {
+        height: 145px;
+        width: 104px;
+    }
+    .journal-dropdown-header {
+        padding: 14px 16px;
+        gap: 12px;
+    }
+    .journal-dropdown-title {
+        font-size: 1.08rem;
+    }
+    .journal-dropdown-hint {
+        font-size: 0.78rem !important;
+    }
+    .journal-dropdown-btn-text {
+        display: none !important;
+    }
+    .journal-toggle-circle {
+        width: 34px;
+        height: 34px;
+    }
+    .journal-table-wrapper {
+        padding: 14px 10px;
+    }
+    .journal-data-table th,
+    .journal-data-table td {
+        padding: 10px 12px !important;
+        font-size: 0.86rem !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .journal-issue-card {
+        border-radius: 10px;
+        margin-bottom: 18px;
+    }
+    .journal-cover-img {
+        height: 130px;
+        width: 95px;
+    }
+    .journal-dropdown-header {
+        padding: 12px 14px;
+    }
+    .journal-dropdown-title {
+        font-size: 1.02rem;
+    }
+    .journal-table-wrapper {
+        padding: 10px 6px;
+    }
+    .journal-article-item {
+        padding: 14px 14px;
+        gap: 8px;
+    }
+    .journal-article-action {
+        width: auto;
+    }
+    .journal-article-action a,
+    .journal-article-action span {
+        width: auto;
+        justify-content: flex-start;
+    }
+}
+
+/* ==========================================================================
+   In-built PDF Previewer & Reader Styles
+   ========================================================================== */
+body:has(.pdf-viewer-page) {
+    overflow: hidden !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+body:has(.pdf-viewer-page) .top-bar,
+body:has(.pdf-viewer-page) .main-header,
+body:has(.pdf-viewer-page) .main-footer {
+    display: none !important;
+}
+
+.pdf-viewer-page {
+    width: 100vw;
+    max-width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
+    background-color: #0b1424;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.pdf-viewer-toolbar {
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+    background-color: #ffffff;
+    border-bottom: 1px solid rgba(15, 32, 66, 0.1);
+    padding: 7px 0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    z-index: 30;
+    flex-shrink: 0;
+}
+
+.pdf-toolbar-inner {
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row !important;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 0 16px;
+    flex-wrap: nowrap;
+}
+
+.pdf-toolbar-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+    min-width: 0;
+}
+
+.pdf-btn-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #ffffff;
+    color: var(--primary);
+    border: 1px solid rgba(15, 32, 66, 0.18);
+    padding: 5px 12px;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+    transition: var(--transition);
+    line-height: 1;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.pdf-btn-back:hover {
+    background: var(--primary);
+    color: #ffffff;
+    border-color: var(--primary);
+    box-shadow: 0 2px 6px rgba(15, 32, 66, 0.15);
+}
+
+.pdf-badge-journal {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background-color: rgba(212, 175, 55, 0.12);
+    color: #856404;
+    border: 1px solid rgba(212, 175, 55, 0.32);
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.pdf-toolbar-center {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.pdf-viewer-doc-title {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--primary-dark);
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: var(--font-heading);
+}
+
+.pdf-viewer-doc-author {
+    font-size: 0.74rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 1;
+}
+
+.pdf-doc-sep {
+    color: var(--text-muted);
+    opacity: 0.5;
+    margin: 0 5px;
+}
+
+.pdf-viewer-canvas {
+    position: relative;
+    flex: 1;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    background-color: #0b1424;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.pdf-iframe {
+    position: absolute;
+    top: -58px;
+    left: 0;
+    width: 100%;
+    height: calc(100% + 58px);
+    border: none;
+    display: block;
+    background: #0b1424;
+    box-sizing: border-box;
+}
+
+.pdf-viewer-loader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(11, 20, 36, 0.94);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 40;
+    padding: 24px;
+    text-align: center;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+}
+
+.pdf-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3.5px solid rgba(212, 175, 55, 0.2);
+    border-top: 3.5px solid var(--accent);
+    border-radius: 50%;
+    animation: pdf-spin 0.85s linear infinite;
+}
+
+@keyframes pdf-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.pdf-viewer-empty-state {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-light);
+}
+
+.pdf-empty-icon {
+    font-size: 3.2rem;
+    color: var(--accent);
+    margin-bottom: 12px;
+}
+
+@media (max-width: 768px) {
+    .pdf-viewer-toolbar {
+        padding: 5px 0;
+    }
+    .pdf-toolbar-inner {
+        flex-direction: row !important;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        padding: 0 10px;
+        flex-wrap: nowrap;
+    }
+    .pdf-toolbar-left {
+        gap: 6px;
+        flex-shrink: 0;
+    }
+    .pdf-btn-back {
+        padding: 4px 8px;
+        font-size: 0.78rem;
+    }
+    .pdf-btn-label {
+        display: none;
+    }
+    .pdf-badge-journal {
+        font-size: 0.68rem !important;
+        max-width: 110px;
+        padding: 3px 6px !important;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .pdf-toolbar-center {
+        flex: 1;
+        min-width: 0;
+        justify-content: flex-end;
+    }
+    .pdf-viewer-doc-title {
+        font-size: 0.78rem;
+        max-width: 100%;
+    }
+    .pdf-viewer-doc-author {
+        display: none; /* keep mobile single-row clean and un-cramped */
+    }
+    .pdf-iframe {
+        top: -48px;
+        height: calc(100% + 48px);
+    }
+}
+
+
+
+
+

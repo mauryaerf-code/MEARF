@@ -49,7 +49,7 @@ export default function About() {
                 <div className="container">
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '40px' }}>
                         {/* Who We Are (Full Width) */}
-                        <div>
+                        <div className="card card-accent" style={{ padding: '35px', backgroundColor: 'var(--bg-white)' }}>
                             <h2 style={{ fontSize: '1.85rem', marginBottom: '20px' }}>Who We Are</h2>
                             <p style={{ fontSize: '1.02rem', fontFamily: '"Outfit", "Inter", sans-serif', lineHeight: '1.8', color: 'var(--text-dark)', textAlign: 'justify', marginBottom: '15px' }}>
                                 <strong>Maurya Education and Research Foundation</strong> is a Non-Government Organisation Recognized by NITI Aayog, Government of India, commonly known as <strong>MERF</strong>, is an academic and research oriented organization dedicated to promoting education, research, innovation and academic collaboration across India.
