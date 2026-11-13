@@ -8,13 +8,14 @@ export function extractDriveFileId(url) {
   return match ? match[1] : null;
 }
 
-export function getProxyPdfUrl(url) {
+export function getProxyPdfUrl(url, download = false) {
   if (!url) return '';
   const fileId = extractDriveFileId(url);
+  const dl = download ? '&download=1' : '';
   if (fileId) {
-    return `/api/proxy-pdf?id=${fileId}`;
+    return `/api/proxy-pdf?id=${fileId}${dl}`;
   }
-  return `/api/proxy-pdf?url=${encodeURIComponent(url)}`;
+  return `/api/proxy-pdf?url=${encodeURIComponent(url)}${dl}`;
 }
 
 export function getFastEmbedDriveUrl(url) {
@@ -39,9 +40,9 @@ export function getDirectDownloadUrl(url) {
   if (!url) return '';
   const fileId = extractDriveFileId(url);
   if (fileId) {
-    return `https://drive.google.com/uc?export=download&id=${fileId}`;
+    return `/api/proxy-pdf?id=${fileId}&download=1`;
   }
-  return url;
+  return `/api/proxy-pdf?url=${encodeURIComponent(url)}&download=1`;
 }
 
 export function getDirectDriveViewUrl(url) {

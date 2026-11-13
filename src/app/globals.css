@@ -1759,9 +1759,10 @@ body:has(.pdf-viewer-page) .main-footer {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: flex-start;
     overflow: hidden;
     white-space: nowrap;
+    padding: 0 10px;
 }
 
 .pdf-viewer-doc-title {
@@ -1806,10 +1807,10 @@ body:has(.pdf-viewer-page) .main-footer {
 
 .pdf-iframe {
     position: absolute;
-    top: -58px;
+    top: 0;
     left: 0;
     width: 100%;
-    height: calc(100% + 58px);
+    height: 100%;
     border: none;
     display: block;
     background: #0b1424;
@@ -1862,6 +1863,182 @@ body:has(.pdf-viewer-page) .main-footer {
     margin-bottom: 12px;
 }
 
+/* ==========================================================================
+   PDF Error / Busy Page
+   ========================================================================== */
+
+.pdf-error-page {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #0b1424 0%, #0f2042 60%, #0b1424 100%);
+    padding: 24px 16px;
+    min-height: 0;
+}
+
+.pdf-error-card {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 40px 36px 36px;
+    max-width: 480px;
+    width: 100%;
+    text-align: center;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.pdf-error-icon-wrap {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 1.9rem;
+}
+
+.pdf-error-icon-busy {
+    background: rgba(212, 175, 55, 0.14);
+    border: 2px solid rgba(212, 175, 55, 0.35);
+    color: var(--accent, #d4af37);
+}
+
+.pdf-error-icon-warn {
+    background: rgba(239, 68, 68, 0.12);
+    border: 2px solid rgba(239, 68, 68, 0.3);
+    color: #ef4444;
+}
+
+.pdf-error-title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #f1f5f9;
+    margin: 0 0 12px;
+    font-family: var(--font-heading);
+    line-height: 1.3;
+}
+
+.pdf-error-desc {
+    font-size: 0.88rem;
+    color: rgba(241, 245, 249, 0.72);
+    line-height: 1.7;
+    margin: 0 0 20px;
+}
+
+.pdf-error-journal-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(212, 175, 55, 0.1);
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    color: #d4af37;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-bottom: 24px;
+}
+
+.pdf-error-countdown {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.pdf-error-countdown-ring {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    border: 3px solid rgba(212, 175, 55, 0.3);
+    border-top-color: var(--accent, #d4af37);
+    animation: pdf-spin 1s linear infinite;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--accent, #d4af37);
+}
+
+.pdf-error-countdown-label {
+    color: rgba(241, 245, 249, 0.6);
+    font-size: 0.82rem;
+}
+
+.pdf-error-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.pdf-error-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.18s ease;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.pdf-error-btn-primary {
+    background: var(--accent, #d4af37);
+    color: #0f2042;
+}
+
+.pdf-error-btn-primary:hover {
+    background: #c9a52f;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(212, 175, 55, 0.4);
+}
+
+.pdf-error-btn-secondary {
+    background: rgba(255, 255, 255, 0.08);
+    color: rgba(241, 245, 249, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.pdf-error-btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.14);
+    color: #fff;
+}
+
+.pdf-error-status-line {
+    font-size: 0.72rem;
+    color: rgba(241, 245, 249, 0.35);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+@media (max-width: 768px) {
+    .pdf-error-card {
+        padding: 28px 20px 24px;
+    }
+    .pdf-error-title {
+        font-size: 1.15rem;
+    }
+    .pdf-error-btn {
+        padding: 9px 16px;
+        font-size: 0.84rem;
+    }
+}
+
 @media (max-width: 768px) {
     .pdf-viewer-toolbar {
         padding: 5px 0;
@@ -1870,12 +2047,12 @@ body:has(.pdf-viewer-page) .main-footer {
         flex-direction: row !important;
         align-items: center;
         justify-content: space-between;
-        gap: 8px;
-        padding: 0 10px;
+        gap: 6px;
+        padding: 0 8px;
         flex-wrap: nowrap;
     }
     .pdf-toolbar-left {
-        gap: 6px;
+        gap: 5px;
         flex-shrink: 0;
     }
     .pdf-btn-back {
@@ -1887,8 +2064,8 @@ body:has(.pdf-viewer-page) .main-footer {
     }
     .pdf-badge-journal {
         font-size: 0.68rem !important;
-        max-width: 110px;
-        padding: 3px 6px !important;
+        max-width: 90px;
+        padding: 2px 5px !important;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -1896,18 +2073,19 @@ body:has(.pdf-viewer-page) .main-footer {
     .pdf-toolbar-center {
         flex: 1;
         min-width: 0;
-        justify-content: flex-end;
+        justify-content: flex-start;
+        padding: 0 4px;
     }
     .pdf-viewer-doc-title {
-        font-size: 0.78rem;
+        font-size: 0.75rem;
         max-width: 100%;
     }
     .pdf-viewer-doc-author {
-        display: none; /* keep mobile single-row clean and un-cramped */
+        display: none;
     }
     .pdf-iframe {
-        top: -48px;
-        height: calc(100% + 48px);
+        top: 0;
+        height: 100%;
     }
 }
 
